@@ -114,27 +114,27 @@
                             </thead>
                             <tbody>
                                 
-                                    @foreach($data as $items)
-                                        <tr class="text-center">
-                                            <td>{{ $items->row_number }}</td>
-                                            <td>{{ $items->name }}</td>
-                                            <td>{{ $items->cedula }}</td>
-                                            <td>{{ $items->nombres . ' ' . $items->apellidos }}</td>
-                                            <td>{{ (($items->roles== 'super-admin') ? 'ADMINISTRADOR DEL SISTEMA' : $items->roles ) }}</td>
-                                            <td>{{ $items->estatus }}</td>
-                                            <td>
-                                                <div class="text-center">
-                                                    <button type="button" onClick="modal({{ $items->id }})" title="Ver" data-toggle="modal" data-target="#modal-xl" class="btn btn-outline-primary"><i class="fas fa-eye"></i></button>
-                                                    @can('editar')
-                                                        <a href="{{ url('/usuario/'.encrypt($items->id).'/edit') }}" title="Editar" type="button" class="btn btn-outline-primary"><i class="fas fa-edit"></i></a>
-                                                    @endcan
-                                                    @can('eliminar')
-                                                        <!-- button type="button" class="btn btn-outline-primary">Eliminar</button -->
-                                                    @endcan
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                @foreach($data as $items)
+                                    <tr class="text-center">
+                                        <td>{{ $items->row_number }}</td>
+                                        <td>{{ $items->name }}</td>
+                                        <td>{{ $items->cedula }}</td>
+                                        <td>{{ $items->nombres . ' ' . $items->apellidos }}</td>
+                                        <td>{{ (($items->roles== 'super-admin') ? 'ADMINISTRADOR DEL SISTEMA' : $items->roles ) }}</td>
+                                        <td>{{ $items->estatus }}</td>
+                                        <td>
+                                            <div class="text-center">
+                                                <button type="button" onClick="modal({{ $items->id }})" title="Ver" data-toggle="modal" data-target="#modal-xl" class="btn btn-outline-primary"><i class="fas fa-eye"></i></button>
+                                                @can('editar')
+                                                    <a href="{{ url('/usuario/'.encrypt($items->id).'/edit') }}" title="Editar" type="button" class="btn btn-outline-primary"><i class="fas fa-edit"></i></a>
+                                                @endcan
+                                                @can('eliminar')
+                                                    <!-- button type="button" class="btn btn-outline-primary">Eliminar</button -->
+                                                @endcan
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 
                             </tbody>
                         </table>
@@ -207,21 +207,6 @@
               </div>
 
               <div class="row">
-                <div class="form-group col-4">
-                    <label for="">Entidad:</label>
-                    <input type="text" class="form-control" name="mo_entidad" readonly>
-                </div>
-                <div class="form-group col-4">
-                    <label for="">Municipio:</label>
-                    <input type="text" class="form-control" name="mo_municipio" readonly>
-                </div>
-                <div class="form-group col-4">
-                    <label for="">Parroquia:</label>
-                    <input type="text" class="form-control" name="mo_parroquia" readonly>
-                </div>
-              </div>
-
-              <div class="row">
                   <div class="form-group col-12">
                       <label for="">Direcci&oacute;n Habitaci&oacute;n:</label>
                       <input type="text" class="form-control" name="mo_direccion_habitacion" readonly>
@@ -277,9 +262,9 @@
             $('input[name=mo_apellidos]').val(result[0].apellidos)
             $('input[name=mo_telefono_local]').val(result[0].telefono_local)
             $('input[name=mo_telefono_movil]').val(result[0].telefono_movil)
-            $('input[name=mo_entidad]').val(result[0].nombre_entidad)
-            $('input[name=mo_municipio]').val(result[0].nombre_municipio)
-            $('input[name=mo_parroquia]').val(result[0].nombre_parroquia)
+            //$('input[name=mo_entidad]').val(result[0].nombre_entidad)
+            //$('input[name=mo_municipio]').val(result[0].nombre_municipio)
+            //$('input[name=mo_parroquia]').val(result[0].nombre_parroquia)
             $('input[name=mo_direccion_habitacion]').val(result[0].direccion_habitacion)
             // $('input[name=mo_entidad]').val(result[0].entidad)
             $('input[name=mo_estatus]').val(result[0].estatus)

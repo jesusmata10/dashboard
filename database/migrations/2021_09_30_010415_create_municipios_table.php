@@ -15,9 +15,7 @@ class CreateMunicipiosTable extends Migration
     {
         Schema::create('municipios', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('entidad_id');
-            $table->string('codigo_entidad', 2);
-            $table->string('codigo_municipio', 2);
+            $table->foreignId('entidades_id');
             $table->string('nombre_municipio', 255);
             $table->boolean('estatus')->default(true);
             $table->timestamps();

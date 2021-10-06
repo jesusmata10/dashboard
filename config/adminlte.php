@@ -86,8 +86,8 @@ return [
 
     'layout_topnav' => null,
     'layout_boxed' => null,
-    'layout_fixed_sidebar' => null,
-    'layout_fixed_navbar' => null,
+    'layout_fixed_sidebar' => true,
+    'layout_fixed_navbar' => true,
     'layout_fixed_footer' => true,
     'layout_dark_mode' => null,
 
@@ -168,7 +168,7 @@ return [
     |
     */
 
-    'right_sidebar' => false,
+    'right_sidebar' => true,
     'right_sidebar_icon' => 'fas fa-cogs',
     'right_sidebar_theme' => 'dark',
     'right_sidebar_slide' => true,
@@ -256,9 +256,16 @@ return [
         ],*/
         ['header' => 'account_settings'],
         [
-            'text' => 'profile',
-            'url'  => 'user/profile',
+            'text' => 'Registro',
+            'url'  => '#',
             'icon' => 'fas fa-fw fa-user',
+            'submenu' => [
+                [
+                    'text' => 'Jefe de Hogar',
+                    'url'  => '#',
+                    'icon' => 'fas fa-fw fa-users-cog',
+                ],
+            ],
         ],
         [
             'text' => 'Gas',
@@ -299,6 +306,22 @@ return [
                     'url'  => 'user/profile',
                     'icon' => 'fas fa-fw fa-user',
                 ],
+                [
+                    'text' => 'Parametros',
+                    'icon' => 'fas fa-fw fa-user',
+                    'submenu' => [
+                        [
+                            'text' => 'Bombonas',
+                            'url'  => '#',
+                            'icon' => 'fas fa-fw fa-user-cog',
+                        ],
+                        [
+                            'text' => 'Peso de Bombonas',
+                            'url'  => '#',
+                            'icon' => 'fas fa-fw fa-user-cog',
+                        ],
+                    ]
+                ],
                 /*[
                     'text'    => 'level_one',
                     'url'     => '#',
@@ -322,12 +345,12 @@ return [
                             ],
                         ],
                     ],
-                ],*/
+                ],
                 [
                     'text' => 'Correos',
                     'url'  => '#',
                     'icon' => 'fas fa-fw fa-envelope',
-                ],
+                ],*/
             ],
         ],
         /*['header' => 'labels'],

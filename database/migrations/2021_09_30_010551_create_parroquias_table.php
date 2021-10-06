@@ -16,9 +16,6 @@ class CreateParroquiasTable extends Migration
         Schema::create('parroquias', function (Blueprint $table) {
             $table->id();
             $table->foreignId('municipio_id');
-            $table->string('codigo_entidad', 2);
-            $table->string('codigo_municipio', 2);
-            $table->string('codigo_parroquia', 2);
             $table->string('nombre_parroquia', 255);
             $table->boolean('estatus')->default(true);
             $table->string('codigo_ine', 6)->nullable();
