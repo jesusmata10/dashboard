@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Tzona;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class TzonaController extends Controller
 {
@@ -15,7 +17,10 @@ class TzonaController extends Controller
     public function index()
     {
         
-        $zonas = Tzona::all();
+        $zonas =  Tzona::reporte('numero', 'id', 'nombre');
+        /*$zonas = DB::table('tzonas')
+                    ->select( DB::raw( 'row_number() OVER (ORDER BY nombre) as numero'), 'id', 'nombre')
+                    ->get();*/        
 
         return view('parametros.zona.index',compact('zonas'));
     }

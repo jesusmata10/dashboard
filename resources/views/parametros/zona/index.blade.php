@@ -31,7 +31,7 @@
                                 {{--@can('consultar')--}}
                                     @foreach($zonas as $items)
                                         <tr class="text-center">
-                                            <td>{{ $items->row_number }}</td>
+                                            <td>{{ $items->numero }}</td>
                                             <td class="text-uppercase">{{ $items->nombre }}</td>
                                             <td>
                                                 <div>
