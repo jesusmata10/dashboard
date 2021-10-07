@@ -62,6 +62,11 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
+    /*public function perfiles()
+    {
+        return $this->hasOne(Personas::class);
+    }*/
+
     public static function userRol()
     {
         return DB::table('roles as r')->select('r.id', 'r.name')

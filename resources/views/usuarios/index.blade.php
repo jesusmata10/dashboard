@@ -105,7 +105,7 @@
                                 <tr class="text-center">
                                     <th style="width:50px">N°</th>
                                     <th>Usuario</th>
-                                    <th>C&eacute;dula</th>
+                                    <th>email</th>
                                     <th>Nombres y Apellidos</th>
                                     <th>Rol</th>
                                     <th>Estatus</th>
@@ -118,7 +118,7 @@
                                     <tr class="text-center">
                                         <td>{{ $items->row_number }}</td>
                                         <td>{{ $items->name }}</td>
-                                        <td>{{ $items->cedula }}</td>
+                                        <td>{{ $items->email }}</td>
                                         <td>{{ $items->nombres . ' ' . $items->apellidos }}</td>
                                         <td>{{ (($items->roles== 'super-admin') ? 'ADMINISTRADOR DEL SISTEMA' : $items->roles ) }}</td>
                                         <td>{{ $items->estatus }}</td>

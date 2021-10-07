@@ -308,7 +308,7 @@ return [
                 ],
                 [
                     'text' => 'Parametros',
-                    'icon' => 'fas fa-fw fa-user',
+                    'icon' => 'fas fa-fw fa-layer-group',
                     'submenu' => [
                         [
                             'text' => 'Bombonas',
@@ -319,6 +319,21 @@ return [
                             'text' => 'Peso de Bombonas',
                             'url'  => '#',
                             'icon' => 'fas fa-fw fa-user-cog',
+                        ],
+                        [
+                            'text' => 'Zona',
+                            'url'  => 'parametro/zona',
+                            'icon' => 'fas fa-fw fa-plus-square',
+                        ],
+                        [
+                            'text' => 'Area',
+                            'url'  => 'parametro/area',
+                            'icon' => 'fas fa-fw fa-plus-square',
+                        ],
+                        [
+                            'text' => 'Hogar',
+                            'url'  => 'parametro/hogar',
+                            'icon' => 'fas fa-fw fa-plus-square',
                         ],
                     ]
                 ],
@@ -353,8 +368,8 @@ return [
                 ],*/
             ],
         ],
-        /*['header' => 'labels'],
-        [
+        ['header' => 'labels'],
+        /*[
             'text'       => 'important',
             'icon_color' => 'red',
             'url'        => '#',

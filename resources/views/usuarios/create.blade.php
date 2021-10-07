@@ -52,9 +52,9 @@
                               <label for="entidad_id">Entidad</label>
                               <select class="form-control" name="entidad_id"  id="entidad_id">
                                 <option value="" selected>Seleccione una opción</option>
-                                {{--@foreach($entidad as $combo)
+                                @foreach($entidad as $combo)
                                   <option value="{{ $combo->id }}">{{ $combo->nombre_entidad }}</option>
-                                @endforeach--}}
+                                @endforeach
                               </select>
                             </div>
                           </div>
@@ -77,19 +77,66 @@
                     </div>
 
                     <div class="row">
-                        <div class="form-group col-12">
-                            <label for="">Direcci&oacute;n de Habitaci&oacute;n:</label>
-                            <input class="form-control text-uppercase" type="text" name="direccion_habitacion">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="urbanizacion">Urbanizaci&oacute;n</label>
+                                <input class="form-control" type="text" name="urbanizacion">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="tzona">Zona</label>
+                                <select class="form-control" name="tzona"  id="tzona">
+                                <option value="" selected>Seleccione una opción</option>
+                                    @foreach($entidad as $combo)
+                                      <option value="{{ $combo->id }}">{{ $combo->nombre_entidad }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="nzona">Nombre de zona</label>
+                                <input class="form-control" type="text" name="nzona">
+                            </div>
                         </div>
                     </div>
-
                     <div class="row">
-                        <div class="form-group col-12">
-                            <label for="">Direcci&oacute;n de Trabajo:</label>
-                            <input class="form-control text-uppercase" type="text" name="direccion_trabajo">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="tcalle">Area:</label>
+                                <select class="form-control" name="tcalle"  id="tcalle">
+                                <option value="" selected>Seleccione una opción</option>
+                                    @foreach($entidad as $combo)
+                                      <option value="{{ $combo->id }}">{{ $combo->nombre_entidad }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="ncalle">Nombre de Area</label>
+                                <input class="form-control" type="text" name="ncalle">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="tvivienda">Hogar:</label>
+                                <select class="form-control" name="tvivienda"  id="tvivienda">
+                                <option value="" selected>Seleccione una opción</option>
+                                    @foreach($entidad as $combo)
+                                      <option value="{{ $combo->id }}">{{ $combo->nombre_entidad }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="nvivienda">Nombre Hogar:</label>
+                                <input class="form-control" type="text" name="nvivienda">
+                            </div>
                         </div>
                     </div>
-
                 </div>
             </div>
 
@@ -109,9 +156,9 @@
                             <label for="">Rol:</label>
                             <select class="form-control" name="rol">
                                 <option value="">Seleccione una opci&oacute;n</option>
-                                {{--@foreach($roles as $items)
+                                @foreach($roles as $items)
                                     <option value="{{ $items->name }}">{{ (($items->name == 'super-admin') ? 'ADMINISTRADOR DEL SISTEMA' : $items->name ) }}</option>
-                                @endforeach--}}
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -177,7 +224,47 @@
     </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script>
 
+
+    $('#entidad_id').change(function ()
+            {
+                $.ajax({
+                    method: "POST",
+                    url: "{{ url('/municipioAjaxUser') }}",
+                    data: {entidad_id: $('#entidad_id').val(), '_token': $('input[name=_token]').val()},
+                    success: function (response) {
+                        $('#municipio_id').html(response);
+                        $("#parroquia_id").empty();
+                        $('#parroquia_id').append('<option value="" selected>Seleccione una opción</option>');
+
+                    },
+                    beforeSend: function () {
+                        $('#municipio_id').append('<option value="" selected>Buscando...</option>');
+
+                    }
+                    });
+            });
+
+          $('#municipio_id').change(function ()
+            {
+                $.ajax({
+                    method: "POST",
+                    url: "{{ url('/parroquiaAjaxUser') }}",
+                    data: {municipio_id: $('#municipio_id').val(), '_token': $('input[name=_token]').val()},
+                    success: function (response) {
+                    $('#parroquia_id').html(response);
+
+                    },
+                    beforeSend: function () {
+                    $('#parroquia_id').append('<option value="" selected>Buscando...</option>');
+
+                    }
+                });
+                
+            });
+</script>
 @section('footer')
 <div></div>
 @endsection

@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Arr;
 use App\Models\User;
+use App\Models\Entidades;
+use App\Models\Municipios;
+use App\Models\Parroquias;
 
 
 
@@ -34,10 +37,12 @@ class UserController extends Controller
         ];
 
         $data = User::all();
+        //dd($data);
 
         //$users = $data->paginate(10);
         //$report = $data->get(10);
         $rol = User::userRol();
+        //dd($rol);
 
         return view('usuarios.index', compact('breadcrumb', 'rol', 'data'));
     }
@@ -60,7 +65,10 @@ class UserController extends Controller
             ]
         ];
 
-        return view('usuarios.create', compact('breadcrumb'));
+        $entidad = Entidades::all();
+        $roles = Role::select('id', 'name')->orderBy('name')->get();
+
+        return view('usuarios.create', compact('breadcrumb', 'entidad', 'roles'));
     }
 
     /**
@@ -130,7 +138,7 @@ class UserController extends Controller
             ]
         ];
 
-        $entidad = Entidad::all();
+        $entidad = Entidades::all();
 
         $user = User::select('u.*', 'u.id as id_user', 'sp.*', 'e.nombre_entidad', 'm.nombre_municipio', 'p.nombre_parroquia')->from('seguridad.users as u')
             ->join('seguridad.perfiles as sp', 'sp.user_id', 'u.id')
@@ -170,4 +178,43 @@ class UserController extends Controller
     {
         //
     }
+
+     public function municipioAjaxUser(Request $request)
+    {
+        //dd($request);
+      if ($request->ajax())
+      {
+
+        //$lista = Municipio::listaMunicipios($request->entidad_id);
+        $lista = Municipios::where('entidad_id',$request->entidad_id)->get();
+        //dd($lista);
+        echo '<option disabled selected value="">Seleccione una opci&oacute;n</option>';
+        //echo '<option value="TODOS">TODOS LOS MUNICIPIOS</option>';
+
+        foreach ($lista as $value)
+        {
+            echo '<option value=' . $value->id . '>'. $value->nombre_municipio . '</option>';
+        }
+      }
+    }
+
+    public function parroquiaAjaxUser(Request $request)
+    {
+
+      if ($request->ajax())
+      {
+        //$lista = Parroquia::listaParroquias($request->municipio_id);
+        $lista = Parroquias::where('municipio_id',$request->municipio_id)->get();
+
+        echo '<option disabled selected value="">Seleccione una opci&oacute;n</option>';
+        //echo '<option value="TODAS">TODAS LAS PARROQUIAS</option>';
+
+        foreach ($lista as $value)
+        {
+            echo '<option value=' . $value->id . '>'. $value->nombre_parroquia . '</option>';
+        }
+      }
+    }
+
+
 }

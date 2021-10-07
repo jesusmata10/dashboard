@@ -24,23 +24,31 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
-
+    // Usuario
     Route::resource('/usuario', 'UserController');
+    Route::post('/municipioAjaxUser', 'UserController@municipioAjaxUser');
+    Route::post('/parroquiaAjaxUser', 'UserController@parroquiaAjaxUser');
 
     Route::get('/prueba', 'PruebaController@index');
 
-    //Route::post('/upload', 'PruebaController@upload');
-
     Route::resource('/upload', 'UploadController');
 
-    //Route::post('/upload', 'HomeController@upload')->name('upload');
-
+    // Gas
     Route::resource('/pdvsa', 'pdvsaController');
 
+    // Roles
     Route::resource('/roles', 'RolesController');
     Route::get('/roles/rolesPermission/{id}', 'RolesController@rolesPermission');
     Route::post('/storeRolPermiso', 'RolesController@storeRolPermiso');
 
+    // Permisos
     Route::resource('/permission', 'PermissionController');
+
+    // Parametros
+    Route::resource('/parametro/area', 'TcalleController');
+    route::resource('/parametro/zona', 'TzonaController');
+    Route::resource('/parametro/hogar', 'TviviendaController');
+
+
     
 });
