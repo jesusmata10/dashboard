@@ -12,16 +12,16 @@
 
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Nueva Zona</h3>
+                <h3 class="card-title">Nuevo Hogar</h3>
             </div>
-            <form class="form" id="rolesForm" name="rolesForm" role="form" data-toggle="validator" method="POST" action="{{ url('roles') }}">
+            <form class="form" id="hogarForm" name="hogarForm" role="form" data-toggle="validator" method="POST" action="{{ url('/parametro/hogar') }}">
                 {{ csrf_field() }}
 
                 <div class="card-body">
                     <div class="row">
                         <div class="form-group col-12">
-                            <label for="name">Nombre</label>
-                            <input type="text" name="name" class="form-control text-uppercase">
+                            <label for="nombre">Nombre</label>
+                            <input type="text" name="nombre" class="form-control text-uppercase">
                         </div>
                     </div>
                 </div>
@@ -29,7 +29,7 @@
                 <div class="card-footer">
                     <div class="float-right">
                         <button type="submit" class="btn btn-outline-primary">Aceptar</button>
-                        <a href="{{ url('/parametro/zona') }}" class="btn btn-outline-danger">Cancelar</a>
+                        <a href="{{ url('/parametro/hogar') }}" class="btn btn-outline-danger">Cancelar</a>
                     </div>
                 </div>
 
@@ -41,5 +41,5 @@
 @endsection
 
 @section('footer')
-  <h5>Creado por: Ing. Jesus Mata - 2021</h5>
+  <div></div>
 @stop

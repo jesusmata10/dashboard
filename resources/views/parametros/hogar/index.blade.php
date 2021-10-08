@@ -4,6 +4,12 @@
 <div class="row">
     <div class="col-12">
 
+        @if (session('status'))
+            <div class="alert alert-danger">
+                {{ session('status') }}
+            </div>
+        @endif
+
         <div class="card">
 
             <div class="card-body">
@@ -11,7 +17,7 @@
                 <div class="row">
                     <div class="col-12">
                         
-                        <a href="{{ url('parametro/zona/create') }}" class="btn btn-outline-primary"><i class="fa fa-plus"></i> Nuevo</a>
+                        <a href="{{ url('parametro/hogar/create') }}" class="btn btn-outline-primary"><i class="fa fa-plus"></i> Nuevo</a>
                         
                     </div>
                 </div><br>
@@ -29,21 +35,17 @@
                             </thead>
                             <tbody>
                                 {{--@can('consultar')--}}
-                                    {{--@foreach($roles as $items)
+                                    @foreach($hogar as $items)
                                         <tr class="text-center">
-                                            <td>{{ $items->row_number }}</td>
-                                            <td class="text-uppercase">{{ $items->name }}</td>
+                                            <td>{{ $items->numero }}</td>
+                                            <td class="text-uppercase">{{ $items->nombre }}</td>
                                             <td>
                                                 <div>
-                                                    <a href="{{ url('/roles/modulePermission/'.$items->id)}}" title="Módulos" class="btn btn-outline-primary btn-sm"> <i class="fa fa-shield-alt"></i></a>
-                                                    <a href="{{ url('/roles/rolesPermission/'.$items->id)}}" title="Permisos" class="btn btn-outline-primary btn-sm"> <i class="fa fa-user-shield"></i></a>
-                                                    @can('editar')
-                                                        <!-- <a href="{{ url('/roles/'.$items->id.'/edit')}}" title="Editar" class="btn btn-outline-primary btn-sm"> <i class="fa fa-edit"></i></a> -->
-                                                    @endcan
+                                                    <a href="{{-- url('/roles/modulePermission/'.$items->id)--}}" title="Módulos" class="btn btn-outline-primary btn-sm"> <i class="fa fa-shield-alt"></i></a>
                                                 </div>
                                             </td>
                                         </tr>
-                                    @endforeach--}}
+                                    @endforeach
                                 {{--@endcan --}}
                             </tbody>
                         </table>

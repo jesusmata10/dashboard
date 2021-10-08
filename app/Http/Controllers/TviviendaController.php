@@ -14,7 +14,10 @@ class TviviendaController extends Controller
      */
     public function index()
     {
-        //
+        
+        $hogar = Tvivienda::consulta('numero', 'id', 'nombre');
+
+        return view('parametros.hogar.index', compact('hogar'));
     }
 
     /**
@@ -24,7 +27,7 @@ class TviviendaController extends Controller
      */
     public function create()
     {
-        //
+        return view('parametros.hogar.create');
     }
 
     /**
@@ -35,7 +38,17 @@ class TviviendaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        //dd($request);
+        $vivienda = new Tvivienda();
+        $vivienda->nombre = $request->nombre;
+        $vivienda->save();
+
+        if ($vivienda->save()) {
+            return redirect('/parametro/hogar')->with('success', __('¡Zona creado sastifactoriamente!'));
+        } else {
+            return redirect('/parametro/hogar')->with('error', __('¡Ha ocurrido un error!'));
+        }
     }
 
     /**
