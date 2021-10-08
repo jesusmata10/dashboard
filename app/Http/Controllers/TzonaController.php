@@ -17,7 +17,7 @@ class TzonaController extends Controller
     public function index()
     {
         
-        $zonas =  Tzona::reporte('numero', 'id', 'nombre');
+        $zonas =  Tzona::consulta('numero', 'id', 'nombre');
         /*$zonas = DB::table('tzonas')
                     ->select( DB::raw( 'row_number() OVER (ORDER BY nombre) as numero'), 'id', 'nombre')
                     ->get();*/        

@@ -24,7 +24,7 @@ class Tzona extends Model
 
     ];
 
-    public static function reporte()
+    public static function consulta()
     {
         $zonas = DB::table('tzonas')
                     ->select( DB::raw( 'row_number() OVER (ORDER BY nombre) as numero'), 'id', 'nombre')

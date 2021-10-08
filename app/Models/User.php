@@ -73,4 +73,13 @@ class User extends Authenticatable
             ->join('model_has_roles as mhr', 'mhr.role_id', 'r.id')
             ->orderBy('name')->distinct()->get();
     }
+
+    public static function consulta()
+    {
+        $data = DB::table('users')
+                    ->select( DB::raw( 'row_number() OVER (ORDER BY name) as numero'), 'id', 'name', 'email')
+                    ->get();
+
+                    return $data;
+    }
 }

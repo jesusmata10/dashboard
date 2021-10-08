@@ -106,9 +106,9 @@
                                     <th style="width:50px">N°</th>
                                     <th>Usuario</th>
                                     <th>email</th>
-                                    <th>Nombres y Apellidos</th>
+                                    {{--<th>Nombres y Apellidos</th>
                                     <th>Rol</th>
-                                    <th>Estatus</th>
+                                    <th>Estatus</th>--}}
                                     <th style="width:100px">Acciones</th>
                                 </tr>
                             </thead>
@@ -116,12 +116,12 @@
                                 
                                 @foreach($data as $items)
                                     <tr class="text-center">
-                                        <td>{{ $items->row_number }}</td>
+                                        <td>{{ $items->numero }}</td>
                                         <td>{{ $items->name }}</td>
                                         <td>{{ $items->email }}</td>
-                                        <td>{{ $items->nombres . ' ' . $items->apellidos }}</td>
+                                        {{--<td>{{ $items->nombres . ' ' . $items->apellidos }}</td>
                                         <td>{{ (($items->roles== 'super-admin') ? 'ADMINISTRADOR DEL SISTEMA' : $items->roles ) }}</td>
-                                        <td>{{ $items->estatus }}</td>
+                                        <td>{{ $items->estatus }}</td>--}}
                                         <td>
                                             <div class="text-center">
                                                 <button type="button" onClick="modal({{ $items->id }})" title="Ver" data-toggle="modal" data-target="#modal-xl" class="btn btn-outline-primary"><i class="fas fa-eye"></i></button>

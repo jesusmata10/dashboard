@@ -88,8 +88,8 @@
                                 <label for="tzona">Zona</label>
                                 <select class="form-control" name="tzona"  id="tzona">
                                 <option value="" selected>Seleccione una opción</option>
-                                    @foreach($entidad as $combo)
-                                      <option value="{{ $combo->id }}">{{ $combo->nombre_entidad }}</option>
+                                    @foreach($zonas as $combo)
+                                      <option value="{{ $combo->id }}">{{ $combo->nombre }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -107,8 +107,8 @@
                                 <label for="tcalle">Area:</label>
                                 <select class="form-control" name="tcalle"  id="tcalle">
                                 <option value="" selected>Seleccione una opción</option>
-                                    @foreach($entidad as $combo)
-                                      <option value="{{ $combo->id }}">{{ $combo->nombre_entidad }}</option>
+                                    @foreach($area as $combo)
+                                      <option value="{{ $combo->id }}">{{ $combo->nombre }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -124,8 +124,8 @@
                                 <label for="tvivienda">Hogar:</label>
                                 <select class="form-control" name="tvivienda"  id="tvivienda">
                                 <option value="" selected>Seleccione una opción</option>
-                                    @foreach($entidad as $combo)
-                                      <option value="{{ $combo->id }}">{{ $combo->nombre_entidad }}</option>
+                                    @foreach($hogar as $combo)
+                                      <option value="{{ $combo->id }}">{{ $combo->nombre }}</option>
                                     @endforeach
                                 </select>
                             </div>

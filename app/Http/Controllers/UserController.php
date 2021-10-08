@@ -13,6 +13,9 @@ use App\Models\User;
 use App\Models\Entidades;
 use App\Models\Municipios;
 use App\Models\Parroquias;
+use App\Models\Tzona;
+use App\Models\Tcalle;
+use App\Models\Tvivienda;
 
 
 
@@ -36,7 +39,7 @@ class UserController extends Controller
             ]
         ];
 
-        $data = User::all();
+        $data = User::consulta();
         //dd($data);
 
         //$users = $data->paginate(10);
@@ -66,9 +69,12 @@ class UserController extends Controller
         ];
 
         $entidad = Entidades::all();
+        $zonas = Tzona::consulta();
+        $hogar = Tvivienda::consulta();
+        $area = Tcalle::consulta();
         $roles = Role::select('id', 'name')->orderBy('name')->get();
 
-        return view('usuarios.create', compact('breadcrumb', 'entidad', 'roles'));
+        return view('usuarios.create', compact('breadcrumb', 'entidad', 'roles', 'zonas', 'hogar', 'area'));
     }
 
     /**

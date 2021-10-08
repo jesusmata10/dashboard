@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Tvivienda;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+
 
 class TviviendaController extends Controller
 {
