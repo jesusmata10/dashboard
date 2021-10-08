@@ -14,7 +14,10 @@ class TcalleController extends Controller
      */
     public function index()
     {
-        //
+        
+        $calle = Tcalle::consulta('id', 'numero', 'nombre');
+        
+        return view('parametros.area.index', compact('calle'));
     }
 
     /**
@@ -24,7 +27,7 @@ class TcalleController extends Controller
      */
     public function create()
     {
-        //
+        return view('parametros.area.create');
     }
 
     /**
@@ -35,7 +38,15 @@ class TcalleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $calle = new Tcalle();
+        $calle->nombre = $request->nombre;
+        $calle->save();
+
+        if ($calle->save()) {
+            return redirect('/parametro/area')->with('success', __('¡Zona creado sastifactoriamente!'));
+        } else {
+            return redirect('/parametro/area')->with('error', __('messages.information_not_stored'));
+        }
     }
 
     /**
