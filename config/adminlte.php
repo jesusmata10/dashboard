@@ -312,12 +312,12 @@ return [
                     'submenu' => [
                         [
                             'text' => 'Bombonas',
-                            'url'  => '#',
+                            'url'  => 'parametro/bombona',
                             'icon' => 'fas fa-fw fa-user-cog',
                         ],
                         [
                             'text' => 'Peso de Bombonas',
-                            'url'  => '#',
+                            'url'  => 'parametro/peso',
                             'icon' => 'fas fa-fw fa-user-cog',
                         ],
                         [

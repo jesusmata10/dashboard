@@ -48,6 +48,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('/parametro/area', 'TcalleController');
     route::resource('/parametro/zona', 'TzonaController');
     Route::resource('/parametro/hogar', 'TviviendaController');
+    Route::resource('/parametro/bombona', 'PbombonasController');
 
 
     
