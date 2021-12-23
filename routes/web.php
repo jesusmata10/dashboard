@@ -50,6 +50,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('/parametro/hogar', 'TviviendaController');
     Route::resource('/parametro/bombona', 'PbombonasController');
 
+    // Personas
 
+    Route::resource('/personas', 'PersonasController');
     
 });

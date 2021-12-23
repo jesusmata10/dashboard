@@ -192,7 +192,7 @@ class UserController extends Controller
       {
 
         //$lista = Municipio::listaMunicipios($request->entidad_id);
-        $lista = Municipios::where('entidad_id',$request->entidad_id)->get();
+        $lista = Municipios::where('entidades_id',$request->entidad_id)->get();
         //dd($lista);
         echo '<option disabled selected value="">Seleccione una opci&oacute;n</option>';
         //echo '<option value="TODOS">TODOS LOS MUNICIPIOS</option>';

@@ -34,5 +34,7 @@
 @endsection
 
 @section('footer')
-  <h5>Creado por: Ing. Jesus Mata - 2021</h5>
+<div class="row">
+ 
+</div>
 @stop

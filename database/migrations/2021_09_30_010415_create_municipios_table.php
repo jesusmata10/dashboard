@@ -19,7 +19,7 @@ class CreateMunicipiosTable extends Migration
             $table->string('nombre_municipio', 255);
             $table->boolean('estatus')->default(true);
             $table->timestamps();
-            $table->foreign('entidad_id')->references('id')->on('entidades')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('entidades_id')->references('id')->on('entidades')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

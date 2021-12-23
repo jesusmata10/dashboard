@@ -262,7 +262,7 @@ return [
             'submenu' => [
                 [
                     'text' => 'Jefe de Hogar',
-                    'url'  => '#',
+                    'url'  => '/personas',
                     'icon' => 'fas fa-fw fa-users-cog',
                 ],
             ],
