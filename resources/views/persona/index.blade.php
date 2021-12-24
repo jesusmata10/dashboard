@@ -1,258 +1,242 @@
 @extends('adminlte::page')
 @section('content')
-
+{{--criterio de busqueda--}}
 <div class="row">
     <div class="col-12">
-    	 <form action="{{ url('/usuario') }}" method="POST" role="form" data-toggle="validator" class="form" id="personaForm" name="personaForm">
+
+        @if (session('success'))
+            <div class="alert alert-success desva">
+                {{ session('success') }}
+            </div>
+        @elseif(session('error'))
+            <div class="alert alert-danger desva">
+                {{ session('error') }}
+            </div>
+        @endif
+
+        <div id="criterioBusqueda" class="alert alert-danger desva" style="display: none" role="alert">
+            Debe seleccionar un criterio de b&uacute;squeda
+        </div>
+
+        <form  action="{{-- url('/usuario') --}}" method="GET" role="form" id="form">
             {{ csrf_field() }}
-
-            <div class="card">
+            <div class="card collapsed-card">
                 <div class="card-header">
-                    <h3 class="card-title">Datos Personales</h3>
-                </div>
-
-                <div class="card-body">
-
-                    <div class="row">
-                        <div class="form-group col-6">
-                            <label for="">C&eacute;dula:</label>
-                            <input type="text" class="form-control" maxlength="9" name="cedula">
-                        </div>
-                        <div class="form-group col-6">
-                            <label for="">Correo Electr&oacute;nico:</label>
-                            <input class="form-control text-lowercase" type="text" name="email">
-                        </div>
+                    <h3 class="card-title">Criterios de B&uacute;squeda</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i></button>
                     </div>
-
+                </div>
+                <div class="card-body">
                     <div class="row">
-                        <div class="form-group col-6">
-                            <label for="">Nombres:</label>
-                            <input type="text" class="form-control text-uppercase" name="nombres">
+                        <div class="form-group col-4">
+                            <label for="">C&eacute;dula</label>
+                            <input class="form-control" type="text" name="cedula">
                         </div>
-                        <div class="form-group col-6">
-                            <label for="">Apellidos:</label>
+                        <div class="form-group col-4">
+                            <label for="">Nombres</label>
+                            <input class="form-control text-uppercase" type="text" name="nombres">
+                        </div>
+                        <div class="form-group col-4">
+                            <label for="">Apellidos</label>
                             <input class="form-control text-uppercase" type="text" name="apellidos">
                         </div>
                     </div>
-
-                    <div class="row">
-                        <div class="form-group col-6">
-                            <label for="">Tel&eacute;fono Local:</label>
-                            <input class="form-control mask_tlf" type="text" name="telefono_local">
-                        </div>
-                        <div class="form-group col-6">
-                            <label for="">Tel&eacute;fono M&oacute;vil:</label>
-                            <input class="form-control mask_tlf" type="text" name="telefono_movil">
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-4" id="divEntidad" >
-                            <div class="form-group">
-                              <label for="entidad_id">Entidad</label>
-                              <select class="form-control" name="entidad_id"  id="entidad_id">
-                                <option value="" selected>Seleccione una opción</option>
-                                @foreach($entidad as $combo)
-                                  <option value="{{ $combo->id }}">{{ $combo->nombre_entidad }}</option>
-                                @endforeach
-                              </select>
-                            </div>
-                          </div>
-                        <div class="col-md-4" id="divMunicipio" >
-                          <div class="form-group">
-                            <label for="municipio_id">Municipio</label>
-                            <select class="form-control" name="municipio_id"  id="municipio_id">
-                              <option value="" selected>Seleccione una opción</option>
-                            </select>
-                          </div>
-                        </div>
-                        <div class="col-md-4" id="divParroquia" >
-                          <div class="form-group">
-                            <label for="parroquia_id">Parroquia</label>
-                            <select class="form-control" name="parroquia_id"  id="parroquia_id">
-                              <option value="" selected>Seleccione una opción</option>
-                            </select>
-                          </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="urbanizacion">Urbanizaci&oacute;n</label>
-                                <input class="form-control" type="text" name="urbanizacion">
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="tzona">Zona</label>
-                                <select class="form-control" name="tzona"  id="tzona">
-                                <option value="" selected>Seleccione una opción</option>
-                                    {{--@foreach($zonas as $combo)
-                                      <option value="{{ $combo->id }}">{{ $combo->nombre }}</option>
-                                    @endforeach--}}
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="nzona">Nombre de zona</label>
-                                <input class="form-control" type="text" name="nzona">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="tcalle">Area:</label>
-                                <select class="form-control" name="tcalle"  id="tcalle">
-                                <option value="" selected>Seleccione una opción</option>
-                                    {{--@foreach($area as $combo)
-                                      <option value="{{ $combo->id }}">{{ $combo->nombre }}</option>
-                                    @endforeach--}}
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="ncalle">Nombre de Area</label>
-                                <input class="form-control" type="text" name="ncalle">
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="tvivienda">Hogar:</label>
-                                <select class="form-control" name="tvivienda"  id="tvivienda">
-                                <option value="" selected>Seleccione una opción</option>
-                                    {{--@foreach($hogar as $combo)
-                                      <option value="{{ $combo->id }}">{{ $combo->nombre }}</option>
-                                    @endforeach--}}
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="nvivienda">Nombre Hogar:</label>
-                                <input class="form-control" type="text" name="nvivienda">
-                            </div>
-                        </div>
-                    </div>
                 </div>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Carga Familiar</h3>
-                </div>
-                    {{--<form role="form" action="{{ url('/bombonas') }}" id="pdvsa" method="POST">--}}
-    
-                <div class="card-body">
-                    <div class="row">
-                        <div class="form-group col-md-6">
-                          <label for="nombres"> Nombres:</label>
-                          <input id="nombres" class="form-control" type="text" name="nombres">
-                        </div>
-                        <div class="form-group col-md-6">
-                          <label for="apellidos">Apellido:</label>
-                          <input id="apellidos" class="form-control" type="text" name="apellidos">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-md-4">
-                          <label for="cedula">Cedula:</label>
-                          <input id="cedula" class="form-control" type="text" name="cedula">
-                        </div>
-                        <div class="form-group col-md-4">
-                          <label for="fecha">fecha Nacimiento:</label>
-                          <input id="fecha" class="form-control" type="text" name="fecha">
-                        </div>
-                        <div class="form-group col-md-4">
-                          <label for="parentezco">Parentezco:</label>
-                          <select class="form-control" name="parentezco" id="parentezco">
-                              <option value="" selected>Seleccione una opci&oacute;n</option>
-                              <option value="1">Madre</option>
-                              <option value="2">Padre</option>
-                              <option value="3">Hijo</option>
-                              <option value="4">Hija</option>
-                              <option value="5">Suegro</option>
-                              <option value="6">Suegra</option>
-                              <option value="7">Sobrina</option>
-                              <option value="8">Sobrino</option>
-                          </select>
-                        </div>
-                    </div>
-                    <hr>
-                    {{--<div class="row">
-                        <div class="form-group col-4">
-                          <label for="">Bombona:</label>
-                          <select class="form-control" name="bombona" id="bombona">
-                              <option value="" selected>Seleccione una opci&oacute;n</option>
-                              <option value="1">Autogas</option>
-                              <option value="2">Hermagas</option>
-                              <option value="3">Danielgas</option>
-                              <option value="4">Pdvsagas</option>
-                              <option value="5">Digas</option>
-                          </select>
-                        </div>
-                        <div class="form-group col-4">
-                          <label for="">Kilo:</label>
-                          <select class="form-control" name="kilo" id="kilo">
-                              <option value="" selected>Seleccione una opci&oacute;n</option>
-                              <option value="1">10 Kg</option>
-                              <option value="2">18 Kg</option>
-                              <option value="3">43 Kg</option>
-                          </select>
-                        </div>
-                        <div class="form-group col-4">
-                          <label>Cantidad:</label>
-                          <input id="cantidad" class="form-control" type="text" placeholder="Cantidad" name="cantidad">
-                        </div>
-                    </div>--}}
-                    <div class="row">
-                        <div class="form-group col-12">
-                            <div class="float-right">
-                                <button id="btnAgregarFamiliar" class="btn btn-success" type="button">Agregar</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="table-responsive">
-                            <table class="table table-sm table-bordered table-hover ">
-                              <thead class="bg-info">
-                                <tr>
-                                  <th>Nombres</th>
-                                  <th>Apellidos</th>
-                                  <th>Cedula</th>
-                                  <th>Fecha</th>
-                                  <th>Parentezco</th>
-                                  <th>Acción</th>
-                                </tr>
-                              </thead>
-                              <tbody id="mytable">
-                              </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-        
                 <div class="card-footer">
                     <div class="float-right">
-                        <a href="{{ url('/personas') }}" type="button" class="btn btn-danger">Cancelar</a>
-                        <button class="btn btn-primary" type="submit" id="registrar">Enviar</button>
+                        @can('consultar')
+                        @endcan
+                            <button type="button" name="send" onClick="validar()" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
+                            <a href="{{-- url('/usuario') --}}" type="button" class="btn btn-primary"><i class="fa fa-eye"></i> Ver Todos</a>
+                        
+                            <button type="reset" class="btn btn-danger"><i class="fa fa-trash"></i> Limpiar</button>
                     </div>
                 </div>
             </div>
         </form>
+
     </div>
 </div>
 
+<div class="row">
+    <div class="col-12">
 
-@stop
+        <div class="card card-primary">
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-12">
+                        
+                            <a href="{{ url('personas/create') }}" type="button" class="btn btn-outline-primary"><i class="fa fa-plus"></i> Nuevo</a>
+                        
+                        {{--@can('reporte')
+                            <button type="button" onClick="reports('pdf')" class="btn btn-outline-primary"><i class="fa fa-file"></i> Pdf</button>
+                            <button type="button" onClick="reports('excel')" class="btn btn-outline-primary"><i class="fa fa-file"></i> Excel</button>
+                        @endcan--}}
+                    </div>
+                </div><br>
+
+                <div class="row">
+                    <div class="col-12">
+
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
+                                <tr class="text-center">
+                                    <th style="width:50px">N°</th>
+                                    <th>Nombre</th>
+                                    <th>Apellido</th>
+                                    {{--<th>Nombres y Apellidos</th>
+                                    <th>Rol</th>
+                                    <th>Estatus</th>--}}
+                                    <th>Cedula</th>
+                                    <th style="width:100px">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                {{--@foreach($data as $items)
+                                    <tr class="text-center">
+                                        <td>{{ $items->numero }}</td>
+                                        <td>{{ $items->name }}</td>
+                                        <td>{{ $items->email }}</td>
+                                        <td>{{ $items->nombres . ' ' . $items->apellidos }}</td>
+                                        <td>{{ (($items->roles== 'super-admin') ? 'ADMINISTRADOR DEL SISTEMA' : $items->roles ) }}</td>
+                                        <td>{{ $items->estatus }}</td>
+                                        <td>
+                                            <div class="text-center">
+                                                <button type="button" onClick="modal({{ $items->id }})" title="Ver" data-toggle="modal" data-target="#modal-xl" class="btn btn-outline-primary"><i class="fas fa-eye"></i></button>
+                                                @can('editar')
+                                                    <a href="{{ url('/usuario/'.encrypt($items->id).'/edit') }}" title="Editar" type="button" class="btn btn-outline-primary"><i class="fas fa-edit"></i></a>
+                                                @endcan
+                                                @can('eliminar')
+                                                    <!-- button type="button" class="btn btn-outline-primary">Eliminar</button -->
+                                                @endcan
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach--}}
+                                
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+            </div>
+            {{--@if($users->total() > 10)
+                <div class="card-footer">
+                    <div class="float-right">
+                        {{ $users->links() }}
+                    </div>
+                </div>
+            @endif--}}
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade" id="modal-xl">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Información del Usuario</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="form-group col-12">
+                        <h4>Datos Personales</h4>
+                    </div>
+                </div>
+
+              <div class="row">
+                  <div class="form-group col-6">
+                      <label for="">C&eacute;dula:</label>
+                      <input type="text" class="form-control" name="mo_cedula" readonly>
+                  </div>
+                  <div class="form-group col-6">
+                      <label for="">Correo Electr&oacute;nico:</label>
+                      <input type="text" class="form-control" name="mo_email" readonly>
+                  </div>
+              </div>
+
+              <div class="row">
+                  <div class="form-group col-6">
+                      <label for="">Nombres:</label>
+                      <input type="text" class="form-control" name="mo_nombres" readonly>
+                  </div>
+                  <div class="form-group col-6">
+                      <label for="">Apellidos:</label>
+                      <input type="text" class="form-control" name="mo_apellidos" readonly>
+                  </div>
+              </div>
+
+              <div class="row">
+                  <div class="form-group col-6">
+                      <label for="">Tel&eacute;fono Habitaci&oacute;n:</label>
+                      <input type="text" class="form-control" name="mo_telefono_local" readonly>
+                  </div>
+                  <div class="form-group col-6">
+                      <label for="">Tel&eacute;fono Movil:</label>
+                      <input type="text" class="form-control" name="mo_telefono_movil" readonly>
+                  </div>
+              </div>
+
+              <div class="row">
+                  <div class="form-group col-12">
+                      <label for="">Direcci&oacute;n Habitaci&oacute;n:</label>
+                      <input type="text" class="form-control" name="mo_direccion_habitacion" readonly>
+                  </div>
+              </div>
+
+              <div class="row">
+                  {{--
+                  <div class="form-group col-6">
+                      <label for="">Entidad:</label>
+                      <input type="text" class="form-control" name="mo_entidad" readonly>
+                  </div> --}}
+                  <div class="form-group col-6">
+                      <label for="">Estatus:</label>
+                      <input type="text" class="form-control" name="mo_estatus" readonly>
+                  </div>
+              </div>
+
+              <div class="row">
+                  <div class="form-group col-12">
+                      <h4>Datos Usuario</h4>
+                  </div>
+              </div>
+
+              <div class="row">
+                  <div class="form-group col-6">
+                      <label for="">Nombre Usuario:</label>
+                      <input type="text" class="form-control" name="mo_name" readonly>
+                  </div>
+                  <div class="form-group col-6">
+                      <label for="">Rol:</label>
+                      <input type="text" class="form-control" name="mo_roles" readonly>
+                  </div>
+              </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@endsection
 @section('footer')
 <div></div>
 @stop
 @section('js')
-    <script> 
+<script> 
         $(document).ready(function() {
    
     $('#btnAgregarFamiliar').on('click', function() {
@@ -357,6 +341,7 @@ $('#entidad_id').change(function ()
         });
                 
 });
-    </script>
+</script>
+
 @stop
 

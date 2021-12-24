@@ -31,7 +31,8 @@ class PersonasController extends Controller
      */
     public function create()
     {
-        //
+        $entidad = Entidades::all();
+        return view('persona.create', compact('entidad'));
     }
 
     /**

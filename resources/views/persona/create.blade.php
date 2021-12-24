@@ -3,7 +3,7 @@
 
 <div class="row">
     <div class="col-12">
-    	 <form action="{{ url('/usuario') }}" method="POST" role="form" data-toggle="validator" class="form" id="personaForm" name="personaForm">
+         <form action="{{ url('/usuario') }}" method="POST" role="form" data-toggle="validator" class="form" id="personaForm" name="personaForm">
             {{ csrf_field() }}
 
             <div class="card">
@@ -34,6 +34,20 @@
                             <input class="form-control text-uppercase" type="text" name="apellidos">
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label for="">fecha:</label>
+                            <input class="form-control text-uppercase" type="text" name="fecha">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="">Lugar de Nacimiento:</label>
+                            <input class="form-control text-uppercase" type="text" name="apellidos">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="">Nacionalidad:</label>
+                            <input class="form-control text-uppercase" type="text" name="apellidos">
+                        </div>
+                    </div>
 
                     <div class="row">
                         <div class="form-group col-6">
@@ -52,9 +66,9 @@
                               <label for="entidad_id">Entidad</label>
                               <select class="form-control" name="entidad_id"  id="entidad_id">
                                 <option value="" selected>Seleccione una opción</option>
-                                {{--@foreach($entidad as $combo)
+                                @foreach($entidad as $combo)
                                   <option value="{{ $combo->id }}">{{ $combo->nombre_entidad }}</option>
-                                @endforeach--}}
+                                @endforeach
                               </select>
                             </div>
                           </div>
@@ -166,7 +180,7 @@
                           <label for="fecha">fecha Nacimiento:</label>
                           <input id="fecha" class="form-control" type="text" name="fecha">
                         </div>
-                        <div class="form-group col-4">
+                        <div class="form-group col-md-4">
                           <label for="parentezco">Parentezco:</label>
                           <select class="form-control" name="parentezco" id="parentezco">
                               <option value="" selected>Seleccione una opci&oacute;n</option>
@@ -182,32 +196,7 @@
                         </div>
                     </div>
                     <hr>
-                    {{--<div class="row">
-                        <div class="form-group col-4">
-                          <label for="">Bombona:</label>
-                          <select class="form-control" name="bombona" id="bombona">
-                              <option value="" selected>Seleccione una opci&oacute;n</option>
-                              <option value="1">Autogas</option>
-                              <option value="2">Hermagas</option>
-                              <option value="3">Danielgas</option>
-                              <option value="4">Pdvsagas</option>
-                              <option value="5">Digas</option>
-                          </select>
-                        </div>
-                        <div class="form-group col-4">
-                          <label for="">Kilo:</label>
-                          <select class="form-control" name="kilo" id="kilo">
-                              <option value="" selected>Seleccione una opci&oacute;n</option>
-                              <option value="1">10 Kg</option>
-                              <option value="2">18 Kg</option>
-                              <option value="3">43 Kg</option>
-                          </select>
-                        </div>
-                        <div class="form-group col-4">
-                          <label>Cantidad:</label>
-                          <input id="cantidad" class="form-control" type="text" placeholder="Cantidad" name="cantidad">
-                        </div>
-                    </div>--}}
+                    
                     <div class="row">
                         <div class="form-group col-12">
                             <div class="float-right">
@@ -216,20 +205,22 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <table class="table table-bordered table-hover ">
-                          <thead>
-                            <tr>
-                              <th>Nombres</th>
-                              <th>Apellidos</th>
-                              <th>Cedula</th>
-                              <th>Fecha</th>
-                              <th>Parentezco</th>
-                              <th>Acción</th>
-                            </tr>
-                          </thead>
-                          <tbody id="mytable">
-                          </tbody>
-                        </table>
+                        <div class="table-responsive">
+                            <table class="table table-sm table-bordered table-hover ">
+                              <thead class="bg-info">
+                                <tr>
+                                  <th>Nombres</th>
+                                  <th>Apellidos</th>
+                                  <th>Cedula</th>
+                                  <th>Fecha</th>
+                                  <th>Parentezco</th>
+                                  <th>Acción</th>
+                                </tr>
+                              </thead>
+                              <tbody id="mytable">
+                              </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
         
@@ -239,54 +230,45 @@
                         <button class="btn btn-primary" type="submit" id="registrar">Enviar</button>
                     </div>
                 </div>
-
-                {{--<div class="card-body">
-
-                    <div class="row">
-                        <div class="col-12 text-right">
-                            <button type="button" onclick="verificarIgualdad();" class="btn btn-outline-primary" id="setPass">Aceptar</button>
-                            <a href="{{ url('/usuario') }}" type="button" class="btn btn-outline-danger">Cancelar</a>
-                        </div>
-                    </div>
-
-                </div>--}}
             </div>
-
         </form>
     </div>
 </div>
 
-{{--<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>--}}
-<script>
-$(document).ready(function(){
+
+@stop
+@section('footer')
+<div></div>
+@stop
+@section('js')
+    <script> 
+        $(document).ready(function() {
    
-  $('#btnAgregarFamiliar').on('click', function() {
+    $('#btnAgregarFamiliar').on('click', function() {
       accionAgregarFamiliar();
-  })
+    })
 
-  accionAgregarFamiliar = function () {
-    var id = ++$("input[name='personaTemp[]']").length
-    let nombres = $('#nombres').val()
-    let apellidos = $('#apellidos').val()
-    let cedula = $('#cedula').val()
-    let fecha = $('#fecha').val()
-    let parentezco = $('#parentezco').val()
-    let parentezcotxt = $('#parentezco option:selected').text()
+    accionAgregarFamiliar = function () {
+        var id = ++$("input[name='personaTemp[]']").length
+        let nombres = $('#nombres').val()
+        let apellidos = $('#apellidos').val()
+        let cedula = $('#cedula').val()
+        let fecha = $('#fecha').val()
+        let parentezco = $('#parentezco').val()
+        let parentezcotxt = $('#parentezco option:selected').text()
 
-    let data = {
-        id: id,
-        nombres: nombres,
-        apellidos: apellidos,
-        cedula: cedula,
-        fecha: fecha,
-        parentezco: parentezco,
-        parentezcotxt: parentezcotxt
-    }
+        let data = {
+            id: id,
+            nombres: nombres,
+            apellidos: apellidos,
+            cedula: cedula,
+            fecha: fecha,
+            parentezco: parentezco,
+            parentezcotxt: parentezcotxt
+        }
 
-    //console.log(data);
-
-    let accion = JSON.stringify(data)
-    console.log(accion);
+        let accion = JSON.stringify(data)
+        console.log(accion);
     if (nombres !== '' && apellidos !== '' && fecha !== '' && parentezco !== '') {
         $('#mytable').append(`
          
@@ -334,7 +316,7 @@ $('#entidad_id').change(function ()
     {
         $.ajax({
             method: "POST",
-            {{--url: "{{ url('/municipioAjaxUser') }}",--}}
+            url: "{{ url('/municipioAjaxUser') }}",
             data: {entidad_id: $('#entidad_id').val(), '_token': $('input[name=_token]').val()},
             success: function (response) {
                 $('#municipio_id').html(response);
@@ -344,7 +326,6 @@ $('#entidad_id').change(function ()
             },
             beforeSend: function () {
                 $('#municipio_id').append('<option value="" selected>Buscando...</option>');
-
             }
             });
     });
@@ -353,7 +334,7 @@ $('#entidad_id').change(function ()
     {
         $.ajax({
             method: "POST",
-            {{--url: "{{ url('/parroquiaAjaxUser') }}",--}}
+            url: "{{ url('/parroquiaAjaxUser') }}",
             data: {municipio_id: $('#municipio_id').val(), '_token': $('input[name=_token]').val()},
             success: function (response) {
             $('#parroquia_id').html(response);
@@ -361,14 +342,10 @@ $('#entidad_id').change(function ()
             },
             beforeSend: function () {
             $('#parroquia_id').append('<option value="" selected>Buscando...</option>');
-
             }
         });
                 
 });
-</script>
-@section('footer')
-<div></div>
-@endsection
+    </script>
+@stop
 
-@endsection
