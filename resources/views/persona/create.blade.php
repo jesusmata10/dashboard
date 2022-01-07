@@ -241,8 +241,8 @@
 <div></div>
 @stop
 @section('js')
-    <script> 
-        $(document).ready(function() {
+<script> 
+$(document).ready(function() {
    
     $('#btnAgregarFamiliar').on('click', function() {
       accionAgregarFamiliar();
