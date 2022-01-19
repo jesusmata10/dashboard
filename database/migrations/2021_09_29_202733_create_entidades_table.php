@@ -15,9 +15,9 @@ class CreateEntidadesTable extends Migration
     {
         Schema::create('entidades', function (Blueprint $table) {
             $table->id();
-            $table->string('codigo_entidad', 2);
-            $table->string('nombre_entidad', 255);
-            $table->boolean('estatus')->default(true);
+            $table->string('estado', 50);
+            $table->string('iso_3166-2', 25);
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }
@@ -25,8 +25,8 @@ class CreateEntidadesTable extends Migration
     /**
      * INSERT PARA MYSQL
      *
-     * 
-     * 
+     *
+     *
     INSERT INTO `entidades` (`id`, `codigo_entidad`, `nombre_entidad`) VALUES (1, 1, 'Amazonas');
     INSERT INTO `entidades` (`id`, `codigo_entidad`, `nombre_entidad`) VALUES (2, 2, 'Anzoátegui');
     INSERT INTO `entidades` (`id`, `codigo_entidad`, `nombre_entidad`) VALUES (3, 3, 'Apure');
@@ -53,12 +53,12 @@ class CreateEntidadesTable extends Migration
     INSERT INTO `entidades` (`id`, `codigo_entidad`, `nombre_entidad`) VALUES (24, 24, 'Distrito Capital');
     INSERT INTO `entidades` (`id`, `codigo_entidad`, `nombre_entidad`) VALUES (25, 25, 'Dependencias Federales');
     */
-     
+
     /**
      * Reverse the migrations.
      *
-     * 
-     * * 
+     *
+     * *
      * @return void
      */
     public function down()

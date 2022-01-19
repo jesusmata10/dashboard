@@ -1,9 +1,31 @@
 @extends('adminlte::page')
 @section('content')
-
+<?php
+    use Carbon\Carbon;
+?>
 <div class="row">
     <div class="col-12">
-         <form action="{{ url('/usuario') }}" method="POST" role="form" data-toggle="validator" class="form" id="personaForm" name="personaForm">
+
+        @if (session('errors'))
+            <div class="alert alert-danger">
+                {{ session('errors') }}
+            </div>
+        @endif
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        {{--@if ($search == 'v' && $data->isEmpty())
+            <div id="sinResultados"  role="alert">
+            </div>
+        @elseif ($search != 'v' && $data->isEmpty())
+            <div id="sinResultados"  role="alert">
+            </div>
+        @endif--}}
+
+         <form action="{{ route('personas.store') }}" method="POST" role="form" data-toggle="validator" class="form" id="personaForm" name="personaForm">
             {{ csrf_field() }}
 
             <div class="card">
@@ -14,65 +36,84 @@
                 <div class="card-body">
 
                     <div class="row">
-                        <div class="form-group col-6">
+                        <div class="form-group col-4">
                             <label for="">C&eacute;dula:</label>
                             <input type="text" class="form-control" maxlength="9" name="cedula">
                         </div>
-                        <div class="form-group col-6">
-                            <label for="">Correo Electr&oacute;nico:</label>
-                            <input class="form-control text-lowercase" type="text" name="email">
+                        <div class="form-group col-md-4">
+                            <label for="correo">Correo Electr&oacute;nico:</label>
+                            <input class="form-control text-lowercase" type="text" name="correo">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="rif">Rif:</label>
+                            <input class="form-control text-uppercase" type="text" name="rif">
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="form-group col-6">
-                            <label for="">Nombres:</label>
+                            <label for="nombres">Nombres:</label>
                             <input type="text" class="form-control text-uppercase" name="nombres">
                         </div>
                         <div class="form-group col-6">
-                            <label for="">Apellidos:</label>
+                            <label for="apellidos">Apellidos:</label>
                             <input class="form-control text-uppercase" type="text" name="apellidos">
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-md-4">
-                            <label for="">fecha:</label>
-                            <input class="form-control text-uppercase" type="text" name="fecha">
+                            <label for="fecha">Fecha:</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="far fa-calendar-alt"></i>
+                                </span>
+                                </div>
+                                <input type="text" class="form-control float-right datepicker" name="fecha" autocomplete="off" readonly>
+                            </div>
                         </div>
                         <div class="form-group col-md-4">
-                            <label for="">Lugar de Nacimiento:</label>
-                            <input class="form-control text-uppercase" type="text" name="apellidos">
+                            <label for="lugarnac">Lugar de Nacimiento:</label>
+                            <input class="form-control text-uppercase" type="text" name="lugarnac">
                         </div>
                         <div class="form-group col-md-4">
-                            <label for="">Nacionalidad:</label>
-                            <input class="form-control text-uppercase" type="text" name="apellidos">
+                            <label for="nacionalidad">Nacionalidad:</label>
+                            <input class="form-control text-uppercase" type="text" name="nacionalidad">
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="form-group col-6">
-                            <label for="">Tel&eacute;fono Local:</label>
-                            <input class="form-control mask_tlf" type="text" name="telefono_local">
+                            <label for="telefono_fijo">Tel&eacute;fono Local:</label>
+                            <input class="form-control mask_tlf" type="text" name="telefono_fijo">
                         </div>
                         <div class="form-group col-6">
-                            <label for="">Tel&eacute;fono M&oacute;vil:</label>
-                            <input class="form-control mask_tlf" type="text" name="telefono_movil">
+                            <label for="celular">Tel&eacute;fono M&oacute;vil:</label>
+                            <input class="form-control mask_tlf" type="text" name="celular">
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-4" id="divEntidad" >
+                        <div class="col-md-3" id="divEntidad" >
                             <div class="form-group">
-                              <label for="entidad_id">Entidad</label>
-                              <select class="form-control" name="entidad_id"  id="entidad_id">
+                              <label for="estado_id">Entidad</label>
+                              <select class="form-control estado" name="estado_id"  id="entidad_id">
                                 <option value="" selected>Seleccione una opción</option>
                                 @foreach($entidad as $combo)
-                                  <option value="{{ $combo->id }}">{{ $combo->nombre_entidad }}</option>
+                                  <option value="{{ $combo->id }}">{{ $combo->estado }}</option>
                                 @endforeach
                               </select>
                             </div>
                           </div>
-                        <div class="col-md-4" id="divMunicipio" >
+                        <div class="col-md-3" id="divMunicipio" >
+                            <div class="form-group">
+                                <label for="ciudad_id">Ciudad</label>
+                                <select class="form-control" name="ciudad_id"  id="ciudad_id">
+                                    <option value="" selected>Seleccione una opción</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3" id="divMunicipio" >
                           <div class="form-group">
                             <label for="municipio_id">Municipio</label>
                             <select class="form-control" name="municipio_id"  id="municipio_id">
@@ -80,7 +121,7 @@
                             </select>
                           </div>
                         </div>
-                        <div class="col-md-4" id="divParroquia" >
+                        <div class="col-md-3" id="divParroquia" >
                           <div class="form-group">
                             <label for="parroquia_id">Parroquia</label>
                             <select class="form-control" name="parroquia_id"  id="parroquia_id">
@@ -94,7 +135,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="urbanizacion">Urbanizaci&oacute;n</label>
-                                <input class="form-control" type="text" name="urbanizacion">
+                                <input class="form-control text-uppercase" type="text" name="urbanizacion">
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -102,16 +143,16 @@
                                 <label for="tzona">Zona</label>
                                 <select class="form-control" name="tzona"  id="tzona">
                                 <option value="" selected>Seleccione una opción</option>
-                                    {{--@foreach($zonas as $combo)
+                                    @foreach($zonas as $combo)
                                       <option value="{{ $combo->id }}">{{ $combo->nombre }}</option>
-                                    @endforeach--}}
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="nzona">Nombre de zona</label>
-                                <input class="form-control" type="text" name="nzona">
+                                <input class="form-control text-uppercase" type="text" name="nzona">
                             </div>
                         </div>
                     </div>
@@ -121,16 +162,16 @@
                                 <label for="tcalle">Area:</label>
                                 <select class="form-control" name="tcalle"  id="tcalle">
                                 <option value="" selected>Seleccione una opción</option>
-                                    {{--@foreach($area as $combo)
+                                    @foreach($area as $combo)
                                       <option value="{{ $combo->id }}">{{ $combo->nombre }}</option>
-                                    @endforeach--}}
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="ncalle">Nombre de Area</label>
-                                <input class="form-control" type="text" name="ncalle">
+                                <input class="form-control text-uppercase" type="text" name="ncalle">
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -138,16 +179,16 @@
                                 <label for="tvivienda">Hogar:</label>
                                 <select class="form-control" name="tvivienda"  id="tvivienda">
                                 <option value="" selected>Seleccione una opción</option>
-                                    {{--@foreach($hogar as $combo)
+                                    @foreach($hogar as $combo)
                                       <option value="{{ $combo->id }}">{{ $combo->nombre }}</option>
-                                    @endforeach--}}
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="nvivienda">Nombre Hogar:</label>
-                                <input class="form-control" type="text" name="nvivienda">
+                                <input class="form-control text-uppercase" type="text" name="nvivienda">
                             </div>
                         </div>
                     </div>
@@ -158,27 +199,33 @@
                 <div class="card-header">
                     <h3 class="card-title">Carga Familiar</h3>
                 </div>
-                    {{--<form role="form" action="{{ url('/bombonas') }}" id="pdvsa" method="POST">--}}
-    
+
                 <div class="card-body">
                     <div class="row">
                         <div class="form-group col-md-6">
-                          <label for="nombres"> Nombres:</label>
-                          <input id="nombres" class="form-control" type="text" name="nombres">
+                          <label for="nombrescf"> Nombres:</label>
+                          <input id="nombrescf" class="form-control text-uppercase" type="text" name="nombrescf">
                         </div>
                         <div class="form-group col-md-6">
-                          <label for="apellidos">Apellido:</label>
-                          <input id="apellidos" class="form-control" type="text" name="apellidos">
+                          <label for="apellidoscf">Apellidos:</label>
+                          <input id="apellidoscf" class="form-control text-uppercase" type="text" name="apellidoscf">
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-md-4">
-                          <label for="cedula">Cedula:</label>
-                          <input id="cedula" class="form-control" type="text" name="cedula">
+                          <label for="cedulacf">Cedula:</label>
+                          <input id="cedulacf" class="form-control" type="text" name="cedulacf">
                         </div>
                         <div class="form-group col-md-4">
-                          <label for="fecha">fecha Nacimiento:</label>
-                          <input id="fecha" class="form-control" type="text" name="fecha">
+                            <label for="fecha">Fecha:</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="far fa-calendar-alt"></i>
+                                </span>
+                                </div>
+                                <input type="text" class="form-control float-right datepicker" name="fechacf" id="fechacf" autocomplete="off" readonly>
+                            </div>
                         </div>
                         <div class="form-group col-md-4">
                           <label for="parentezco">Parentezco:</label>
@@ -196,7 +243,7 @@
                         </div>
                     </div>
                     <hr>
-                    
+
                     <div class="row">
                         <div class="form-group col-12">
                             <div class="float-right">
@@ -223,7 +270,7 @@
                         </div>
                     </div>
                 </div>
-        
+
                 <div class="card-footer">
                     <div class="float-right">
                         <a href="{{ url('/personas') }}" type="button" class="btn btn-danger">Cancelar</a>
@@ -241,19 +288,38 @@
 <div></div>
 @stop
 @section('js')
-<script> 
+<script>
+
+$('.datepicker').datepicker({
+      format: "yyyy-mm-dd",
+      clearBtn: true,
+      language: "es",
+      orientation: "bottom auto",
+      changeYear: false,
+      endDate: new Date()
+    });
+
+    /*$('#myModal').on('shown.bs.modal', function () {
+        $('#myInput').trigger('focus')
+
+    });
+
+    $('#btnYes').click(function() {
+        $('#facturaForm').submit();
+    });*/
+
 $(document).ready(function() {
-   
+
     $('#btnAgregarFamiliar').on('click', function() {
       accionAgregarFamiliar();
     })
 
     accionAgregarFamiliar = function () {
         var id = ++$("input[name='personaTemp[]']").length
-        let nombres = $('#nombres').val()
-        let apellidos = $('#apellidos').val()
-        let cedula = $('#cedula').val()
-        let fecha = $('#fecha').val()
+        let nombres = $('#nombrescf').val()
+        let apellidos = $('#apellidoscf').val()
+        let cedula = $('#cedulacf').val()
+        let fecha = $('#fechacf').val()
         let parentezco = $('#parentezco').val()
         let parentezcotxt = $('#parentezco option:selected').text()
 
@@ -266,12 +332,12 @@ $(document).ready(function() {
             parentezco: parentezco,
             parentezcotxt: parentezcotxt
         }
-
+        console.log(data);
         let accion = JSON.stringify(data)
         console.log(accion);
     if (nombres !== '' && apellidos !== '' && fecha !== '' && parentezco !== '') {
         $('#mytable').append(`
-         
+
             <tr id="row${id}">
                 <td style="display: none">
                     <input type="hidden" name="personaTemp[]" value='${accion}' />
@@ -287,48 +353,49 @@ $(document).ready(function() {
                     </button>
                 </td>
             </tr>
-          
+
         `);
 
     } else{
-       $('#alert').html('Debe cargar toda la información de la sección de Servicios');
+       $('#alert').html('Debe cargar toda la información de la carga familiar');
        $('#alert').fadeIn();
        setTimeout(function(){ $('#alert').fadeOut(); }, 3000);
     }
 
 //limpia los input despues de insertar
-$('#nombres').val('');
-$('#apellidos').val('');
-$('#cedula').val('');
-$('#fecha').val('');
+$('#nombrescf').val('');
+$('#apellidoscf').val('');
+$('#cedulacf').val('');
+$('#fechacf').val('');
 $('#parentezco').val('');
 
   }
-  
+
 //elimina el registro selecionado
 eliminarFamiliar = function (id) {
     $('#row'+id).remove();
 }
 
-});    
+});
 
 $('#entidad_id').change(function ()
-    {
-        $.ajax({
-            method: "POST",
-            url: "{{ url('/municipioAjaxUser') }}",
-            data: {entidad_id: $('#entidad_id').val(), '_token': $('input[name=_token]').val()},
-            success: function (response) {
-                $('#municipio_id').html(response);
-                $("#parroquia_id").empty();
-                $('#parroquia_id').append('<option value="" selected>Seleccione una opción</option>');
+{
+    $.ajax({
+        method: "POST",
+        url: "{{ url('/municipioAjaxUser') }}",
+        data: {entidad_id: $('#entidad_id').val(), '_token': $('input[name=_token]').val()},
+        success: function (response) {
+            $('#municipio_id').html(response);
+            $('#cuidad_id').empty();
+            $("#parroquia_id").empty();
+            $('#parroquia_id').append('<option value="" selected>Seleccione una opción</option>');
 
-            },
-            beforeSend: function () {
-                $('#municipio_id').append('<option value="" selected>Buscando...</option>');
-            }
-            });
+        },
+        beforeSend: function () {
+            $('#municipio_id').append('<option value="" selected>Buscando...</option>');
+        }
     });
+});
 
   $('#municipio_id').change(function ()
     {
@@ -339,12 +406,29 @@ $('#entidad_id').change(function ()
             success: function (response) {
             $('#parroquia_id').html(response);
 
-            },
-            beforeSend: function () {
-            $('#parroquia_id').append('<option value="" selected>Buscando...</option>');
-            }
-        });
-                
+        },
+        beforeSend: function () {
+        $('#parroquia_id').append('<option value="" selected>Buscando...</option>');
+        }
+    });
+
+});
+
+$('.estado').change(function ()
+{
+    $.ajax({
+        method: "POST",
+        url: "{{ url('/ciudadAjaxUser') }}",
+        data: {entidad_id: $('#entidad_id').val(), '_token': $('input[name=_token]').val()},
+        success: function (response) {
+            $('#ciudad_id').html(response);
+
+        },
+        beforeSend: function () {
+            $('#ciudad_id').append('<option value="" selected>Buscando...</option>');
+        }
+    });
+
 });
     </script>
 @stop

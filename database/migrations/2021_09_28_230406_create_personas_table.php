@@ -21,7 +21,7 @@ class CreatePersonasTable extends Migration
             $table->string('telefono_fijo')->length(15);
             $table->string('celular')->length(15);
             $table->string('correo')->length(255);
-            $table->string('rif')->length(10);
+            $table->string('rif')->length(14);
             $table->boolean('status')->default(true);
             $table->timestamps();
         });

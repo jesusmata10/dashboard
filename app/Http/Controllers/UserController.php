@@ -13,6 +13,7 @@ use App\Models\User;
 use App\Models\Entidades;
 use App\Models\Municipios;
 use App\Models\Parroquias;
+use App\Models\Ciudades;
 use App\Models\Tzona;
 use App\Models\Tcalle;
 use App\Models\Tvivienda;
@@ -192,14 +193,14 @@ class UserController extends Controller
       {
 
         //$lista = Municipio::listaMunicipios($request->entidad_id);
-        $lista = Municipios::where('entidades_id',$request->entidad_id)->get();
+        $lista = Municipios::where('estado_id',$request->entidad_id)->get();
         //dd($lista);
         echo '<option disabled selected value="">Seleccione una opci&oacute;n</option>';
         //echo '<option value="TODOS">TODOS LOS MUNICIPIOS</option>';
 
         foreach ($lista as $value)
         {
-            echo '<option value=' . $value->id . '>'. $value->nombre_municipio . '</option>';
+            echo '<option value=' . $value->id . '>'. $value->municipio . '</option>';
         }
       }
     }
@@ -217,10 +218,29 @@ class UserController extends Controller
 
         foreach ($lista as $value)
         {
-            echo '<option value=' . $value->id . '>'. $value->nombre_parroquia . '</option>';
+            echo '<option value=' . $value->id . '>'. $value->parroquia . '</option>';
         }
       }
     }
 
+    public function ciudadAjaxUser(Request $request)
+    {
+
+      if ($request->ajax())
+      {
+
+        //$lista = Municipio::listaMunicipios($request->entidad_id);
+        $lista = Ciudades::where('estado_id',$request->entidad_id)->get();
+        
+        //dd($lista);
+        echo '<option disabled selected value="">Seleccione una opci&oacute;n</option>';
+        //echo '<option value="TODOS">TODOS LOS MUNICIPIOS</option>';
+
+        foreach ($lista as $value)
+        {
+            echo '<option value=' . $value->id . '>'. $value->ciudad . '</option>';
+        }
+      }
+    }
 
 }

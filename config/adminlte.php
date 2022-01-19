@@ -501,6 +501,27 @@ return [
                 ],
             ],
         ],
+        'datepicker' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'datepicker/js/bootstrap-datepicker.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'datepicker/locales/bootstrap-datepicker.es.min.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'datepicker/css/bootstrap-datepicker3.min.css',
+                ],
+            ],
+        ],
+        
     ],
 
     /*

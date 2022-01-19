@@ -5,28 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Personas extends Model
+class Direccion extends Model
 {
     use HasFactory;
 
-    protected $table = "personas";
+    protected $table = 'direccion';
 
     protected $fillable = [
 
-        'nombres',
-        'apellidos',
-        'cedula',
-        'fecha',
-        'telefono_fijo',
-        'celular',
-        'correo',
-        'rif',
-        'lugarnac',
-        'nacionalidad',
         'personas_id',
-        'parentezco'
-        /*'entidad_id',
+        'estado_id',
         'municipio_id',
+        'ciudad_id',
         'parroquia_id',
         'urbanizacion',
         'tzona',
@@ -35,18 +25,16 @@ class Personas extends Model
         'ncalle',
         'tvivienda',
         'nvivienda',
-        'nombrescf',
-        'apellidoscf',
-        'cedulacf',
-        'fechacf',*/
+        'status'
+
 
     ];
 
     protected $hidden = [
 
         'created_at',
-        'updated_at',
-    ];
+        'updated_at'
 
+    ];
 
 }

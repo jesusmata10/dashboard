@@ -28,6 +28,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('/usuario', 'UserController');
     Route::post('/municipioAjaxUser', 'UserController@municipioAjaxUser');
     Route::post('/parroquiaAjaxUser', 'UserController@parroquiaAjaxUser');
+    Route::post('/ciudadAjaxUser', 'UserController@ciudadAjaxUser');
 
     Route::get('/prueba', 'PruebaController@index');
 
