@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Entidades;
-//use App\Models\Municipios;
-//use App\Models\Parroquias;
 use App\Models\Tzona;
 use App\Models\Tcalle;
 use App\Models\Tvivienda;

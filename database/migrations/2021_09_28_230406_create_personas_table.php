@@ -15,14 +15,17 @@ class CreatePersonasTable extends Migration
     {
         Schema::create('personas', function (Blueprint $table) {
             $table->id();
-            $table->string('apellidos')->length(255);
-            $table->string('nombres')->length(255);
-            $table->string('cedula')->length(10);
-            $table->string('telefono_fijo')->length(15);
-            $table->string('celular')->length(15);
-            $table->string('correo')->length(255);
-            $table->string('rif')->length(14);
+            $table->foreignId('personas_id');
+            $table->string('apellidos', 255);
+            $table->string('nombres', 255);
+            $table->string('cedula', 10)->unique();
+            $table->string('telefono_fijo', 15)->nullable();
+            $table->string('celular', 15);
+            $table->string('correo', 255);
+            $table->string('rif', 14)->nullable();
             $table->boolean('status')->default(true);
+            $table->string('parentesco')->nullable();
+            $table->string('vocero', 255)->nullable();
             $table->timestamps();
         });
     }

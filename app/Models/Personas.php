@@ -25,20 +25,6 @@ class Personas extends Model
         'nacionalidad',
         'personas_id',
         'parentezco'
-        /*'entidad_id',
-        'municipio_id',
-        'parroquia_id',
-        'urbanizacion',
-        'tzona',
-        'nzona',
-        'tcalle',
-        'ncalle',
-        'tvivienda',
-        'nvivienda',
-        'nombrescf',
-        'apellidoscf',
-        'cedulacf',
-        'fechacf',*/
 
     ];
 

@@ -23,7 +23,7 @@ class pdvsaController extends Controller
      */
     public function create()
     {
-        //
+        return view('pdvsa.create');
     }
 
     /**
