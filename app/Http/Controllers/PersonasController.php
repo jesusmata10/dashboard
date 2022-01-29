@@ -9,6 +9,7 @@ use App\Models\Tcalle;
 use App\Models\Tvivienda;
 use App\Models\Personas;
 use App\Models\Direccion;
+use Illuminate\Support\Facades\DB;
 //use Carbon\Carbon;
 //use Illuminate\Support\Str;
 
@@ -19,11 +20,14 @@ class PersonasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $persona = Personas::all();
-        //$entidad = Entidades::all();
-        return view('persona.index', compact('persona'));
+        $persona = Personas::all()->where('personas_id', '=', 0);
+        $carga_familiar = DB::table('personas')
+                ->where('personas_id', '=', $request->id)
+                ->get();
+        //dd($persona);
+        return view('persona.index', compact('persona', 'carga_familiar'));
     }
 
     /**
@@ -138,7 +142,22 @@ class PersonasController extends Controller
      */
     public function show($id)
     {
-        //
+        
+        $carga_familiar = Personas::all()->where('personas_id', '=', decrypt($id));
+        //$persona = DB::table('personas')->where('id', decrypt($id))->first();
+        $persona = Personas::consulta();
+        /*$carga_familiar = DB::table('personas as p ')
+                 ->select(DB::raw('row_number() OVER (ORDER BY p.nombres) as numero'))
+                 ->select('nombres', 'apellidos', 'cedula', 'fecha')
+                 ->where('personas_id', '=', decrypt($id))
+                 ->get();*/
+        //dd($persona);
+        $entidad = Entidades::all();
+        $zonas = Tzona::all();
+        $area = Tcalle::all();
+        $hogar = Tvivienda::all();
+
+        return view('persona.show', compact('persona', 'entidad', 'zonas', 'area', 'hogar', 'carga_familiar'));
     }
 
     /**
@@ -172,6 +191,15 @@ class PersonasController extends Controller
      */
     public function destroy($id)
     {
-        //
+        /*try {
+            $data = Personas::where('id', $id)->delete();
+
+            return back()->with('success', __('¡Producto eliminado sastifactoriamente!'));
+
+        } catch (Exception $e) {
+
+            return back()->with('error', __('¡Ha ocurrido un Error'));
+
+        }*/
     }
 }
