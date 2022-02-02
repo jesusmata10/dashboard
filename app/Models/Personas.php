@@ -35,27 +35,31 @@ class Personas extends Model
         'updated_at',
     ];
 
-    public static function consulta()
+    public static function consulta($id)
     {
         $data = DB::table('personas as p')
-                    ->select( DB::raw( 'row_number() OVER (ORDER BY p.nombres) as num'), 'p.id', 'p.nombres', 'p.apellidos', 'p.personas_id', 'p.cedula', 'p.correo', 'p.rif', 'p.fecha', 'p.lugarnac', 'p.nacionalidad', 'p.celular', 'p.telefono_fijo', 'd.estado_id', 'd.ciudad_id', 'municipio_id', 'parroquia_id', 'urbanizacion', 'tzona', 'nzona', 'tcalle', 'ncalle', 'tvivienda', 'nvivienda')
-                    ->join('direccion as d', 'd.personas_id', 'p.id' )
+                    ->select( DB::raw( 'row_number() OVER (ORDER BY p.nombres) as num'), 'p.id', 'p.nombres', 'p.apellidos', 'p.personas_id', 'p.cedula', 'p.correo', 'p.rif', 'p.fecha', 'p.lugarnac', 'p.nacionalidad', 'p.celular', 'p.telefono_fijo', 'e.estado', 'd.ciudad_id', 'ciu.ciudad', 'd.municipio_id', 'm.municipio', 'parroquia_id', 'pa.parroquia', 'urbanizacion', 'tzona', 'tz.nombre as zona', 'nzona', 'tcalle', 't.nombre as calle', 'ncalle', 'tvivienda', 'tv.nombre as vivienda', 'nvivienda')
+                    ->join('direccion as d', 'd.personas_id', 'p.id')
+                    ->join('entidades as e', 'e.id', 'd.estado_id')
+                    ->join('ciudades as ciu', 'ciu.id', 'd.ciudad_id')
+                    ->join('municipios as m', 'm.id', 'd.municipio_id')
+                    ->join('parroquias as pa', 'pa.id', 'd.parroquia_id')
+                    ->join('tzonas as tz', 'tz.id', 'd.tzona' )
+                    ->join('tcalles as t', 't.id', 'd.tcalle')
+                    ->join('tviviendas as tv', 'tv.id', 'd.tvivienda')
+                    ->where('p.id', '=', $id)
                     ->first();
-        /*$data = DB::table('personas')
-            ->join('direccion', 'personas.id', '=', 'direccion.personas_id')
-            ->select('personas.*', 'direccion.*')
-            ->first();*/
 
             return $data;
     }
 
-    public static function carga_familiar()
+    public static function carga_familiar($id)
     {
+        //$data = Personas::all()->where('personas_id', '=', $id);
         $data = DB::table('personas as p')
-                    ->select( DB::raw( 'row_number() OVER (ORDER BY p.nombres) as num'), 'p.id', 'p.nombres', 'p.apellidos', 'p.personas_id', 'p.cedula', 'p.correo', 'p.rif', 'p.fecha', 'p.lugarnac', 'p.nacionalidad', 'p.celular', 'p.telefono_fijo', 'p.parentezco')
-                    ->join('direccion as d', 'd.personas_id', 'p.id', 'd.estado_id' )
-                    //->where('personas_id', '=' , 'decrytp($id)')
-                    ->first();
+                    ->select( DB::raw( 'row_number() OVER (ORDER BY p.nombres) as num'), 'p.id', 'p.nombres', 'p.apellidos', 'p.personas_id', 'p.cedula', 'p.correo', 'p.fecha', 'p.lugarnac', 'p.nacionalidad', 'p.celular', 'p.telefono_fijo', 'p.parentezco')
+                    ->where('p.personas_id', '=', $id)
+                    ->get();
 
                     return $data;
     }

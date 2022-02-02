@@ -143,15 +143,9 @@ class PersonasController extends Controller
     public function show($id)
     {
         
-        $carga_familiar = Personas::all()->where('personas_id', '=', decrypt($id));
-        //$persona = DB::table('personas')->where('id', decrypt($id))->first();
-        $persona = Personas::consulta();
-        /*$carga_familiar = DB::table('personas as p ')
-                 ->select(DB::raw('row_number() OVER (ORDER BY p.nombres) as numero'))
-                 ->select('nombres', 'apellidos', 'cedula', 'fecha')
-                 ->where('personas_id', '=', decrypt($id))
-                 ->get();*/
-        //dd($persona);
+        $persona = Personas::consulta(decrypt($id));
+        $carga_familiar = Personas::carga_familiar(decrypt($id));
+        //dd($carga_familiar);
         $entidad = Entidades::all();
         $zonas = Tzona::all();
         $area = Tcalle::all();
