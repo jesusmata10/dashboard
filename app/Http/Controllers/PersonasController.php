@@ -10,6 +10,8 @@ use App\Models\Tvivienda;
 use App\Models\Personas;
 use App\Models\Direccion;
 use Illuminate\Support\Facades\DB;
+use PhpParser\Node\Stmt\TryCatch;
+
 //use Carbon\Carbon;
 //use Illuminate\Support\Str;
 
@@ -24,8 +26,8 @@ class PersonasController extends Controller
     {
         $persona = Personas::all()->where('personas_id', '=', 0);
         $carga_familiar = DB::table('personas')
-                ->where('personas_id', '=', $request->id)
-                ->get();
+            ->where('personas_id', '=', $request->id)
+            ->get();
         //dd($persona);
         return view('persona.index', compact('persona', 'carga_familiar'));
     }
@@ -54,25 +56,15 @@ class PersonasController extends Controller
      */
     public function store(Request $request)
     {
-        //$date = $request->fecha;
-        //$date = Carbon::now();
-        //$fecha = $date->format('Y-m-d');
-        //dd($request);
-
 
         try {
-            //$date = $date->format('Y-m-d');
 
             $input = $request->all();
             $input['personas_id'] = 0;
             $input['parentezco'] = 'Jefe de hogar';
             //$input['estado_id'] = $request->estado_id == '' ? '0' : '0';
             $input['status'] = 1;
-            //dd($input);
             $solicitud = Personas::create($input);
-
-            /*$direccion = Direccion::create($input);*/
-            //$direccion['personas_id'] = $solicitud->id;
 
             $personaDireccionSave = new Direccion();
             $personaDireccionSave->personas_id = $solicitud->id;
@@ -90,8 +82,8 @@ class PersonasController extends Controller
             $personaDireccionSave->status = 1;
             $personaDireccionSave->save();
 
-            if(isset($request->personaTemp)){
-                foreach($request->personaTemp as $familia){
+            if (isset($request->personaTemp)) {
+                foreach ($request->personaTemp as $familia) {
                     $servicios = json_decode($familia);
 
                     $familiaSave = new Personas();
@@ -142,16 +134,10 @@ class PersonasController extends Controller
      */
     public function show($id)
     {
-        
         $persona = Personas::consulta(decrypt($id));
         $carga_familiar = Personas::carga_familiar(decrypt($id));
-        //dd($carga_familiar);
-        $entidad = Entidades::all();
-        $zonas = Tzona::all();
-        $area = Tcalle::all();
-        $hogar = Tvivienda::all();
 
-        return view('persona.show', compact('persona', 'entidad', 'zonas', 'area', 'hogar', 'carga_familiar'));
+        return view('persona.show', compact('persona', 'carga_familiar'));
     }
 
     /**
