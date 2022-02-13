@@ -11,8 +11,10 @@ use App\Models\Personas;
 use App\Models\Direccion;
 use Illuminate\Support\Facades\DB;
 use PhpParser\Node\Stmt\TryCatch;
-
-//use Carbon\Carbon;
+use PDF;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\QueryException;
+use Carbon\Carbon;
 //use Illuminate\Support\Str;
 
 class PersonasController extends Controller
@@ -29,7 +31,9 @@ class PersonasController extends Controller
             ->where('personas_id', '=', $request->id)
             ->get();
         //dd($persona);
-        return view('persona.index', compact('persona', 'carga_familiar'));
+        $datatable = Personas::sqlReport($request);
+        //dd($datatable);  
+        return view('persona.index', compact('persona', 'carga_familiar', 'datatable'));
     }
 
     /**
@@ -56,14 +60,15 @@ class PersonasController extends Controller
      */
     public function store(Request $request)
     {
-
+        //dd($request);
         try {
 
             $input = $request->all();
             $input['personas_id'] = 0;
-            $input['parentezco'] = 'Jefe de hogar';
-            //$input['estado_id'] = $request->estado_id == '' ? '0' : '0';
-            $input['status'] = 1;
+            $input['parentesco'] = 'Jefe de hogar';
+            $input['user_id'] = Auth::id();
+            $input['status'] = 1;  //acomodar en la tabla como booleano
+            //dd($input);
             $solicitud = Personas::create($input);
 
             $personaDireccionSave = new Direccion();
@@ -80,6 +85,7 @@ class PersonasController extends Controller
             $personaDireccionSave->tvivienda = $request->tvivienda;
             $personaDireccionSave->nvivienda = $request->nvivienda;
             $personaDireccionSave->status = 1;
+            //$personaDireccionSave->user_id = $solicitud->user_id;
             $personaDireccionSave->save();
 
             if (isset($request->personaTemp)) {
@@ -98,11 +104,11 @@ class PersonasController extends Controller
                     $familiaSave->nacionalidad = 0;
                     $familiaSave->telefono_fijo = 0;
                     $familiaSave->celular = $solicitud->celular;
-                    //$familiaSave->rif = 'null';
-                    $familiaSave->parentezco = $servicios->parentezco;
+                    $familiaSave->user_id = $solicitud->user_id;
+                    $familiaSave->parentesco = $servicios->parentezco;
                     $familiaSave->save();
 
-                    $direccionSave = new Direccion();
+                    /*$direccionSave = new Direccion();
                     $direccionSave->personas_id = $solicitud->id;
                     $direccionSave->estado_id = $personaDireccionSave->estado_id;
                     $direccionSave->municipio_id = $personaDireccionSave->municipio_id;
@@ -116,7 +122,7 @@ class PersonasController extends Controller
                     $direccionSave->tvivienda = $personaDireccionSave->tvivienda;
                     $direccionSave->nvivienda = $personaDireccionSave->nvivienda;
                     $direccionSave->status = 1;
-                    $direccionSave->save();
+                    $direccionSave->save();*/
                 }
             }
             return redirect('/personas')->with('message', __('Registro Sastifatorio'));
@@ -182,4 +188,13 @@ class PersonasController extends Controller
 
         }*/
     }
+
+    public function pdf(Request $request){
+        $datatable = Personas::sqlReport($request);
+        //dd($datatable);
+            return PDF::loadView('persona.pdf', compact('datatable'))
+                ->setPaper('letter','landscape')
+                ->stream('persona.pdf');
+    }
+    
 }

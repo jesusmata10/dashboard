@@ -52,5 +52,6 @@ Route::middleware(['auth'])->group(function () {
     // Personas
 
     Route::resource('/personas', 'PersonasController');
+    Route::get('/personasPdf', 'PersonasController@pdf');
 
 });

@@ -216,7 +216,7 @@
                                             {{ $items->fecha }}
                                         </td>
                                         <td class="text-uppercase">
-                                            {{ $items->parentezco}}
+                                            {{ $items->parentesco}}
                                         </td>
                                     </tr>
                                     @endforeach

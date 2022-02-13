@@ -14,13 +14,18 @@
         </div>
         @endif
 
+        {{--<div id="criterioBusqueda" class="alert alert-danger desva" style="display: none" role="alert">
+            Debe seleccionar un criterio de b&uacute;squeda
+        </div>--}}
         <div id="criterioBusqueda" class="alert alert-danger desva" style="display: none" role="alert">
+            <button type="button" class="close text-white" data-dismiss="alert" aria-hidden="true">×</button>
+            <h5><i class="icon fas fa-ban" style="font-size:15px"></i>¡Error!</h5>
             Debe seleccionar un criterio de b&uacute;squeda
         </div>
 
         <!-- Button trigger modal -->
 
-        <form action="{{-- url('/usuario') --}}" method="GET" role="form" id="form">
+        <form action="{{ url('/personas') }}" method="GET" role="form" id="form">
             {{ csrf_field() }}
             <div class="card collapsed-card">
                 <div class="card-header">
@@ -47,10 +52,9 @@
                 </div>
                 <div class="card-footer">
                     <div class="float-right">
-                        @can('consultar')
-                        @endcan
+                        
                         <button type="button" name="send" onClick="validar()" class="btn btn-primary"><i class="fa fa-search"></i> Buscar</button>
-                        <a href="{{-- url('/usuario') --}}" type="button" class="btn btn-primary"><i class="fa fa-eye"></i> Ver Todos</a>
+                        <a href="{{ url('/personas') }}" type="button" class="btn btn-primary"><i class="fa fa-eye"></i> Ver Todos</a>
 
                         <button type="reset" class="btn btn-primary"><i class="fa fa-trash"></i> Limpiar</button>
                     </div>
@@ -70,9 +74,9 @@
                 <div class="row">
                     <div class="col-12">
                         <a href="{{ url('personas/create') }}" type="button" class="btn btn-outline-primary"><i class="fa fa-plus"></i> Nuevo</a>
-
-                        {{--@can('reporte')
+                        
                             <button type="button" onClick="reports('pdf')" class="btn btn-outline-primary "><i class="fa fa-file"></i> Pdf</button>
+                            {{--@can('reporte')
                             <button type="button" onClick="reports('excel')" class="btn btn-outline-primary"><i class="fa fa-file"></i> Excel</button>
                         @endcan--}}
                     </div>
@@ -92,9 +96,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($persona as $items)
+                                @foreach($datatable as $items)
                                 <tr class="text-center">
-                                    <td>{{ $items->id }}</td>
+                                    <td>{{ $items->num }}</td>
                                     <td>{{ $items->nombres . ' ' . $items->apellidos }}</td>
                                     <td>{{ $items->cedula}}</td>
                                     <td>{{ $items->correo }}</td>
@@ -282,6 +286,51 @@
 
     $(document).ready(function() {
 
+        function validar() {
+            var select = $('#form select').length
+            var text = $('#form input[type=text]').length
+
+            var i = 1
+            var flag = false
+
+            if (select > 0) {
+                $.each($('#form select'), function() {
+                    if ($(this).val() == '') {
+                        if (i == select) {
+                            flag = false
+                            i = 1
+                        } else {
+                            i++
+                        }
+                    } else {
+                        flag = true
+                    }
+                })
+            }
+
+            if (text > 0 && !flag) {
+                $.each($('#form input[type=text]'), function() {
+                    if ($(this).val() == '') {
+                        if (i == text) {
+                            flag = false
+                        }
+                        i++
+                    } else {
+                        flag = true
+                    }
+                })
+            }
+
+            if (!flag) {
+                $('#criterioBusqueda').show()
+                setTimeout(function() {
+                    $(".desva").fadeOut(6000);
+                }, 12000)
+            } else {
+                $("#form").submit()
+            }
+        }
+
         $('#btnAgregarFamiliar').on('click', function() {
             accionAgregarFamiliar();
         })
@@ -391,6 +440,26 @@
         });
 
     });
+
+    function reports(type) {
+        var link = window.location.search
+        var inicio = link.indexOf('&')
+
+        if (inicio == -1) {
+            cadena = ''
+        } else {
+            var cadena = link.substring(inicio)
+        }
+
+        if (type == 'pdf') {
+            window.open('{{ url('/personasPdf') }}' + '?' + cadena, '_blank')
+        } else {
+            window.open('{{ url('/personasExcel') }}' + '?' + cadena, '_blank')
+        }
+    }
+
+    desvanecer()
+
 </script>
 
 @stop

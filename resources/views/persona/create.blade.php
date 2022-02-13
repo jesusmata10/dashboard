@@ -38,7 +38,7 @@
                     <div class="row">
                         <div class="form-group col-4">
                             <label for="">C&eacute;dula:</label>
-                            <input type="text" class="form-control" maxlength="9" name="cedula">
+                            <input type="text" class="form-control" maxlength="10" name="cedula">
                         </div>
                         <div class="form-group col-md-4">
                             <label for="correo">Correo Electr&oacute;nico:</label>
@@ -229,16 +229,16 @@
                         </div>
                         <div class="form-group col-md-4">
                           <label for="parentezco">Parentezco:</label>
-                          <select class="form-control" name="parentezco" id="parentezco">
+                          <select class="form-control" name="parentesco" id="parentesco">
                               <option value="" selected>Seleccione una opci&oacute;n</option>
-                              <option value="1">Madre</option>
-                              <option value="2">Padre</option>
-                              <option value="3">Hijo</option>
-                              <option value="4">Hija</option>
-                              <option value="5">Suegro</option>
-                              <option value="6">Suegra</option>
-                              <option value="7">Sobrina</option>
-                              <option value="8">Sobrino</option>
+                              <option value="Madre">Madre</option>
+                              <option value="Padre">Padre</option>
+                              <option value="Hijo">Hijo</option>
+                              <option value="Hija">Hija</option>
+                              <option value="Suegro">Suegro</option>
+                              <option value="Suegra">Suegra</option>
+                              <option value="Sobrina">Sobrina</option>
+                              <option value="Sobrino">Sobrino</option>
                           </select>
                         </div>
                     </div>
@@ -320,7 +320,7 @@ $(document).ready(function() {
         let apellidos = $('#apellidoscf').val()
         let cedula = $('#cedulacf').val()
         let fecha = $('#fechacf').val()
-        let parentezco = $('#parentezco').val()
+        let parentesco = $('#parentesco').val()
         let parentezcotxt = $('#parentezco option:selected').text()
 
         let data = {
@@ -329,13 +329,13 @@ $(document).ready(function() {
             apellidos: apellidos,
             cedula: cedula,
             fecha: fecha,
-            parentezco: parentezco,
-            parentezcotxt: parentezcotxt
+            parentesco: parentesco,
+            parentescotxt: parentescotxt
         }
         console.log(data);
         let accion = JSON.stringify(data)
         console.log(accion);
-    if (nombres !== '' && apellidos !== '' && fecha !== '' && parentezco !== '') {
+    if (nombres !== '' && apellidos !== '' && fecha !== '' && parentesco !== '') {
         $('#mytable').append(`
 
             <tr id="row${id}">
@@ -346,7 +346,7 @@ $(document).ready(function() {
                 <td>${apellidos}</td>
                 <td>${cedula}</td>
                 <td>${fecha}</td>
-                <td>${parentezcotxt}</td>
+                <td>${parentescotxt}</td>
                 <td>
                     <button type="button" class="btn btn-danger" onclick='eliminarFamiliar(${id})'>
                         <i class="fa fa-trash"></i>
