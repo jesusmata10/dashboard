@@ -17,6 +17,10 @@ mix.js('resources/js/app.js', 'public/js')
         require('tailwindcss'),
     ]);
 
+mix.copy('vendor/proengsoft/laravel-jsvalidation/resources/views', 'resources/views/vendor/jsvalidation')
+.copy('vendor/proengsoft/laravel-jsvalidation/public', 'public/vendor/jsvalidation');
+
+
 if (mix.inProduction()) {
     mix.version();
 }
