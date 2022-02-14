@@ -89,7 +89,7 @@ class Personas extends Model
             $datatable->where('pr.cedula', $search->cedulas);
         }
 
-        return $datatable->orderBy('num')->distinct()->get();
+        return $datatable->orderBy('cedula')->distinct()->get();
     }
-    
+
 }

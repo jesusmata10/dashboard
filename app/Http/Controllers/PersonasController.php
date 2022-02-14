@@ -32,7 +32,7 @@ class PersonasController extends Controller
             ->get();
         //dd($persona);
         $datatable = Personas::sqlReport($request);
-        //dd($datatable);  
+        //dd($datatable);
         return view('persona.index', compact('persona', 'carga_familiar', 'datatable'));
     }
 
@@ -189,12 +189,21 @@ class PersonasController extends Controller
         }*/
     }
 
-    public function pdf(Request $request){
+    public function pdf(Request $request)
+    {
         $datatable = Personas::sqlReport($request);
         //dd($datatable);
-            return PDF::loadView('persona.pdf', compact('datatable'))
-                ->setPaper('letter','landscape')
-                ->stream('persona.pdf');
+        return PDF::loadView('persona.pdf', compact('datatable'))
+            ->setPaper('letter', 'landscape')
+            ->stream('persona.pdf');
     }
-    
+
+    public function constanciaResidenciaPdf(Request $request)
+    {
+        $datatable = Personas::sqlReport($request);
+        //dd($datatable);
+        return PDF::loadView('reportes.residenciapdf', compact('datatable'))
+            ->setPaper('letter')
+            ->stream('reportes.residenciapdf');
+    }
 }
