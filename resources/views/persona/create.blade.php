@@ -214,7 +214,7 @@
                     <div class="row">
                         <div class="form-group col-md-4">
                           <label for="cedulacf">Cedula:</label>
-                          <input id="cedulacf" class="form-control" type="text" name="cedulacf">
+                          <input id="cedulacf" class="form-control text-uppercase" type="text" name="cedulacf">
                         </div>
                         <div class="form-group col-md-4">
                             <label for="fecha">Fecha:</label>
@@ -288,6 +288,10 @@
 <div></div>
 @stop
 @section('js')
+
+   <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
+    {!! JsValidator::formRequest('App\Http\Requests\PersonasRequest', '#personaForm') !!}
+
 <script>
 
 $('.datepicker').datepicker({
@@ -321,7 +325,7 @@ $(document).ready(function() {
         let cedula = $('#cedulacf').val()
         let fecha = $('#fechacf').val()
         let parentesco = $('#parentesco').val()
-        let parentezcotxt = $('#parentezco option:selected').text()
+        let parentescotxt = $('#parentesco option:selected').text()
 
         let data = {
             id: id,
@@ -342,11 +346,11 @@ $(document).ready(function() {
                 <td style="display: none">
                     <input type="hidden" name="personaTemp[]" value='${accion}' />
                 </td>
-                <td>${nombres}</td>
-                <td>${apellidos}</td>
-                <td>${cedula}</td>
-                <td>${fecha}</td>
-                <td>${parentescotxt}</td>
+                <td class="text-uppercase">${nombres}</td>
+                <td class="text-uppercase">${apellidos}</td>
+                <td class="text-uppercase">${cedula}</td>
+                <td class="text-uppercase">${fecha}</td>
+                <td class="text-uppercase">${parentescotxt}</td>
                 <td>
                     <button type="button" class="btn btn-danger" onclick='eliminarFamiliar(${id})'>
                         <i class="fa fa-trash"></i>

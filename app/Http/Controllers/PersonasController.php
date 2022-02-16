@@ -10,6 +10,7 @@ use App\Models\Tvivienda;
 use App\Models\Personas;
 use App\Models\Direccion;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\PersonasRequest;
 use PhpParser\Node\Stmt\TryCatch;
 use PDF;
 use Illuminate\Support\Facades\Auth;
@@ -58,7 +59,7 @@ class PersonasController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PersonasRequest $request)
     {
         //dd($request);
         try {

@@ -95,7 +95,7 @@ class UserController extends Controller
 
                 $input['user_id'] = $user->id;
 
-                Perfile::create($input);
+                //Perfile::create($input);
 
                 $user->syncRoles($request->rol);
                 //Mail::to($user->email)->send(new SendMail($perfil));
