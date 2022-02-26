@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class PersonasRequest extends FormRequest
 {
@@ -27,10 +26,9 @@ class PersonasRequest extends FormRequest
     public function rules()
     {
         return [
-
             'cedula' => [
                 'required',
-                Rule::unique('personas')->ignore($this->id)
+                Rule::unique('personas')->ignore($this->id),
             ],
             'correo' => ['required', 'email', Rule::unique('personas')->ignore($this->id)],
             'nombres' => 'required|regex:/^[A-Za-záéíóúñÁÉÍÓÚÑ\s]+$/|between:2,50',
@@ -38,7 +36,7 @@ class PersonasRequest extends FormRequest
             'celular' => 'required',
             'telefono_fijo' => 'required',
             'fecha' => 'required|date',
-            'rif'       => 'required',
+            'rif' => 'required',
             'lugarnac' => 'required',
             'nacionalidad' => 'required',
             'urbanizacion' => 'required',
@@ -52,13 +50,6 @@ class PersonasRequest extends FormRequest
             'ncalle' => 'required',
             'tvivienda' => 'required',
             'nvivienda' => 'required',
-
-            /*'name'                 => [
-        'required',
-        'regex:/^[A-Za-záéíóúñÁÉÍÓÚÑ]+$/',
-        'between:6,50',
-        Rule::unique('seguridad.users')->ignore($this->id),
-        ],*/
         ];
     }
 
@@ -74,7 +65,7 @@ class PersonasRequest extends FormRequest
             'cedula' => Str::upper($this->cedula),
             'nzona' => Str::upper($this->nzona),
             'ncalle' => Str::upper($this->ncalle),
-            'nvivienda' => Str::upper($this->nvivienda)
+            'nvivienda' => Str::upper($this->nvivienda),
         ]);
     }
 }

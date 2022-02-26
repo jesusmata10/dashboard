@@ -188,12 +188,12 @@ class UserController extends Controller
 
      public function municipioAjaxUser(Request $request)
     {
-        //dd($request);
+        dd($request->all());
       if ($request->ajax())
       {
 
         //$lista = Municipio::listaMunicipios($request->entidad_id);
-        $lista = Municipios::where('estado_id',$request->entidad_id)->get();
+        $lista = Municipios::where('estado_id',$request->ciudad_id)->get();
         //dd($lista);
         echo '<option disabled selected value="">Seleccione una opci&oacute;n</option>';
         //echo '<option value="TODOS">TODOS LOS MUNICIPIOS</option>';
@@ -231,7 +231,7 @@ class UserController extends Controller
 
         //$lista = Municipio::listaMunicipios($request->entidad_id);
         $lista = Ciudades::where('estado_id',$request->entidad_id)->get();
-        
+
         //dd($lista);
         echo '<option disabled selected value="">Seleccione una opci&oacute;n</option>';
         //echo '<option value="TODOS">TODOS LOS MUNICIPIOS</option>';

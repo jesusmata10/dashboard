@@ -2,21 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\PersonasRequest;
+use App\Models\Direccion;
 use App\Models\Entidades;
-use App\Models\Tzona;
+use App\Models\Personas;
 use App\Models\Tcalle;
 use App\Models\Tvivienda;
-use App\Models\Personas;
-use App\Models\Direccion;
-use Illuminate\Support\Facades\DB;
-use App\Http\Requests\PersonasRequest;
-use PhpParser\Node\Stmt\TryCatch;
-use PDF;
+use App\Models\Tzona;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\QueryException;
-use Carbon\Carbon;
-//use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+use PDF;
 
 class PersonasController extends Controller
 {
@@ -30,7 +26,8 @@ class PersonasController extends Controller
         $persona = Personas::all()->where('personas_id', '=', 0);
         $carga_familiar = DB::table('personas')
             ->where('personas_id', '=', $request->id)
-            ->get();
+            ->get()
+        ;
         //dd($persona);
         $datatable = Personas::sqlReport($request);
         //dd($datatable);
@@ -49,21 +46,20 @@ class PersonasController extends Controller
         $area = Tcalle::all();
         $hogar = Tvivienda::all();
 
-
         return view('persona.create', compact('entidad', 'zonas', 'area', 'hogar'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(PersonasRequest $request)
     {
         //dd($request);
         try {
-
             $input = $request->all();
             $input['personas_id'] = 0;
             $input['parentesco'] = 'Jefe de hogar';
@@ -126,9 +122,13 @@ class PersonasController extends Controller
                     $direccionSave->save();*/
                 }
             }
+
             return redirect('/personas')->with('message', __('Registro Sastifatorio'));
         } catch (Exception $e) {
-            dd($e);
+            \Log::error('PersonasController.store', [
+                'message' => $e->getMessage(),
+            ]);
+
             return redirect('/personas')->with('searchError', __('messages.information_not_stored'));
         }
     }
@@ -136,7 +136,8 @@ class PersonasController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -150,30 +151,69 @@ class PersonasController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
+        $entidad = Entidades::all();
+        $zonas = Tzona::all();
+        $area = Tcalle::all();
+        $hogar = Tvivienda::all();
+        $persona = Personas::consulta(decrypt($id));
+        //dd($persona);
+        $cargaFamiliar = Personas::carga_familiar(decrypt($id));
+
+        return view('persona.edit', compact('persona', 'cargaFamiliar', 'entidad', 'zonas', 'area', 'hogar'));
     }
 
     /**
      * Update the specified resource in storage.
+     *+"num": 1
+     * +"id": 8
+     * +"nombres": "maria antonia"
+     * +"apellidos": "perez"
+     * +"personas_id": 0
+     * +"cedula": "V-17475727"
+     * +"correo": "rosa@gmail.com"
+     * +"rif": "J-17475727-1"
+     * +"fecha": "1979-06-15"
+     * +"lugarnac": "caracas"
+     * +"nacionalidad": "venezuela"
+     * +"celular": "111111111111"
+     * +"telefono_fijo": "000000000000"
+     * +"estado": "Bolivariano de Miranda"
+     * +"ciudad_id": "292"
+     * +"ciudad": "Santa Teresa"
+     * +"municipio_id": "233"
+     * +"municipio": "Independencia"
+     * +"parroquia_id": "631"
+     * +"parroquia": "Santa Teresa del Tuy"
+     * +"urbanizacion": "mopia"
+     * +"tzona": "1"
+     * +"zona": "sector"
+     * +"nzona": "2"
+     * +"tcalle": "1"
+     * +"calle": "vereda"
+     * +"ncalle": "28B"
+     * +"tvivienda": "1"
+     * +"vivienda": "casa"
+     * +"nvivienda": "23".
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -196,7 +236,8 @@ class PersonasController extends Controller
         //dd($datatable);
         return PDF::loadView('persona.pdf', compact('datatable'))
             ->setPaper('letter', 'landscape')
-            ->stream('persona.pdf');
+            ->stream('persona.pdf')
+        ;
     }
 
     public function constanciaResidenciaPdf(Request $request)
@@ -205,6 +246,7 @@ class PersonasController extends Controller
         //dd($datatable);
         return PDF::loadView('reportes.residenciapdf', compact('datatable'))
             ->setPaper('letter')
-            ->stream('reportes.residenciapdf');
+            ->stream('reportes.residenciapdf')
+        ;
     }
 }

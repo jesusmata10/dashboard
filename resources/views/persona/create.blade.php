@@ -105,7 +105,7 @@
                               </select>
                             </div>
                           </div>
-                        <div class="col-md-3" id="divMunicipio" >
+                        <div class="col-md-3" id="divciudad" >
                             <div class="form-group">
                                 <label for="ciudad_id">Ciudad</label>
                                 <select class="form-control" name="ciudad_id"  id="ciudad_id">
@@ -201,6 +201,7 @@
                 </div>
 
                 <div class="card-body">
+                    <div class="alert" role="alert" id="alert" style="display: none"></div>
                     <div class="row">
                         <div class="form-group col-md-6">
                           <label for="nombrescf"> Nombres:</label>
@@ -251,7 +252,9 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="form-group">
+
                         <div class="table-responsive">
                             <table class="table table-sm table-bordered table-hover ">
                               <thead class="bg-info">
@@ -382,7 +385,7 @@ eliminarFamiliar = function (id) {
 
 });
 
-$('#entidad_id').change(function ()
+$('#ciudad_id').change(function ()
 {
     $.ajax({
         method: "POST",
@@ -401,24 +404,7 @@ $('#entidad_id').change(function ()
     });
 });
 
-  $('#municipio_id').change(function ()
-    {
-        $.ajax({
-            method: "POST",
-            url: "{{ url('/parroquiaAjaxUser') }}",
-            data: {municipio_id: $('#municipio_id').val(), '_token': $('input[name=_token]').val()},
-            success: function (response) {
-            $('#parroquia_id').html(response);
-
-        },
-        beforeSend: function () {
-        $('#parroquia_id').append('<option value="" selected>Buscando...</option>');
-        }
-    });
-
-});
-
-$('.estado').change(function ()
+$('#entidad_id').change(function ()
 {
     $.ajax({
         method: "POST",
@@ -426,7 +412,8 @@ $('.estado').change(function ()
         data: {entidad_id: $('#entidad_id').val(), '_token': $('input[name=_token]').val()},
         success: function (response) {
             $('#ciudad_id').html(response);
-
+            /*$('#municipio_id').empty();
+            $('#municipio_id').append('<option value="" selected>Seleccione una opción</option>');*/
         },
         beforeSend: function () {
             $('#ciudad_id').append('<option value="" selected>Buscando...</option>');
@@ -434,6 +421,25 @@ $('.estado').change(function ()
     });
 
 });
+
+$('#municipio_id').change(function ()
+{
+    $.ajax({
+        method: "POST",
+        url: "{{ url('/parroquiaAjaxUser') }}",
+        data: {municipio_id: $('#municipio_id').val(), '_token': $('input[name=_token]').val()},
+        success: function (response) {
+        $('#parroquia_id').html(response);
+
+    },
+    beforeSend: function () {
+    $('#parroquia_id').append('<option value="" selected>Buscando...</option>');
+    }
+});
+
+});
+
+
     </script>
 @stop
 
