@@ -54,4 +54,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('/personas', 'PersonasController');
     Route::get('/personasPdf', 'PersonasController@pdf');
 
+    // Carnet de  la Patria
+
+    Route::resource('/carnetPatria', 'CarnetController');
+
 });

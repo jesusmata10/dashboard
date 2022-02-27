@@ -265,6 +265,11 @@ return [
                     'url'  => '/personas',
                     'icon' => 'fas fa-fw fa-users-cog',
                 ],
+                [
+                    'text' => 'Carnet de la Patria',
+                    'url' => '/carnetPatria',
+                    'icon' => 'fas fa-fw fa-address-card'
+                ],
             ],
         ],
         [
@@ -521,7 +526,7 @@ return [
                 ],
             ],
         ],
-        
+
     ],
 
     /*

@@ -26,8 +26,7 @@ class PersonasController extends Controller
         $persona = Personas::all()->where('personas_id', '=', 0);
         $carga_familiar = DB::table('personas')
             ->where('personas_id', '=', $request->id)
-            ->get()
-        ;
+            ->get();
         //dd($persona);
         $datatable = Personas::sqlReport($request);
         //dd($datatable);
@@ -236,8 +235,7 @@ class PersonasController extends Controller
         //dd($datatable);
         return PDF::loadView('persona.pdf', compact('datatable'))
             ->setPaper('letter', 'landscape')
-            ->stream('persona.pdf')
-        ;
+            ->stream('persona.pdf');
     }
 
     public function constanciaResidenciaPdf(Request $request)
@@ -246,7 +244,6 @@ class PersonasController extends Controller
         //dd($datatable);
         return PDF::loadView('reportes.residenciapdf', compact('datatable'))
             ->setPaper('letter')
-            ->stream('reportes.residenciapdf')
-        ;
+            ->stream('reportes.residenciapdf');
     }
 }
