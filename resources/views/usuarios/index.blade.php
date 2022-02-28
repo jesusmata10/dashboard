@@ -31,46 +31,69 @@
                     <div class="row">
                         <div class="form-group col-6">
                             <label for="">C&eacute;dula</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-address-card"></i></span>
+                                </div>
                             <input class="form-control" type="text" name="cedula">
+                            </div>
                         </div>
                         <div class="col-6">
                             <label for="">Rol</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-address-card"></i></span>
+                                </div>
                             <select class="form-control" name="rol">
                                 <option value="" selected>Seleccione una opci&oacute;n</option>
                                 @foreach($rol as $items)
                                     <option value="{{ $items->id }}">{{ $items->name}}</option>
                                 @endforeach
                             </select>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-6">
                             <label for="">Nombres</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-signature"></i></span>
+                                </div>
                             <input class="form-control text-uppercase" type="text" name="nombres">
+                            </div>
                         </div>
                         <div class="col-6">
                             <label for="">Apellidos</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-signature"></i></span>
+                                </div>
                             <input class="form-control text-uppercase" type="text" name="apellidos">
+                            </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-6">
                             <label for="">Estatus</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
+                                </div>
                             <select class="form-control" name="estatus">
                                 <option value="" selected>Seleccione una opci&oacute;n</option>
                                 <option value="1">ACTIVO</option>
                                 <option value="0">INACTIVO</option>
                             </select>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="card-footer">
                     <div class="float-right">
-                        @can('consultar')
-                            <button type="button" name="send" onClick="validar()" class="btn btn-outline-primary"><i class="fa fa-search"></i> Buscar</button>
-                            <a href="{{-- url('/usuario') --}}" type="button" class="btn btn-outline-primary"><i class="fa fa-eye"></i> Ver Todos</a>
-                        @endcan
-                            <button type="reset" class="btn btn-outline-danger"><i class="fa fa-trash"></i> Limpiar</button>
+                            <button type="button" name="send" onClick="validar()" class="btn btn-sm btn-primary"><i class="fa fa-search"></i> Buscar</button>
+                            <a href="{{ url('/usuario') }}" type="button" class="btn btn-sm btn-primary"><i class="fa fa-eye"></i> Ver Todos</a>
+                            <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> Limpiar</button>
                     </div>
                 </div>
             </div>
@@ -81,25 +104,21 @@
 
 <div class="row">
     <div class="col-12">
-
         <div class="card card-primary">
             <div class="card-body">
-
                 <div class="row">
                     <div class="col-12">
-                        
-                            <a href="{{ url('usuario/create') }}" type="button" class="btn btn-outline-primary"><i class="fa fa-plus"></i> Nuevo</a>
-                        
+
+                            <a href="{{ url('usuario/create') }}" type="button" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Nuevo</a>
+
                         {{--@can('reporte')
                             <button type="button" onClick="reports('pdf')" class="btn btn-outline-primary"><i class="fa fa-file"></i> Pdf</button>
                             <button type="button" onClick="reports('excel')" class="btn btn-outline-primary"><i class="fa fa-file"></i> Excel</button>
                         @endcan--}}
                     </div>
                 </div><br>
-
                 <div class="row">
                     <div class="col-12">
-
                         <table id="example2" class="table table-bordered table-hover">
                             <thead>
                                 <tr class="text-center">
@@ -113,7 +132,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                
                                 @foreach($data as $items)
                                     <tr class="text-center">
                                         <td>{{ $items->numero }}</td>
@@ -124,21 +142,15 @@
                                         <td>{{ $items->estatus }}</td>--}}
                                         <td>
                                             <div class="text-center">
-                                                <button type="button" onClick="modal({{ $items->id }})" title="Ver" data-toggle="modal" data-target="#modal-xl" class="btn btn-outline-primary"><i class="fas fa-eye"></i></button>
-                                                @can('editar')
-                                                    <a href="{{ url('/usuario/'.encrypt($items->id).'/edit') }}" title="Editar" type="button" class="btn btn-outline-primary"><i class="fas fa-edit"></i></a>
-                                                @endcan
-                                                @can('eliminar')
-                                                    <!-- button type="button" class="btn btn-outline-primary">Eliminar</button -->
-                                                @endcan
+                                                <button type="button" onClick="modal({{ $items->id }})" title="Ver" data-toggle="modal" data-target="#modal-xl" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></button>
+                                                <a href="{{ url('/usuario/'.encrypt($items->id).'/edit') }}" title="Editar" type="button" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
+                                                <!-- button type="button" class="btn btn-outline-primary">Eliminar</button -->
                                             </div>
                                         </td>
                                     </tr>
                                 @endforeach
-                                
                             </tbody>
                         </table>
-
                     </div>
                 </div>
 

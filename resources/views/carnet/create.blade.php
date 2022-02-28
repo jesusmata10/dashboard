@@ -34,20 +34,30 @@
                             </div>
                             <div class="form-group col-sm-12 col-md-4">
                                 <label for="nzona">Serial:</label>
-                                <input class="form-control text-uppercase" type="text" name="serial">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-address-card"></i></span>
+                                    </div>
+                                    <input class="form-control text-uppercase" type="text" name="serial">
+
+                                </div>
                             </div>
                             <div class="form-group col-sm-12 col-md-4">
                                 <label for="nzona">Codigo:</label>
-                                <input class="form-control text-uppercase" type="text" name="codigo">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-address-card"></i></span>
+                                    </div>
+                                    <input class="form-control text-uppercase" type="text" name="codigo">
+
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="card-footer">
                         <div class="float-right">
-                            <button class="btn btn-primary btn-sm mx-1" type="submit">Guardar <i
-                                    class="fa fa-check-circle"></i></button>
-                            <a href="{{'/carnetPatria'}}" type="button" class="btn btn-danger btn-sm float-right">Cancelar
-                                <i class="fa fa-minus-circle"></i></a>
+                            <button class="btn btn-primary btn-sm mx-1" type="submit">Guardar <i class="fa fa-save"></i></button>
+                            <a href="{{'/carnetPatria'}}" type="button" class="btn btn-danger btn-sm float-right">Cancelar<i class="fa fa-minus-circle"></i></a>
                         </div>
                     </div>
                 </div>
@@ -65,67 +75,7 @@
     {!! JsValidator::formRequest('App\Http\Requests\CarnetCreateRequest', '#carnetForm') !!}
     <script>
 
-        $('.datepicker').datepicker({
-            format: "dd-mm-yyyy",
-            clearBtn: true,
-            language: "es",
-            orientation: "bottom auto",
-            changeYear: false,
-            endDate: new Date()
-        });
 
-        $(document).ready(function () {
-
-
-            $('#entidad_id').change(function () {
-                $.ajax({
-                    method: "POST",
-                    url: "{{ url('/municipioAjaxUser') }}",
-                    data: {entidad_id: $('#entidad_id').val(), '_token': $('input[name=_token]').val()},
-                    success: function (response) {
-                        $('#municipio_id').html(response);
-                        $('#cuidad_id').empty();
-                        $("#parroquia_id").empty();
-                        $('#parroquia_id').append('<option value="" selected>Seleccione una opción</option>');
-
-                    },
-                    beforeSend: function () {
-                        $('#municipio_id').append('<option value="" selected>Buscando...</option>');
-                    }
-                });
-            });
-
-            $('#municipio_id').change(function () {
-                $.ajax({
-                    method: "POST",
-                    url: "{{ url('/parroquiaAjaxUser') }}",
-                    data: {municipio_id: $('#municipio_id').val(), '_token': $('input[name=_token]').val()},
-                    success: function (response) {
-                        $('#parroquia_id').html(response);
-
-                    },
-                    beforeSend: function () {
-                        $('#parroquia_id').append('<option value="" selected>Buscando...</option>');
-                    }
-                });
-
-            });
-
-            $('.estado').change(function () {
-                $.ajax({
-                    method: "POST",
-                    url: "{{ url('/ciudadAjaxUser') }}",
-                    data: {entidad_id: $('#entidad_id').val(), '_token': $('input[name=_token]').val()},
-                    success: function (response) {
-                        $('#ciudad_id').html(response);
-
-                    },
-                    beforeSend: function () {
-                        $('#ciudad_id').append('<option value="" selected>Buscando...</option>');
-                    }
-                });
-
-            });
     </script>
 @stop
 

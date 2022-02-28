@@ -30,13 +30,31 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="form-group col-sm-12 col-md-6">
-                                <label for="">C&eacute;dula</label>
+                            <div class="form-group col-sm-12 col-md-4">
+                                <label for="">C&eacutedula</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-address-card"></i></span>
                                     </div>
                                     <input class="form-control" type="text" name="cedula">
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-12 col-md-4">
+                                <label for="">Serial:</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-address-card"></i></span>
+                                    </div>
+                                    <input class="form-control" type="text" name="serial">
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-12 col-md-4">
+                                <label for="">Codigo:</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-address-card"></i></span>
+                                    </div>
+                                    <input class="form-control" type="text" name="codigo">
                                 </div>
                             </div>
                         </div>
@@ -71,10 +89,10 @@
                                 <i class="fa fa-plus"></i> Nuevo</a>
 
                             <button type="button" onClick="reports('pdf')" class="btn btn-sm btn-primary">
-                                <i class="fa fa-file"></i> Pdf
+                                <i class="fa fa-file-pdf"></i> Pdf
                             </button>
                             <button type="button" onClick="reports('excel')" class="btn btn-sm btn-primary">
-                                <i class="fa fa-file"></i> Excel
+                                <i class="fa fa-file-excel"></i> Excel
                             </button>
                         </div>
                     </div>
@@ -201,8 +219,9 @@
 @section('script')
     <script type="text/javascript">
         function modal(item) {
-            let datatable ={!! $carnet !!}
-            const result = datatable.filter(datatable => datatable.id === item)
+            let datatable = {!! $carnet !!}
+                const
+            result = datatable.filter(datatable => datatable.id === item)
 
             $('input[name=mo_cedula]').val(result[0].cedula)
             //$('input[name=mo_email]').val(result[0].correo)
@@ -220,7 +239,7 @@
             //$('input[name=mo_roles]').val(result[0].roles)
         }
 
-        setTimeout(function() {
+        setTimeout(function () {
             $(".desva").fadeOut(6000)
         }, 12000)
 

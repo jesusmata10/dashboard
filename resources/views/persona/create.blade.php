@@ -38,26 +38,52 @@
                     <div class="row">
                         <div class="form-group col-4">
                             <label for="">C&eacute;dula:</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-address-card"></i></span>
+                                </div>
                             <input type="text" class="form-control" maxlength="10" name="cedula">
+                            </div>
                         </div>
                         <div class="form-group col-md-4">
                             <label for="correo">Correo Electr&oacute;nico:</label>
-                            <input class="form-control text-lowercase" type="text" name="correo">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-at"></i></span>
+                                </div>
+                                <input class="form-control text-lowercase" type="text" name="correo">
+                            </div>
                         </div>
                         <div class="form-group col-md-4">
                             <label for="rif">Rif:</label>
-                            <input class="form-control text-uppercase" type="text" name="rif">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-registered"></i></span>
+                                </div>
+                                <input class="form-control text-uppercase" type="text" name="rif">
+                            </div>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="form-group col-6">
                             <label for="nombres">Nombres:</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-signature"></i></span>
+                                </div>
                             <input type="text" class="form-control text-uppercase" name="nombres">
+                            </div>
                         </div>
                         <div class="form-group col-6">
                             <label for="apellidos">Apellidos:</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-signature"></i></span>
+                                </div>
                             <input class="form-control text-uppercase" type="text" name="apellidos">
+                            </div>
+
                         </div>
                     </div>
                     <div class="row">
@@ -74,22 +100,42 @@
                         </div>
                         <div class="form-group col-md-4">
                             <label for="lugarnac">Lugar de Nacimiento:</label>
+                                <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-map-marked-alt"></i></span>
+                                </div>
                             <input class="form-control text-uppercase" type="text" name="lugarnac">
+                                </div>
                         </div>
                         <div class="form-group col-md-4">
                             <label for="nacionalidad">Nacionalidad:</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-map"></i></span>
+                                </div>
                             <input class="form-control text-uppercase" type="text" name="nacionalidad">
+                            </div>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="form-group col-6">
                             <label for="telefono_fijo">Tel&eacute;fono Local:</label>
-                            <input class="form-control mask_tlf" type="text" name="telefono_fijo">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                </div>
+                                <input class="form-control mask_tlf" type="text" name="telefono_fijo">
+                            </div>
                         </div>
                         <div class="form-group col-6">
                             <label for="celular">Tel&eacute;fono M&oacute;vil:</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-mobile-alt"></i></span>
+                                </div>
                             <input class="form-control mask_tlf" type="text" name="celular">
+                            </div>
                         </div>
                     </div>
 
@@ -97,36 +143,56 @@
                         <div class="col-md-3" id="divEntidad" >
                             <div class="form-group">
                               <label for="estado_id">Entidad</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-globe-americas"></i></span>
+                                    </div>
                               <select class="form-control estado" name="estado_id"  id="entidad_id">
                                 <option value="" selected>Seleccione una opción</option>
                                 @foreach($entidad as $combo)
                                   <option value="{{ $combo->id }}">{{ $combo->estado }}</option>
                                 @endforeach
                               </select>
+                                </div>
                             </div>
                           </div>
                         <div class="col-md-3" id="divciudad" >
                             <div class="form-group">
                                 <label for="ciudad_id">Ciudad</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-city"></i></span>
+                                    </div>
                                 <select class="form-control" name="ciudad_id"  id="ciudad_id">
                                     <option value="" selected>Seleccione una opción</option>
                                 </select>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-3" id="divMunicipio" >
                           <div class="form-group">
                             <label for="municipio_id">Municipio</label>
+                              <div class="input-group">
+                                  <div class="input-group-prepend">
+                                      <span class="input-group-text"><i class="fas fa-city"></i></span>
+                                  </div>
                             <select class="form-control" name="municipio_id"  id="municipio_id">
                               <option value="" selected>Seleccione una opción</option>
                             </select>
+                              </div>
                           </div>
                         </div>
                         <div class="col-md-3" id="divParroquia" >
                           <div class="form-group">
                             <label for="parroquia_id">Parroquia</label>
+                              <div class="input-group">
+                                  <div class="input-group-prepend">
+                                      <span class="input-group-text"><i class="fas fa-map-pin"></i></span>
+                                  </div>
                             <select class="form-control" name="parroquia_id"  id="parroquia_id">
                               <option value="" selected>Seleccione una opción</option>
                             </select>
+                              </div>
                           </div>
                         </div>
                     </div>
@@ -135,18 +201,28 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="urbanizacion">Urbanizaci&oacute;n</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-city"></i></span>
+                                    </div>
                                 <input class="form-control text-uppercase" type="text" name="urbanizacion">
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="tzona">Zona</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-map-marked-alt"></i></span>
+                                    </div>
                                 <select class="form-control" name="tzona"  id="tzona">
                                 <option value="" selected>Seleccione una opción</option>
                                     @foreach($zonas as $combo)
                                       <option value="{{ $combo->id }}">{{ $combo->nombre }}</option>
                                     @endforeach
                                 </select>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -160,12 +236,17 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="tcalle">Area:</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-map-marked"></i></span>
+                                    </div>
                                 <select class="form-control" name="tcalle"  id="tcalle">
                                 <option value="" selected>Seleccione una opción</option>
                                     @foreach($area as $combo)
                                       <option value="{{ $combo->id }}">{{ $combo->nombre }}</option>
                                     @endforeach
                                 </select>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -177,12 +258,17 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="tvivienda">Hogar:</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-home"></i></span>
+                                    </div>
                                 <select class="form-control" name="tvivienda"  id="tvivienda">
                                 <option value="" selected>Seleccione una opción</option>
                                     @foreach($hogar as $combo)
                                       <option value="{{ $combo->id }}">{{ $combo->nombre }}</option>
                                     @endforeach
                                 </select>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -205,17 +291,32 @@
                     <div class="row">
                         <div class="form-group col-md-6">
                           <label for="nombrescf"> Nombres:</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-signature"></i></span>
+                                </div>
                           <input id="nombrescf" class="form-control text-uppercase" type="text" name="nombrescf">
+                            </div>
                         </div>
                         <div class="form-group col-md-6">
                           <label for="apellidoscf">Apellidos:</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-signature"></i></span>
+                                </div>
                           <input id="apellidoscf" class="form-control text-uppercase" type="text" name="apellidoscf">
+                            </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-md-4">
                           <label for="cedulacf">Cedula:</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-address-card"></i></span>
+                                </div>
                           <input id="cedulacf" class="form-control text-uppercase" type="text" name="cedulacf">
+                            </div>
                         </div>
                         <div class="form-group col-md-4">
                             <label for="fecha">Fecha:</label>
@@ -230,6 +331,10 @@
                         </div>
                         <div class="form-group col-md-4">
                           <label for="parentezco">Parentezco:</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-user-friends"></i></span>
+                                </div>
                           <select class="form-control" name="parentesco" id="parentesco">
                               <option value="" selected>Seleccione una opci&oacute;n</option>
                               <option value="Madre">Madre</option>
@@ -241,6 +346,7 @@
                               <option value="Sobrina">Sobrina</option>
                               <option value="Sobrino">Sobrino</option>
                           </select>
+                            </div>
                         </div>
                     </div>
                     <hr>
@@ -248,7 +354,7 @@
                     <div class="row">
                         <div class="form-group col-12">
                             <div class="float-right">
-                                <button id="btnAgregarFamiliar" class="btn btn-success" type="button">Agregar</button>
+                                <button id="btnAgregarFamiliar" class="btn btn-sm btn-success" type="button"><i class="fas fa-plus"></i> Agregar</button>
                             </div>
                         </div>
                     </div>
@@ -276,8 +382,8 @@
 
                 <div class="card-footer">
                     <div class="float-right">
-                        <a href="{{ url('/personas') }}" type="button" class="btn btn-danger">Cancelar</a>
-                        <button class="btn btn-primary" type="submit" id="registrar">Enviar</button>
+                        <a href="{{ url('/personas') }}" type="button" class="btn btn-sm btn-danger"><i class="fas fa-arrow-left"></i> Cancelar</a>
+                        <button class="btn btn-sm btn-primary" type="submit" id="registrar"><i class="fas fa-save"></i> Enviar</button>
                     </div>
                 </div>
             </div>

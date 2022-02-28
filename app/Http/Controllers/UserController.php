@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserCreateRequest;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
@@ -17,8 +18,6 @@ use App\Models\Ciudades;
 use App\Models\Tzona;
 use App\Models\Tcalle;
 use App\Models\Tvivienda;
-
-
 
 class UserController extends Controller
 {
@@ -84,21 +83,19 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserCreateRequest $request)
     {
         $input                   = $request->all();
         $input['remember_token'] = Str::random(10);
         $input['password']       = Hash::make($request->password);
+        dd($input);
         try {
             DB::transaction(function () use ($request, $input) {
                 $user = User::create($input);
 
                 $input['user_id'] = $user->id;
 
-                //Perfile::create($input);
-
                 $user->syncRoles($request->rol);
-                //Mail::to($user->email)->send(new SendMail($perfil));
             });
 
             return redirect('/usuario')->with('success', __('messages.stored_information'));
@@ -186,61 +183,52 @@ class UserController extends Controller
         //
     }
 
-     public function municipioAjaxUser(Request $request)
+    public function municipioAjaxUser(Request $request)
     {
         dd($request->all());
-      if ($request->ajax())
-      {
+        if ($request->ajax()) {
 
         //$lista = Municipio::listaMunicipios($request->entidad_id);
-        $lista = Municipios::where('estado_id',$request->ciudad_id)->get();
-        //dd($lista);
-        echo '<option disabled selected value="">Seleccione una opci&oacute;n</option>';
-        //echo '<option value="TODOS">TODOS LOS MUNICIPIOS</option>';
+            $lista = Municipios::where('estado_id', $request->ciudad_id)->get();
+            //dd($lista);
+            echo '<option disabled selected value="">Seleccione una opci&oacute;n</option>';
+            //echo '<option value="TODOS">TODOS LOS MUNICIPIOS</option>';
 
-        foreach ($lista as $value)
-        {
-            echo '<option value=' . $value->id . '>'. $value->municipio . '</option>';
+            foreach ($lista as $value) {
+                echo '<option value=' . $value->id . '>'. $value->municipio . '</option>';
+            }
         }
-      }
     }
 
     public function parroquiaAjaxUser(Request $request)
     {
+        if ($request->ajax()) {
+            //$lista = Parroquia::listaParroquias($request->municipio_id);
+            $lista = Parroquias::where('municipio_id', $request->municipio_id)->get();
 
-      if ($request->ajax())
-      {
-        //$lista = Parroquia::listaParroquias($request->municipio_id);
-        $lista = Parroquias::where('municipio_id',$request->municipio_id)->get();
+            echo '<option disabled selected value="">Seleccione una opci&oacute;n</option>';
+            //echo '<option value="TODAS">TODAS LAS PARROQUIAS</option>';
 
-        echo '<option disabled selected value="">Seleccione una opci&oacute;n</option>';
-        //echo '<option value="TODAS">TODAS LAS PARROQUIAS</option>';
-
-        foreach ($lista as $value)
-        {
-            echo '<option value=' . $value->id . '>'. $value->parroquia . '</option>';
+            foreach ($lista as $value) {
+                echo '<option value=' . $value->id . '>'. $value->parroquia . '</option>';
+            }
         }
-      }
     }
 
     public function ciudadAjaxUser(Request $request)
     {
-
-      if ($request->ajax())
-      {
+        if ($request->ajax()) {
 
         //$lista = Municipio::listaMunicipios($request->entidad_id);
-        $lista = Ciudades::where('estado_id',$request->entidad_id)->get();
+            $lista = Ciudades::where('estado_id', $request->entidad_id)->get();
 
-        //dd($lista);
-        echo '<option disabled selected value="">Seleccione una opci&oacute;n</option>';
-        //echo '<option value="TODOS">TODOS LOS MUNICIPIOS</option>';
+            //dd($lista);
+            echo '<option disabled selected value="">Seleccione una opci&oacute;n</option>';
+            //echo '<option value="TODOS">TODOS LOS MUNICIPIOS</option>';
 
-        foreach ($lista as $value)
-        {
-            echo '<option value=' . $value->id . '>'. $value->ciudad . '</option>';
+            foreach ($lista as $value) {
+                echo '<option value=' . $value->id . '>'. $value->ciudad . '</option>';
+            }
         }
-      }
     }
-
 }
