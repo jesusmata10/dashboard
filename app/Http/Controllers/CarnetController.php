@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CarnetCreateRequest;
 use App\Models\Carnet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -37,7 +38,7 @@ class CarnetController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CarnetCreateRequest $request)
     {
         $persona = DB::table('personas')
             ->select('id', 'cedula', 'nombres', 'apellidos')

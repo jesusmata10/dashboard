@@ -14,7 +14,7 @@
             @endif
 
             <form action="{{ route('carnetPatria.store') }}" method="POST" role="form" data-toggle="validator"
-                  class="form" id="personaForm" name="personaForm">
+                  class="form" id="carnetForm" name="carnetForm">
                 {{ csrf_field() }}
 
                 <div class="card">
@@ -60,6 +60,9 @@
     <div></div>
 @stop
 @section('js')
+
+    <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
+    {!! JsValidator::formRequest('App\Http\Requests\CarnetCreateRequest', '#carnetForm') !!}
     <script>
 
         $('.datepicker').datepicker({

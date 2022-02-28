@@ -90,7 +90,7 @@
                                     <th>NOMBRES Y APELLIDOS</th>
                                     <th>SERIAL</th>
                                     <th>CODIGO</th>
-                                    <th style="width:100px">ACCIONES</th>
+                                    <th style="width:150px">ACCIONES</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -106,16 +106,15 @@
                                             <div class="text-center">
                                                 <button type="button" onClick="modal({{ $items->id }})" title="Ver"
                                                         data-toggle="modal" data-target="#modal-xl"
-                                                        class="btn btn-outline-primary"><i class="fas fa-eye"></i>
+                                                        class="btn btn-sm btn-primary"><i class="fas fa-eye"></i>
                                                 </button>
-                                                @can('editar')
-                                                    <a href="{{ url('/usuario/'.encrypt($items->id).'/edit') }}"
-                                                       title="Editar" type="button" class="btn btn-outline-primary"><i
-                                                            class="fas fa-edit"></i></a>
-                                                @endcan
-                                                @can('eliminar')
-                                                <!-- button type="button" class="btn btn-outline-primary">Eliminar</button -->
-                                                @endcan
+
+                                                <a href="{{ url('/usuario/'.encrypt($items->id).'/edit') }}"
+                                                   title="Editar" type="button" class="btn btn-sm btn-primary">
+                                                    <i class="fas fa-edit"></i></a>
+
+                                                {{--<button type="button" class="btn btn-outline-primary"><i class="fas fa-eye"></i> Eliminar
+                                                </button>--}}
                                             </div>
                                         </td>
                                     </tr>
@@ -182,7 +181,7 @@
                         </div>
                         <div class="form-group col-6">
                             <label for="">Tel&eacute;fono Movil:</label>
-                            <input type="text" class="form-control" name="mo_telefono_movil" readonly>
+                            <input type="text" class="form-control" name="mo_celular" readonly>
                         </div>
                     </div>
                     <div class="row">
@@ -202,24 +201,28 @@
 @section('script')
     <script type="text/javascript">
         function modal(item) {
-            let datatable = {{--!! $report !!--}}
+            let datatable ={!! $carnet !!}
             const result = datatable.filter(datatable => datatable.id === item)
 
             $('input[name=mo_cedula]').val(result[0].cedula)
-            $('input[name=mo_email]').val(result[0].correo)
+            //$('input[name=mo_email]').val(result[0].correo)
             $('input[name=mo_nombres]').val(result[0].nombres)
             $('input[name=mo_apellidos]').val(result[0].apellidos)
-            $('input[name=mo_telefono_local]').val(result[0].telefono_local)
-            $('input[name=mo_telefono_movil]').val(result[0].telefono_movil)
+            //$('input[name=mo_telefono_local]').val(result[0].telefono_local)
+            $('input[name=mo_celular]').val(result[0].telefono_movil)
             //$('input[name=mo_entidad]').val(result[0].nombre_entidad)
             //$('input[name=mo_municipio]').val(result[0].nombre_municipio)
             //$('input[name=mo_parroquia]').val(result[0].nombre_parroquia)
             $('input[name=mo_direccion_habitacion]').val(result[0].direccion_habitacion)
             // $('input[name=mo_entidad]').val(result[0].entidad)
-            $('input[name=mo_estatus]').val(result[0].estatus)
-            $('input[name=mo_name]').val(result[0].name)
-            $('input[name=mo_roles]').val(result[0].roles)
+            //$('input[name=mo_estatus]').val(result[0].estatus)
+            //$('input[name=mo_name]').val(result[0].name)
+            //$('input[name=mo_roles]').val(result[0].roles)
         }
+
+        setTimeout(function() {
+            $(".desva").fadeOut(6000)
+        }, 12000)
 
         function validar() {
             var select = $('#form select').length
