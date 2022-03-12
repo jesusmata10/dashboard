@@ -18,9 +18,14 @@ class CarnetController extends Controller
      */
     public function index(Request $request)
     {
+
         $carnet = Carnet::consulta($request);
-        //dd($carnet);
-        return view('carnet.index', compact('carnet'));
+        //dump($carnet);
+        $lista = $carnet->paginate(2);
+        $report = $carnet->get(2);
+        //dd($report);
+
+        return view('carnet.index', compact('carnet', 'report', 'lista'));
     }
 
     /**
@@ -44,7 +49,7 @@ class CarnetController extends Controller
             ->select('id', 'cedula', 'nombres', 'apellidos')
             ->where('cedula', $request['cedula'])
             ->first();
-
+        //dd($persona);
         if ($persona == '') {
             return redirect('/carnetPatria/create')->with('error', 'Cedula no registrada en el sistemas');
         }

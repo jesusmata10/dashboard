@@ -27,7 +27,7 @@ class PersonasController extends Controller
         $carga_familiar = DB::table('personas')
             ->where('personas_id', '=', $request->id)
             ->get();
-        //dd($persona);
+        dump($persona->all());
         $datatable = Personas::sqlReport($request);
         //dd($datatable);
         return view('persona.index', compact('persona', 'carga_familiar', 'datatable'));

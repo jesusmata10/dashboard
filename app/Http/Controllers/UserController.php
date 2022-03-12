@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserCreateRequest;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -57,61 +59,57 @@ class UserController extends Controller
      */
     public function create()
     {
-        $breadcrumb = [
-            [
-                'link' => '#',
-                'name' => 'Configuración'
-            ],
-            [
-                'link' => '#',
-                'name' => 'Usuarios'
-            ]
-        ];
+        try {
+            $entidad = Entidades::all();
+            $zonas = Tzona::consulta();
+            $hogar = Tvivienda::consulta();
+            $area = Tcalle::consulta();
+            $roles = Role::select('id', 'name')->orderBy('name')->get();
 
-        $entidad = Entidades::all();
-        $zonas = Tzona::consulta();
-        $hogar = Tvivienda::consulta();
-        $area = Tcalle::consulta();
-        $roles = Role::select('id', 'name')->orderBy('name')->get();
+            return view('usuarios.create', compact('entidad', 'roles', 'zonas', 'hogar', 'area'));
+        } catch (QueryException $e) {
+            \Log::error('UserController.create', ['message' => $e->getMessage()]);
 
-        return view('usuarios.create', compact('breadcrumb', 'entidad', 'roles', 'zonas', 'hogar', 'area'));
+            return view('usuarios.create')->with('error', ('¡Ha ocurrido un error!'));
+        }
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(UserCreateRequest $request)
     {
-        $input                   = $request->all();
+        $input = $request->all();
+        $input['user_id'] = Auth::id();
         $input['remember_token'] = Str::random(10);
-        $input['password']       = Hash::make($request->password);
+        $input['password'] = Hash::make($request->password);
         dd($input);
         try {
             DB::transaction(function () use ($request, $input) {
                 $user = User::create($input);
 
-                $input['user_id'] = $user->id;
+                $personas = Personas::create($input);
 
                 $user->syncRoles($request->rol);
             });
 
-            return redirect('/usuario')->with('success', __('messages.stored_information'));
+            return redirect('/usuario')->with('success', 'messages.stored_information');
         } catch (QueryException $e) {
             \Log::error('UserController.store', [
                 'message' => $e->getMessage()
             ]);
 
-            return redirect('/usuario')->with('error', __('messages.information_not_stored'));
+            return redirect('/usuario')->with('error', 'messages.information_not_stored');
         }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -122,7 +120,7 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -163,8 +161,8 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -175,7 +173,7 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -185,17 +183,17 @@ class UserController extends Controller
 
     public function municipioAjaxUser(Request $request)
     {
-        dd($request->all());
+        //dd($request->all());
         if ($request->ajax()) {
 
-        //$lista = Municipio::listaMunicipios($request->entidad_id);
+            //$lista = Municipio::listaMunicipios($request->entidad_id);
             $lista = Municipios::where('estado_id', $request->ciudad_id)->get();
             //dd($lista);
             echo '<option disabled selected value="">Seleccione una opci&oacute;n</option>';
             //echo '<option value="TODOS">TODOS LOS MUNICIPIOS</option>';
 
             foreach ($lista as $value) {
-                echo '<option value=' . $value->id . '>'. $value->municipio . '</option>';
+                echo '<option value=' . $value->id . '>' . $value->municipio . '</option>';
             }
         }
     }
@@ -210,7 +208,7 @@ class UserController extends Controller
             //echo '<option value="TODAS">TODAS LAS PARROQUIAS</option>';
 
             foreach ($lista as $value) {
-                echo '<option value=' . $value->id . '>'. $value->parroquia . '</option>';
+                echo '<option value=' . $value->id . '>' . $value->parroquia . '</option>';
             }
         }
     }
@@ -219,7 +217,7 @@ class UserController extends Controller
     {
         if ($request->ajax()) {
 
-        //$lista = Municipio::listaMunicipios($request->entidad_id);
+            //$lista = Municipio::listaMunicipios($request->entidad_id);
             $lista = Ciudades::where('estado_id', $request->entidad_id)->get();
 
             //dd($lista);
@@ -227,7 +225,7 @@ class UserController extends Controller
             //echo '<option value="TODOS">TODOS LOS MUNICIPIOS</option>';
 
             foreach ($lista as $value) {
-                echo '<option value=' . $value->id . '>'. $value->ciudad . '</option>';
+                echo '<option value=' . $value->id . '>' . $value->ciudad . '</option>';
             }
         }
     }

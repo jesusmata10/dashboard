@@ -318,7 +318,7 @@
                           <input id="cedulacf" class="form-control text-uppercase" type="text" name="cedulacf">
                             </div>
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-sm-12 col-md-4">
                             <label for="fecha">Fecha:</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -404,7 +404,7 @@
 <script>
 
 $('.datepicker').datepicker({
-      format: "yyyy-mm-dd",
+      format: "dd-mm-yyyy",
       clearBtn: true,
       language: "es",
       orientation: "bottom auto",

@@ -4,13 +4,14 @@
     <div class="row">
         <div class="col-12">
             <form action="{{ url('/usuario') }}" method="POST" role="form" data-toggle="validator" class="form"
-                  id="userForm" name="userForm">
+                  id="usuarioForm" name="usuarioForm">
                 {{ csrf_field() }}
 
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Datos Personales</h3>
                     </div>
+
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group col-sm-12 col-md-6">
@@ -28,7 +29,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-at"></i></span>
                                     </div>
-                                    <input class="form-control text-lowercase" type="text" name="correo">
+                                    <input class="form-control text-lowercase" type="text" name="email">
                                 </div>
                             </div>
                         </div>
@@ -55,22 +56,34 @@
                         </div>
 
                         <div class="row">
-                            <div class="form-group col-sm-12 col-md-6">
+                            <div class="form-group col-sm-12 col-md-4">
+                                <label for="fecha">Fecha:</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="far fa-calendar-alt"></i>
+                                </span>
+                                    </div>
+                                    <input type="text" class="form-control float-right datepicker" name="fechacf"
+                                           id="fechacf" autocomplete="off" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-12 col-md-4">
                                 <label for="">Tel&eacute;fono Local:</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-phone"></i></span>
                                     </div>
-                                    <input class="form-control mask_tlf" type="text" name="telefono_local">
+                                    <input class="form-control mask_tlf" type="text" name="telefono_fijo">
                                 </div>
                             </div>
-                            <div class="form-group col-sm-12 col-md-6">
+                            <div class="form-group col-sm-12 col-md-4">
                                 <label for="">Tel&eacute;fono M&oacute;vil:</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-mobile-alt"></i></span>
                                     </div>
-                                    <input class="form-control mask_tlf" type="text" name="telefono_movil">
+                                    <input class="form-control mask_tlf" type="text" name="celular">
                                 </div>
                             </div>
                         </div>
@@ -317,10 +330,16 @@
 @stop
 @section('js')
 
-    <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
-    {!! JsValidator::formRequest('App\Http\Requests\UserCreateRequest', '#userForm') !!}
-
     <script>
+        $('.datepicker').datepicker({
+            format: "dd-mm-yyyy",
+            clearBtn: true,
+            language: "es",
+            orientation: "bottom auto",
+            changeYear: false,
+            endDate: new Date()
+        });
+
         $('#entidad_id').change(function () {
             $.ajax({
                 method: "POST",
@@ -339,7 +358,7 @@
             });
         });
 
-        $('#municipio_id').change(function () {
+        /*$('#municipio_id').change(function () {
             $.ajax({
                 method: "POST",
                 url: "{{ url('/parroquiaAjaxUser') }}",
@@ -354,7 +373,7 @@
                 }
             });
 
-        });
+        });*/
 
         function checkStrength(password) {
             var strength = 0
@@ -404,14 +423,12 @@
                 })
         })
 
-        function validaClave()
-        {
-            valor =  $("#password").val();
+        function validaClave() {
+            valor = $("#password").val();
             longitud = $("#password").val().length;
-            if(longitud > 15)
-            {
+            if (longitud > 15) {
                 valor = valor.toString();
-                valor =valor.slice (0, 15);
+                valor = valor.slice(0, 15);
                 $("#password").val(valor);
                 $('#message').html("@lang('message.longitudClave')");
                 $('#msj').show();
@@ -419,17 +436,21 @@
             }
         }
 
-        function verificarIgualdad(){
-            var password      = $("#password").val();
+        function verificarIgualdad() {
+            var password = $("#password").val();
             var passwordNuevo = $("#confirm_password").val();
 
-            if(password == passwordNuevo){
+            if (password == passwordNuevo) {
                 $("#mensajeIogualdadPass").html("");
                 $("#usuarioForm").submit();
-            }else{
+            } else {
                 $("#mensajeIogualdadPass").html("Los campos de nueva contraseña y confirmación no coinciden");
             }
 
         }
     </script>
+
+    <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
+    {!! JsValidator::formRequest('App\Http\Requests\UserCreateRequest', '#usuarioForm') !!}
+
 @stop

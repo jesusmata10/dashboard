@@ -21,18 +21,52 @@ class Carnet extends Model
         'updated_at',
     ];
 
+    /*public function personas()
+    {
+        return $this->belongsTo(personas::class);
+    }*/
+
     public static function consulta($search)
     {
         $data = DB::table('carnet as c')
-            ->select(DB::raw('row_number() OVER (ORDER BY p.cedula) as num'), 'p.id', 'p.nombres', 'p.apellidos', 'p.cedula', 'c.serial', 'c.codigo', 'c.personas_id')
+            ->select(DB::raw('row_number() OVER (ORDER BY p.cedula) as num'), 'p.id', 'p.nombres', 'p.apellidos', 'p.cedula', 'c.serial', 'p.celular', 'c.codigo', 'c.personas_id')
             ->join('personas as p', 'p.id', 'c.personas_id');
 
-        if (null != $search->cedula) {
+        if ($search->cedula != null) {
             $data->where('p.cedula', $search->cedula);
         }
 
-        return $data->orderBy('p.cedula')->distinct()->get();
+        if ($search->serial != null) {
+            $data->where('c.serial', $search->serial);
+        }
+
+        if ($search->codigo != null) {
+            $data->where('c.codigo', $search->codigo);
+        }
+
+        return $data->orderBy('p.cedula')->distinct();
     }
 
+    public static function sqlreport($texto)
+    {
+        $sqlreport = DB::table('carnet as c')
+            ->select(
+                DB::raw('row_number() OVER (ORDER BY p.cedula) as num'),
+                'p.id',
+                'p.nombres',
+                'p.apellidos',
+                'p.cedula',
+                'p.celular',
+                'c.serial',
+                'c.codigo',
+                'c.personas_id'
+            )
+            ->join('personas as p', 'p.id', 'c.personas_id')
+            ->where('p.cedula', 'LIKE', '%' . $texto->cedula . '%')
+            //->orwhere('c.serial', 'LIKE', '%' . $texto->serial . '%')
+            //->orwhere('c.codigo', 'LIKE', '%' . $search->codigo . '%')
+            ->orderBy('p.cedula', 'asc');
 
+        return $sqlreport;
+    }
 }

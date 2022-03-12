@@ -27,7 +27,6 @@ class Direccion extends Model
         'nvivienda',
         'status'
 
-
     ];
 
     protected $hidden = [
@@ -36,5 +35,10 @@ class Direccion extends Model
         'updated_at'
 
     ];
+
+    public function personas(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Personas::class);
+    }
 
 }
