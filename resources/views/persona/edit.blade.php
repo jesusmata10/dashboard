@@ -34,8 +34,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-address-card"></i></span>
                                     </div>
-                                    <input type="text" class="form-control" maxlength="9" name="cedula"
-                                           value="{{ $persona->cedula }}" readonly>
+                                    <input type="text" class="form-control" maxlength="9" name="cedula" value="{{ $persona->cedula }}" readonly>
                                 </div>
                             </div>
                             <div class="form-group col-md-4">
@@ -44,14 +43,12 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-at"></i></span>
                                     </div>
-                                    <input class="form-control text-lowercase" type="text" name="correo"
-                                           value="{{ $persona->correo }}">
+                                    <input class="form-control text-lowercase" type="text" name="correo" value="{{ $persona->correo }}">
                                 </div>
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="rif">Rif:</label>
-                                <input class="form-control text-uppercase" type="text" name="rif"
-                                       value="{{ $persona->rif }}">
+                                <input class="form-control text-uppercase" type="text" name="rif" value="{{ $persona->rif }}">
                             </div>
                         </div>
 
@@ -113,8 +110,7 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="nacionalidad">Nacionalidad:</label>
-                                <input class="form-control text-uppercase" type="text" name="nacionalidad"
-                                       value="{{ $persona->nacionalidad }}">
+                                <input class="form-control text-uppercase" type="text" name="nacionalidad" value="{{ $persona->nacionalidad }}">
                             </div>
                         </div>
 
@@ -333,7 +329,6 @@
 
         $(document).ready(function () {
 
-
             $('#entidad_id').change(function () {
                 $.ajax({
                     method: "POST",
@@ -381,7 +376,7 @@
                         $('#ciudad_id').append('<option value="" selected>Buscando...</option>');
                     }
                 });
-
             });
+        })
     </script>
 @stop

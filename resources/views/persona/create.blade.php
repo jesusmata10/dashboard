@@ -18,7 +18,7 @@
                     <div class="card-body">
 
                         <div class="row">
-                            <div class="form-group col-4">
+                            <div class="form-group col-sm-12 col-md-4">
                                 <label for="cedula">(*) C&eacute;dula:</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -27,7 +27,7 @@
                                     <input type="text" class="form-control" maxlength="10" name="cedula">
                                 </div>
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-sm-12 col-md-4">
                                 <label for="correo">(*) Correo Electr&oacute;nico:</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -36,7 +36,7 @@
                                     <input class="form-control text-lowercase" type="text" name="correo">
                                 </div>
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-sm-12 col-md-4">
                                 <label for="rif">Rif:</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -415,11 +415,9 @@
 
                     <div class="card-footer">
                         <div class="float-right">
-                            <a href="{{ url('/personas') }}" type="button" class="btn btn-sm btn-danger"><i
-                                    class="fas fa-arrow-left"></i> Cancelar</a>
-                            <button class="btn btn-sm btn-primary" type="submit" id="registrar"><i
-                                    class="fas fa-save"></i> Enviar
+                            <button class="btn btn-sm btn-primary" type="submit" id="registrar"><i class="fas fa-save"></i> Enviar
                             </button>
+                            <a href="{{ url('/personas') }}" type="button" class="btn btn-sm btn-danger"><i class="fas fa-arrow-left"></i> Cancelar</a>
                         </div>
                     </div>
                 </div>
@@ -475,9 +473,8 @@
                     parentesco: parentesco,
                     parentescotxt: parentescotxt
                 }
-                console.log(data);
+
                 let accion = JSON.stringify(data)
-                console.log(accion);
                 if (primer_nombre !== '' && primer_apellido !== '' && fecha !== '' && parentesco !== '') {
                     $('#mytable').append(`
 
@@ -527,14 +524,13 @@
 
         });
 
-        $('#ciudad_id').change(function () {
+        $('#entidad_id').change(function () {
             $.ajax({
                 method: "POST",
                 url: "{{ url('/municipioAjaxUser') }}",
                 data: {entidad_id: $('#entidad_id').val(), '_token': $('input[name=_token]').val()},
                 success: function (response) {
                     $('#municipio_id').html(response);
-                    $('#cuidad_id').empty();
                     $("#parroquia_id").empty();
                     $('#parroquia_id').append('<option value="" selected>Seleccione una opción</option>');
 
@@ -577,8 +573,7 @@
             });
 
         });
-
-
+        
     </script>
 @stop
 
