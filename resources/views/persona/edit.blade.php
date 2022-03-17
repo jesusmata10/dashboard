@@ -15,13 +15,6 @@
                 </div>
             @endif
 
-            {{--@if ($search == 'v' && $data->isEmpty())
-                <div id="sinResultados"  role="alert">
-                </div>
-            @elseif ($search != 'v' && $data->isEmpty())
-                <div id="sinResultados"  role="alert">
-                </div>
-            @endif--}}
 
             <form action="{{-- route('personas.store') --}}" method="POST" role="form" data-toggle="validator"
                   class="form" id="personaForm" name="personaForm">
@@ -63,29 +56,40 @@
                         </div>
 
                         <div class="row">
-                            <div class="form-group col-sm-12 col-md-6">
-                                <label for="">(*) Nombre Usuario:</label>
+                            <div class="form-group col-md-3">
+                                <label for="primer_nombre">(*) Primer Nombre:</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-signature"></i></span>
                                     </div>
-                                    <input type="text" class="form-control text-lowercase"
-                                           value="{{ isset($user->name) ? $user->name : '' }}">
+                                    <input id="primer_nombre" class="form-control text-uppercase" type="text" name="primer_nombre" value="{{ isset($persona->primer_nombre) ? $persona->primer_nombre : '' }}">
                                 </div>
                             </div>
-                            {{--<div class="form-group col-6">
-                                <label for="nombres">Nombres:</label>
-                                <input type="text" class="form-control text-uppercase" name="nombres"
-                                       value="{{ $persona->nombres}}">
-                            </div>--}}
-                            <div class="form-group col-6">
-                                <label for="apellidos">Apellidos:</label>
+                            <div class="form-group col-md-3">
+                                <label for="segundo_nombre">Segundo Nombre:</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-signature"></i></span>
                                     </div>
-                                    <input class="form-control text-uppercase" type="text" name="apellidos"
-                                           value="{{ $persona->apellidos }}">
+                                    <input id="segundo_nombre" class="form-control text-uppercase" type="text" name="segundo_nombre" value="{{ isset($persona->segundo_nombre) ? $persona->segundo_nombre : '' }}">
+                                </div>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="primer_apellido">(*) Primer Apellido:</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-signature"></i></span>
+                                    </div>
+                                    <input id="primer_apellido" class="form-control text-uppercase" type="text" name="primer_apellido" value="{{ isset($persona->primer_apellido) ? $persona->primer_apellido : '' }}">
+                                </div>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="segundo_apellido">Segundo Apellido:</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-signature"></i></span>
+                                    </div>
+                                    <input id="segundo_apellido" class="form-control text-uppercase" type="text" name="segundo_apellido" value="{{ isset($persona->segundo_apellido) ? $persona->segundo_apellido : '' }}">
                                 </div>
                             </div>
                         </div>

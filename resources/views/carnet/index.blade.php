@@ -4,10 +4,6 @@
     <div class="row">
         <div class="col-12">
 
-            <div id="criterioBusqueda" class="alert alert-danger desva" style="display: none" role="alert">
-                Debe seleccionar un criterio de b&uacute;squeda
-            </div>
-
             <form action="{{ route('carnetPatria.index') }}" method="GET" role="form" id="form">
 
                 <div class="card collapsed-card">
@@ -109,13 +105,14 @@
                                                 <div class="text-center">
                                                     <button type="button" onClick="modal({{ $items->id }})" title="Ver"
                                                             data-toggle="modal" data-target="#modal-xl"
-                                                            class="btn btn-sm btn-primary"><i class="fas fa-eye"></i>
+                                                            class="btn btn-sm btn-success"><i class="fas fa-eye"></i>
                                                     </button>
-                                                    <a href="{{ url('/usuario/'.encrypt($items->id).'/edit') }}"
+                                                    <a href="{{ url('/carnetPatria/'.encrypt($items->id).'/edit') }}"
                                                        title="Editar" type="button" class="btn btn-sm btn-primary"><i
                                                             class="fas fa-edit"></i></a>
-                                                    {{--<button type="button" class="btn btn-outline-primary"><i class="fas fa-eye"></i> Eliminar
-                                                    </button>--}}
+                                                    <a href="{{ url('/carnetPatria/'.encrypt($items->id).'/destroy') }}"
+                                                       title="Editar" type="button" class="btn btn-sm btn-danger"><i
+                                                            class="fas fa-eraser" title="Eliminar"></i></a>
                                                 </div>
                                             </td>
                                         </tr>
@@ -187,7 +184,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>
@@ -197,6 +194,14 @@
 @section('js')
 
     <script type="text/javascript">
+        @if(session('success'))
+            toastr.options = {
+            "closeButton": true,
+            "progressBar": true
+        }
+        toastr.success("{{ session('success') }}");
+
+        @endif
 
         function modal(item) {
             let datatable = {!! $report !!}
@@ -212,9 +217,9 @@
             $('#modal-xl').modal('show');
         }
 
-        /*setTimeout(function () {
+        setTimeout(function () {
             $(".desva").fadeOut(6000)
-        }, 12000)*/
+        }, 12000)
 
         function validar() {
             var select = $('#form select').length
@@ -252,7 +257,8 @@
             }
 
             if (!flag) {
-                $('#criterioBusqueda').show()
+
+                toastr.error("Debe seleccionar un criterio de b&uacute;squeda");
 
             } else {
                 $("#form").submit()

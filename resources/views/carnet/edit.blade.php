@@ -74,11 +74,10 @@
             toastr.options = {
             "closeButton": true,
             "progressBar": true
-            }
-            toastr.error("{{ session('error') }}");
+        }
+        toastr.error("{{ session('error') }}");
 
         @endif
 
     </script>
 @stop
-

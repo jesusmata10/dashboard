@@ -247,13 +247,13 @@ return [
             'url'  => 'admin/blog',
             'can'  => 'manage-blog',
         ],
-        /*[
+        [
             'text'        => 'pages',
             'url'         => 'admin/pages',
             'icon'        => 'far fa-fw fa-file',
             'label'       => 4,
             'label_color' => 'success',
-        ],*/
+        ],
         ['header' => 'account_settings'],
         [
             'text' => 'Registro',
@@ -471,7 +471,7 @@ return [
                 ],
             ],
         ],
-        'Sweetalert2' => [
+        'Sweetalert22' => [
             'active' => false,
             'files' => [
                 [
@@ -503,6 +503,26 @@ return [
                     'type' => 'js',
                     'asset' => true,
                     'location' => 'vendor/bs-custom-file-input/bs-custom-file-input.min.js',
+                ],
+            ],
+        ],
+        'Sweetalert2' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/sweetalert2/sweetalert2.all.js',
+                ],
+            ],
+        ],
+        'toastr' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/toastr/toastr.min.js',
                 ],
             ],
         ],

@@ -85,6 +85,7 @@ class CarnetController extends Controller
      */
     public function show($id)
     {
+        return view('carnet.edit');
     }
 
     /**
@@ -118,5 +119,6 @@ class CarnetController extends Controller
      */
     public function destroy($id)
     {
+
     }
 }

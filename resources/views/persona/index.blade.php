@@ -99,8 +99,8 @@
 
                 <div class="row">
                     <div class="col-12">
-                    <div class="table-responsive">
-                        <table id="example2" class="table table-bordered table-hover">
+                        <div class="table-responsive">
+                            <table id="example2" class="table table-sm table-bordered table-hover">
                             <thead>
                                 <tr class="text-center">
                                     <th style="width:50px">N°</th>
@@ -111,7 +111,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($datatable as $items)
+                                @foreach($lista as $items)
                                 <tr class="text-center">
                                     <td>{{ $items->num }}</td>
                                     <td>{{ $items->nombres . ' ' . $items->apellidos }}</td>
@@ -134,13 +134,13 @@
                     </div>
                 </div>
             </div>
-            {{--@if($users->total() > 10)
+            @if ($lista->total() > 2)
                 <div class="card-footer">
                     <div class="float-right">
-                        {{ $users->links() }}
+                        {{ $lista->withQueryString()->links() }}
                     </div>
                 </div>
-            @endif--}}
+            @endif
         </div>
 
     </div>
@@ -226,7 +226,8 @@
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <table id="example2" class="table table-bordered table-hover">
+                        <div class="table-responsive">
+                            <table id="example2" class="table table-sm table-bordered table-hover">
                             <thead>
                                 <tr class="text-center">
                                     <th style="width:50px">N°</th>
@@ -246,6 +247,7 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        </div>
                     </div>
                 </div>
 
@@ -267,20 +269,13 @@
     </div>
 </div>
 
-
 @endsection
-@section('footer')
-<div></div>
-@stop
+
 @section('js')
-<script>
-    /*$('.openBtn').on('click',function(){
-    $('.modal-body').load('getContent.php?id=2',function(){
-        $('#myModal').modal({show:true});
-    });
-});
-    function modal(item) {
-            let datatable = {{--{!! $report !!}--}}
+    <script>
+
+        function modal(item) {
+            let datatable = {!! $report !!}
             const result = datatable.filter(datatable => datatable.id === item)
 
             $('input[name=mo_cedula]').val(result[0].cedula)
@@ -297,10 +292,7 @@
             $('input[name=mo_estatus]').val(result[0].estatus)
             $('input[name=mo_name]').val(result[0].name)
             $('input[name=mo_roles]').val(result[0].roles)
-        }*/
-
-    $(document).ready(function() {
-
+        }
         function validar() {
             var select = $('#form select').length
             var text = $('#form input[type=text]').length
@@ -337,144 +329,73 @@
             }
 
             if (!flag) {
-                $('#criterioBusqueda').show()
-                setTimeout(function() {
-                    $(".desva").fadeOut(6000);
-                }, 12000)
+                toastr.error("Debe seleccionar un criterio de b&uacute;squeda");
             } else {
                 $("#form").submit()
             }
         }
 
-        $('#btnAgregarFamiliar').on('click', function() {
-            accionAgregarFamiliar();
+        $('#entidad_id').change(function() {
+            $.ajax({
+                method: "POST",
+                url: "{{ url('/municipioAjaxUser') }}",
+                data: {
+                    entidad_id: $('#entidad_id').val(),
+                    '_token': $('input[name=_token]').val()
+                },
+                success: function(response) {
+                    $('#municipio_id').html(response);
+                    $("#parroquia_id").empty();
+                    $('#parroquia_id').append('<option value="" selected>Seleccione una opción</option>');
+
+                },
+                beforeSend: function() {
+                    $('#municipio_id').append('<option value="" selected>Buscando...</option>');
+                }
+            });
         })
 
+        $('#municipio_id').change(function() {
+            $.ajax({
+                method: "POST",
+                url: "{{ url('/parroquiaAjaxUser') }}",
+                data: {
+                    municipio_id: $('#municipio_id').val(),
+                    '_token': $('input[name=_token]').val()
+                },
+                success: function(response) {
+                    $('#parroquia_id').html(response);
 
-        accionAgregarFamiliar = function() {
-            var id = ++$("input[name='personaTemp[]']").length
-            let nombres = $('#nombres').val()
-            let apellidos = $('#apellidos').val()
-            let cedula = $('#cedula').val()
-            let fecha = $('#fecha').val()
-            let parentezco = $('#parentezco').val()
-            let parentezcotxt = $('#parentezco option:selected').text()
+                },
+                beforeSend: function() {
+                    $('#parroquia_id').append('<option value="" selected>Buscando...</option>');
+                }
+            });
 
-            let data = {
-                id: id,
-                nombres: nombres,
-                apellidos: apellidos,
-                cedula: cedula,
-                fecha: fecha,
-                parentezco: parentezco,
-                parentezcotxt: parentezcotxt
-            }
+        })
 
-            let accion = JSON.stringify(data)
-            console.log(accion);
-            if (nombres !== '' && apellidos !== '' && fecha !== '' && parentezco !== '') {
-                $('#mytable').append(`
+        function reports(type) {
+            var link = window.location.search
+            var inicio = link.indexOf('&')
 
-            <tr id="row${id}">
-                <td style="display: none">
-                    <input type="hidden" name="personaTemp[]" value='${accion}' />
-                </td>
-                <td>${nombres}</td>
-                <td>${apellidos}</td>
-                <td>${cedula}</td>
-                <td>${fecha}</td>
-                <td>${parentezcotxt}</td>
-                <td>
-                    <button type="button" class="btn btn-danger" onclick='eliminarFamiliar(${id})'>
-                        <i class="fa fa-trash"></i>
-                    </button>
-                </td>
-            </tr>
-
-        `);
-
+            if (inicio == -1) {
+                cadena = ''
             } else {
-                $('#alert').html('Debe cargar toda la información de la sección de Servicios');
-                $('#alert').fadeIn();
-                setTimeout(function() {
-                    $('#alert').fadeOut();
-                }, 3000);
+                var cadena = link.substring(inicio)
             }
 
-            //limpia los input despues de insertar
-            $('#nombres').val('');
-            $('#apellidos').val('');
-            $('#cedula').val('');
-            $('#fecha').val('');
-            $('#parentezco').val('');
-
-        }
-
-        //elimina el registro selecionado
-        eliminarFamiliar = function(id) {
-            $('#row' + id).remove();
-        }
-
-    });
-
-    $('#entidad_id').change(function() {
-        $.ajax({
-            method: "POST",
-            url: "{{ url('/municipioAjaxUser') }}",
-            data: {
-                entidad_id: $('#entidad_id').val(),
-                '_token': $('input[name=_token]').val()
-            },
-            success: function(response) {
-                $('#municipio_id').html(response);
-                $("#parroquia_id").empty();
-                $('#parroquia_id').append('<option value="" selected>Seleccione una opción</option>');
-
-            },
-            beforeSend: function() {
-                $('#municipio_id').append('<option value="" selected>Buscando...</option>');
+            if (type == 'pdf') {
+                window.open('{{ url('/personasPdf') }}' + '?' + cadena, '_blank')
+            } else {
+                window.open('{{ url('/personasExcel') }}' + '?' + cadena, '_blank')
             }
-        });
-    });
-
-    $('#municipio_id').change(function() {
-        $.ajax({
-            method: "POST",
-            url: "{{ url('/parroquiaAjaxUser') }}",
-            data: {
-                municipio_id: $('#municipio_id').val(),
-                '_token': $('input[name=_token]').val()
-            },
-            success: function(response) {
-                $('#parroquia_id').html(response);
-
-            },
-            beforeSend: function() {
-                $('#parroquia_id').append('<option value="" selected>Buscando...</option>');
-            }
-        });
-
-    });
-
-    function reports(type) {
-        var link = window.location.search
-        var inicio = link.indexOf('&')
-
-        if (inicio == -1) {
-            cadena = ''
-        } else {
-            var cadena = link.substring(inicio)
         }
 
-        if (type == 'pdf') {
-            window.open('{{ url('/personasPdf') }}' + '?' + cadena, '_blank')
-        } else {
-            window.open('{{ url('/personasExcel') }}' + '?' + cadena, '_blank')
-        }
-    }
 
-    desvanecer()
-
-</script>
+    </script>
 
 @stop
+@section('footer')
+<div></div>
+@stop
+

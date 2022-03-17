@@ -137,7 +137,7 @@
 
 @section('footer')
 <div class="row">
- 
+
 </div>
 @stop
 
@@ -147,4 +147,11 @@
 
 @section('js')
     <script> console.log('Hi!'); </script>
+    <script>
+        Swal.fire(
+            'The Internet?',
+            'That thing is still around?',
+            'question'
+        )
+    </script>
 @stop

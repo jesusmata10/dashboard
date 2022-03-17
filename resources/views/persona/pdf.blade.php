@@ -41,7 +41,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach ($datatable as $items)
+        @foreach ($lista as $items)
             <tr class="text-center" style="font-size:10pt">
                 <td> {{$items->num}} </td>
                 <td> {{$items->cedula}} </td>

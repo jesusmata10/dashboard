@@ -15,3 +15,5 @@ yarn-error.log
 /.idea
 /resources/views/vendor/
 /public/vendor/
+.idea/dashboard.iml
+

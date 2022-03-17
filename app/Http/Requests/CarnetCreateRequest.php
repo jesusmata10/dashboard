@@ -27,6 +27,9 @@ class CarnetCreateRequest extends FormRequest
     {
         return [
             'cedula' => 'required',
+            'personas_id' => [
+                Rule::unique('carnet')->ignore($this->id),
+            ],
             'serial' => [
                 'required',
                 Rule::unique('carnet')->ignore($this->id),

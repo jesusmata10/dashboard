@@ -23,14 +23,17 @@ class PersonasController extends Controller
      */
     public function index(Request $request)
     {
-        $persona = Personas::all()->where('personas_id', '=', 0);
+        $persona = Personas::sqlReport($request);
+        $lista = $persona->paginate(2);
+        $report = $persona->get(2);
+
         $carga_familiar = DB::table('personas')
             ->where('personas_id', '=', $request->id)
             ->get();
-        dump($persona->all());
+        //dump($persona->all());
         $datatable = Personas::sqlReport($request);
-        //dd($datatable);
-        return view('persona.index', compact('persona', 'carga_familiar', 'datatable'));
+
+        return view('persona.index', compact('persona', 'carga_familiar', 'datatable', 'lista', 'report'));
     }
 
     /**
@@ -231,9 +234,11 @@ class PersonasController extends Controller
 
     public function pdf(Request $request)
     {
-        $datatable = Personas::sqlReport($request);
+        $persona = Personas::sqlReport($request);
+        $lista = $persona->paginate(2);
+        $report = $persona->get(2);
         //dd($datatable);
-        return PDF::loadView('persona.pdf', compact('datatable'))
+        return PDF::loadView('persona.pdf', compact('lista', 'report'))
             ->setPaper('letter', 'landscape')
             ->stream('persona.pdf');
     }
