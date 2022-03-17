@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="ProjectModuleManager">
-    <modules>
-      <module fileurl="file://$PROJECT_DIR$/../admin_delfin10/.idea/admin_delfin10.iml" filepath="$PROJECT_DIR$/../admin_delfin10/.idea/admin_delfin10.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/dashboard.iml" filepath="$PROJECT_DIR$/.idea/dashboard.iml" />
-    </modules>
-  </component>
-</project>
