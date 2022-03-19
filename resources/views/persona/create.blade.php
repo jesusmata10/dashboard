@@ -378,6 +378,26 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="form-group col-md-4">
+                                <label for="lugarnacf">(*) Lugar de Nacimiento:</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-map-marked-alt"></i></span>
+                                    </div>
+                                    <input class="form-control text-uppercase" type="text" name="lugarnacf">
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="nacionalidadf">(*) Nacionalidad:</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-map"></i></span>
+                                    </div>
+                                    <input class="form-control text-uppercase" type="text" name="nacionalidadf">
+                                </div>
+                            </div>
+                        </div>
                         <hr>
 
                         <div class="row">
@@ -415,9 +435,11 @@
 
                     <div class="card-footer">
                         <div class="float-right">
-                            <button class="btn btn-sm btn-primary" type="submit" id="registrar"><i class="fas fa-save"></i> Enviar
+                            <button class="btn btn-sm btn-primary" type="submit" id="registrar"><i
+                                    class="fas fa-save"></i> Enviar
                             </button>
-                            <a href="{{ url('/personas') }}" type="button" class="btn btn-sm btn-danger"><i class="fas fa-arrow-left"></i> Cancelar</a>
+                            <a href="{{ url('/personas') }}" type="button" class="btn btn-sm btn-danger"><i
+                                    class="fas fa-arrow-left"></i> Cancelar</a>
                         </div>
                     </div>
                 </div>
@@ -573,7 +595,7 @@
             });
 
         });
-        
+
     </script>
 @stop
 
