@@ -46,21 +46,42 @@
                             </div>
                         </div>
                         <div class="form-group col-4">
-                            <label for="">Nombres</label>
+                            <label for="primer_nombre">Primer Nombre</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-signature"></i></span>
                                 </div>
-                                <input class="form-control text-uppercase" type="text" name="nombres">
+                                <input class="form-control text-uppercase" type="text" name="primer_nombre">
                             </div>
                         </div>
                         <div class="form-group col-4">
-                            <label for="">Apellidos</label>
+                            <label for="segundo_nombre">Segundo Nombre</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-signature"></i></span>
                                 </div>
-                                <input class="form-control text-uppercase" type="text" name="apellidos">
+                                <input class="form-control text-uppercase" type="text" name="segundo_nombre">
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-4">
+                            <label for="primer_apellido">Primer Apellido</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-signature"></i></span>
+                                </div>
+                                <input class="form-control text-uppercase" type="text" name="primer_apellido">
+                            </div>
+                        </div>
+                        <div class="form-group col-4">
+                            <label for="segundo_apellido">Segundo Apellido</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-signature"></i></span>
+                                </div>
+                                <input class="form-control text-uppercase" type="text" name="segundo_apellido">
                             </div>
                         </div>
                     </div>

@@ -21,30 +21,30 @@ class Carnet extends Model
         'updated_at',
     ];
 
-    /*public function personas()
+    public function personas()
     {
         return $this->belongsTo(personas::class);
-    }*/
+    }
 
     public static function consulta($search)
     {
-        $data = DB::table('carnet as c')
-            ->select(DB::raw('row_number() OVER (ORDER BY p.cedula) as num'), 'p.id', 'p.nombres', 'p.apellidos', 'p.cedula', 'c.serial', 'p.celular', 'c.codigo', 'c.personas_id')
-            ->join('personas as p', 'p.id', 'c.personas_id');
+        $data = DB ::table('carnet as c')
+            -> select(DB ::raw('row_number() OVER (ORDER BY p.cedula) as num'), 'p.id', 'p.primer_nombre', 'p.segundo_nombre', 'p.primer_apellido', 'p.segundo_apellido', 'p.cedula', 'c.serial', 'p.celular', 'c.codigo', 'c.personas_id')
+            -> join('personas as p', 'p.id', 'c.personas_id');
 
-        if ($search->cedula != null) {
-            $data->where('p.cedula', $search->cedula);
+        if ($search -> cedula != null) {
+            $data -> where('p.cedula', $search -> cedula);
         }
 
-        if ($search->serial != null) {
-            $data->where('c.serial', $search->serial);
+        if ($search -> serial != null) {
+            $data -> where('c.serial', $search -> serial);
         }
 
-        if ($search->codigo != null) {
-            $data->where('c.codigo', $search->codigo);
+        if ($search -> codigo != null) {
+            $data -> where('c.codigo', $search -> codigo);
         }
 
-        return $data->orderBy('p.cedula')->distinct();
+        return $data -> orderBy('p.cedula') -> distinct();
     }
 
     public static function sqlreport($texto)
@@ -53,8 +53,10 @@ class Carnet extends Model
             ->select(
                 DB::raw('row_number() OVER (ORDER BY p.cedula) as num'),
                 'p.id',
-                'p.nombres',
-                'p.apellidos',
+                'p.primer_nombre',
+                'p.segundo_nombre',
+                'p.primer_apellido',
+                'p.segundo_apellido',
                 'p.cedula',
                 'p.celular',
                 'c.serial',

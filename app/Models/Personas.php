@@ -5,18 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-use App\Models\Carnet;
 
 class Personas extends Model
 {
     use HasFactory;
 
-    protected $table = "personas";
+    protected $table = 'personas';
 
     protected $fillable = [
-
-        'nombres',
-        'apellidos',
+        'primer_nombre',
+        'segundo_nombre',
+        'primer_apellido',
+        'segundo_apellido',
         'cedula',
         'fecha',
         'telefono_fijo',
@@ -27,8 +27,8 @@ class Personas extends Model
         'nacionalidad',
         'personas_id',
         'parentesco',
-        'user_id'
-
+        'user_id',
+        'vocero_id',
     ];
 
     protected $hidden = [
@@ -37,9 +37,8 @@ class Personas extends Model
     ];
 
     protected $with = [
-        'carnet', 'direccion'
+        'carnet', 'direccion',
     ];
-
 
     public function carnet(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
@@ -53,8 +52,8 @@ class Personas extends Model
 
     public static function consulta($id)
     {
-        $data = DB::table('personas as p')
-            ->select(DB::raw('row_number() OVER (ORDER BY p.nombres) as num'), 'p.id', 'p.nombres', 'p.apellidos', 'p.personas_id', 'p.cedula', 'p.correo', 'p.rif', 'p.fecha', 'p.lugarnac', 'p.nacionalidad', 'p.celular', 'p.telefono_fijo', 'e.estado', 'd.estado_id', 'd.ciudad_id', 'ciu.ciudad', 'd.municipio_id', 'm.municipio', 'parroquia_id', 'pa.parroquia', 'urbanizacion', 'tzona', 'tz.nombre as zona', 'nzona', 'tcalle', 't.nombre as calle', 'ncalle', 'tvivienda', 'tv.nombre as vivienda', 'nvivienda')
+        return DB::table('personas as p')
+            ->select(DB::raw('row_number() OVER (ORDER BY p.nombres) as num'), 'p.id', 'p.primer_nombre', 'p.segundo_nombre', 'p.primer_apellido', 'p.segundo_apellido', 'p.personas_id', 'p.cedula', 'p.correo', 'p.rif', 'p.fecha', 'p.lugarnac', 'p.nacionalidad', 'p.celular', 'p.telefono_fijo', 'e.estado', 'd.estado_id', 'd.ciudad_id', 'ciu.ciudad', 'd.municipio_id', 'm.municipio', 'parroquia_id', 'pa.parroquia', 'urbanizacion', 'tzona', 'tz.nombre as zona', 'nzona', 'tcalle', 't.nombre as calle', 'ncalle', 'tvivienda', 'tv.nombre as vivienda', 'nvivienda')
             ->join('direccion as d', 'd.personas_id', 'p.id')
             ->join('entidades as e', 'e.id', 'd.estado_id')
             ->join('ciudades as ciu', 'ciu.id', 'd.ciudad_id')
@@ -65,24 +64,53 @@ class Personas extends Model
             ->join('tviviendas as tv', 'tv.id', 'd.tvivienda')
             ->where('p.id', '=', $id)
             ->first();
-
-        return $data;
     }
 
     public static function carga_familiar($id)
     {
-        $data = DB::table('personas as p')
-            ->select(DB::raw('row_number() OVER (ORDER BY p.nombres) as num'), 'p.id', 'p.nombres', 'p.apellidos', 'p.personas_id', 'p.cedula', 'p.correo', 'p.fecha', 'p.lugarnac', 'p.nacionalidad', 'p.celular', 'p.telefono_fijo', 'p.parentesco')
+        return DB::table('personas as p')
+            ->select(DB::raw('row_number() OVER (ORDER BY p.nombres) as num'), 'p.id', 'p.primer_nombre', 'p.segundo_nombre', 'p.primer_apellido', 'p.segundo_apellido', 'p.personas_id', 'p.cedula', 'p.correo', 'p.fecha', 'p.lugarnac', 'p.nacionalidad', 'p.celular', 'p.telefono_fijo', 'p.parentesco')
             ->where('p.personas_id', '=', $id)
             ->get();
-
-        return $data;
     }
 
     public static function sqlReport($search)
     {
         $datatable = DB::table('personas as p')
-            ->select(DB::raw('row_number() OVER (ORDER BY p.cedula) as num'), 'p.id', 'p.nombres', 'p.apellidos', 'p.personas_id', 'p.cedula', 'p.correo', 'p.rif', 'p.fecha', 'p.lugarnac', 'p.nacionalidad', 'p.celular', 'p.telefono_fijo', 'e.estado', 'd.ciudad_id', 'ciu.ciudad', 'd.municipio_id', 'm.municipio', 'parroquia_id', 'pa.parroquia', 'urbanizacion', 'tzona', 'tz.nombre as zona', 'nzona', 'tcalle', 't.nombre as calle', 'ncalle', 'tvivienda', 'tv.nombre as vivienda', 'nvivienda')
+            ->select(
+                DB::raw('row_number() OVER (ORDER BY p.cedula) as num'),
+                'p.id',
+                'p.primer_nombre',
+                'p.segundo_nombre',
+                'p.primer_apellido',
+                'p.segundo_apellido',
+                'p.personas_id',
+                'p.cedula',
+                'p.correo',
+                'p.rif',
+                'p.fecha',
+                'p.lugarnac',
+                'p.nacionalidad',
+                'p.celular',
+                'p.telefono_fijo',
+                'e.estado',
+                'd.ciudad_id',
+                'ciu.ciudad',
+                'd.municipio_id',
+                'm.municipio',
+                'parroquia_id',
+                'pa.parroquia',
+                'urbanizacion',
+                'tzona',
+                'tz.nombre as zona',
+                'nzona',
+                'tcalle',
+                't.nombre as calle',
+                'ncalle',
+                'tvivienda',
+                'tv.nombre as vivienda',
+                'nvivienda'
+            )
             ->join('direccion as d', 'd.personas_id', 'p.id')
             ->join('entidades as e', 'e.id', 'd.estado_id')
             ->join('ciudades as ciu', 'ciu.id', 'd.ciudad_id')
@@ -97,8 +125,20 @@ class Personas extends Model
             $datatable->where('p.cedula', $search->cedula);
         }
 
-        if ($search->nombres != null) {
-            $datatable->where('p.nombres', $search->nombres);
+        if ($search->primer_nombre != null) {
+            $datatable->where('p.primer_nombre', $search->primer_nombre);
+        }
+
+        if ($search->segundo_nombre != null) {
+            $datatable->where('p.segundo_nombre', $search->segundo_nombre);
+        }
+
+        if ($search->primer_apellido != null) {
+            $datatable->where('p.primer_apellido', $search->primer_apellido);
+        }
+
+        if ($search->segundo_apellido != null) {
+            $datatable->where('p.segundo_apellido', $search->segundo_apellido);
         }
 
         if ($search->apellidos != null) {
@@ -107,5 +147,4 @@ class Personas extends Model
 
         return $datatable->orderBy('p.cedula')->distinct();
     }
-
 }

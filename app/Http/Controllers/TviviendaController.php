@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Tvivienda;
 use Illuminate\Http\Request;
+use App\Http\Requests\ViviendaRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -17,7 +18,7 @@ class TviviendaController extends Controller
      */
     public function index()
     {
-        
+
         $hogar = Tvivienda::consulta('numero', 'id', 'nombre');
 
         return view('parametros.hogar.index', compact('hogar'));
@@ -39,18 +40,18 @@ class TviviendaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ViviendaRequest $request)
     {
-        
+
         //dd($request);
         $vivienda = new Tvivienda();
         $vivienda->nombre = $request->nombre;
         $vivienda->save();
 
         if ($vivienda->save()) {
-            return redirect('/parametro/hogar')->with('success', __('¡Zona creado sastifactoriamente!'));
+            return redirect('/parametro/hogar')->with('success', '¡Zona creado sastifactoriamente!');
         } else {
-            return redirect('/parametro/hogar')->with('error', __('¡Ha ocurrido un error!'));
+            return redirect('/parametro/hogar')->with('error', '¡Ha ocurrido un error!');
         }
     }
 

@@ -15,11 +15,11 @@ class CreateMunicipiosTable extends Migration
     {
         Schema::create('municipios', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('estado_id');
+            $table->foreignId('entidad_id');
             $table->string('municipio', 255);
             $table->boolean('status')->default(true);
             $table->timestamps();
-            $table->foreign('estado_id')->references('id')->on('entidades')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('entidad_id')->references('id')->on('entidades')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

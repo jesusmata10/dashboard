@@ -4,17 +4,11 @@
 <div class="row">
     <div class="col-12">
 
-        @if (session('status'))
-            <div class="alert alert-danger">
-                {{ session('status') }}
-            </div>
-        @endif
-
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Nuevo Hogar</h3>
             </div>
-            <form class="form" id="hogarForm" name="hogarForm" role="form" data-toggle="validator" method="POST" action="{{ url('/parametro/hogar') }}">
+            <form class="form" id="FormHogar" name="FormHogar" role="form" data-toggle="validator" method="POST" action="{{ url('/parametro/hogar') }}">
                 {{ csrf_field() }}
 
                 <div class="card-body">
@@ -28,8 +22,8 @@
 
                 <div class="card-footer">
                     <div class="float-right">
-                        <button type="submit" class="btn btn-outline-primary">Aceptar</button>
-                        <a href="{{ url('/parametro/hogar') }}" class="btn btn-outline-danger">Cancelar</a>
+                        <button type="submit" class="btn btn-sm btn-primary">Aceptar</button>
+                        <a href="{{ url('/parametro/hogar') }}" class="btn btn-sm btn-danger">Cancelar</a>
                     </div>
                 </div>
 
@@ -39,7 +33,12 @@
 </div>
 
 @endsection
+@section('js')
 
+    <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
+    {!! JsValidator::formRequest('App\Http\Requests\ViviendaRequest', '#FormHogar') !!}
+
+@endsection
 @section('footer')
   <div></div>
 @stop

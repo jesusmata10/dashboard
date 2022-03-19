@@ -10,16 +10,16 @@
 
                 <div class="row">
                     <div class="col-12">
-                        
-                        <a href="{{ url('parametro/zona/create') }}" class="btn btn-outline-primary"><i class="fa fa-plus"></i> Nuevo</a>
-                        
+
+                        <a href="{{ url('parametro/zona/create') }}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Nuevo</a>
+
                     </div>
                 </div><br>
 
                 <div class="row">
                     <div class="col-12">
 
-                        <table id="tabla1" class="table table-bordered">
+                        <table id="tabla1" class="table table-sm table-bordered table-hover">
                             <thead>
                                 <tr class="text-center">
                                     <th style="width:50px">N°</th>
@@ -60,7 +60,30 @@
     </div>
 </div>
 @endsection
+@section('js')
 
+    <script type="text/javascript">
+        @if(session('success'))
+            toastr.options = {
+            "closeButton": true,
+            "progressBar": true
+        }
+        toastr.success("{{ session('success') }}");
+
+        @endif
+
+            @if(session('error'))
+            toastr.options = {
+            "closeButton": true,
+            "progressBar": true
+        }
+        toastr.success("{{ session('error') }}");
+
+        @endif
+
+    </script>
+
+@endsection
 
 @section('footer')
   <div></div>

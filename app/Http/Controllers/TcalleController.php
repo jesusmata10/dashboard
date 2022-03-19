@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Tcalle;
 use Illuminate\Http\Request;
+use App\Http\Requests\AreaRequest;
+use Illuminate\Support\Str;
 
 class TcalleController extends Controller
 {
@@ -14,9 +16,9 @@ class TcalleController extends Controller
      */
     public function index()
     {
-        
+
         $calle = Tcalle::consulta('id', 'numero', 'nombre');
-        
+
         return view('parametros.area.index', compact('calle'));
     }
 
@@ -36,7 +38,7 @@ class TcalleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AreaRequest $request)
     {
         $calle = new Tcalle();
         $calle->nombre = $request->nombre;

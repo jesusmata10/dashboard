@@ -14,7 +14,7 @@
             <div class="card-header">
                 <h3 class="card-title">Nueva Zona</h3>
             </div>
-            <form class="form" id="rolesForm" name="rolesForm" role="form" data-toggle="validator" method="POST" action="{{ url('/parametro/zona') }}">
+            <form class="form" id="FormZona" name="FormZona" role="form" data-toggle="validator" method="POST" action="{{ url('/parametro/zona') }}">
                 {{ csrf_field() }}
 
                 <div class="card-body">
@@ -28,8 +28,8 @@
 
                 <div class="card-footer">
                     <div class="float-right">
-                        <button type="submit" class="btn btn-outline-primary">Aceptar</button>
-                        <a href="{{ url('/parametro/zona') }}" class="btn btn-outline-danger">Cancelar</a>
+                        <button type="submit" class="btn btn-sm btn-primary">Aceptar</button>
+                        <a href="{{ url('/parametro/zona') }}" class="btn btn-sm btn-danger">Cancelar</a>
                     </div>
                 </div>
 
@@ -37,6 +37,12 @@
         </div>
     </div>
 </div>
+
+@endsection
+@section('js')
+
+    <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
+    {!! JsValidator::formRequest('App\Http\Requests\ZonaRequest', '#FormZona') !!}
 
 @endsection
 

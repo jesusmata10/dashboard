@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Tzona;
 use Illuminate\Http\Request;
+use App\Http\Requests\ZonaRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -16,11 +17,11 @@ class TzonaController extends Controller
      */
     public function index()
     {
-        
+
         $zonas =  Tzona::consulta('numero', 'id', 'nombre');
         /*$zonas = DB::table('tzonas')
                     ->select( DB::raw( 'row_number() OVER (ORDER BY nombre) as numero'), 'id', 'nombre')
-                    ->get();*/        
+                    ->get();*/
 
         return view('parametros.zona.index',compact('zonas'));
     }
@@ -41,18 +42,18 @@ class TzonaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ZonaRequest $request)
     {
-        
+
         //dd($request);
         $zona = new Tzona();
         $zona->nombre = $request->nombre;
         $zona->save();
 
         if ($zona->save()) {
-            return redirect('/parametro/zona')->with('success', __('¡Zona creado sastifactoriamente!'));
+            return redirect('/parametro/zona')->with('success', '¡Zona creado sastifactoriamente!');
         } else {
-            return redirect('/parametro/zona')->with('error', __('messages.information_not_stored'));
+            return redirect('/parametro/zona')->with('error', 'messages.information_not_stored');
         }
     }
 
