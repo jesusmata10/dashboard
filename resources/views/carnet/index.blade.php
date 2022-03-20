@@ -194,6 +194,7 @@
 @section('js')
 
     <script type="text/javascript">
+
         @if(session('success'))
             toastr.options = {
             "closeButton": true,

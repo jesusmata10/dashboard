@@ -4,18 +4,6 @@
     <div class="row">
         <div class="col-sm-12 col-md-12">
 
-            @if (session('errors'))
-                <div class="alert alert-danger">
-                    {{ session('errors') }}
-                </div>
-            @endif
-            @if (session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-            @endif
-
-
             <form action="{{-- route('personas.store') --}}" method="POST" role="form" data-toggle="validator"
                   class="form" id="personaForm" name="personaForm">
                 {{ csrf_field() }}
@@ -34,7 +22,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-address-card"></i></span>
                                     </div>
-                                    <input type="text" class="form-control" maxlength="9" name="cedula" value="{{ $persona->cedula }}" readonly>
+                                    <input type="text" class="form-control" maxlength="9" name="cedula" value="{{ isset($persona->cedula) ? $persona->cedula : '' }}" readonly>
                                 </div>
                             </div>
                             <div class="form-group col-md-4">
@@ -43,12 +31,12 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-at"></i></span>
                                     </div>
-                                    <input class="form-control text-lowercase" type="text" name="correo" value="{{ $persona->correo }}">
+                                    <input class="form-control text-lowercase" type="text" name="correo" value="{{ isset($persona->correo) ? $persona->correo : '' }}">
                                 </div>
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="rif">Rif:</label>
-                                <input class="form-control text-uppercase" type="text" name="rif" value="{{ $persona->rif }}">
+                                <input class="form-control text-uppercase" type="text" name="rif" value="{{ isset($persona->rif) ? $persona->rif : '' }}">
                             </div>
                         </div>
 
@@ -100,17 +88,17 @@
                                 </span>
                                     </div>
                                     <input type="text" class="form-control float-right datepicker" name="fecha"
-                                           autocomplete="off" value="{{ $persona->fecha}}">
+                                           autocomplete="off" value="{{ isset($persona->fecha) ? \Illuminate\Support\Carbon::parse($persona->fecha)->format('d-m-Y') : '' }}">
                                 </div>
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="lugarnac">Lugar de Nacimiento:</label>
                                 <input class="form-control text-uppercase" type="text" name="lugarnac"
-                                       value="{{ isset($user->fecha_nacimiento) ? \Illuminate\Support\Carbon::parse($user->fecha_nacimiento)->format('d-m-Y') : '' }}">
+                                       value="{{ isset($persona->lugarnac) ? $persona->lugarnac : '' }}">
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="nacionalidad">Nacionalidad:</label>
-                                <input class="form-control text-uppercase" type="text" name="nacionalidad" value="{{ $persona->nacionalidad }}">
+                                <input class="form-control text-uppercase" type="text" name="nacionalidad" value="{{ isset($persona->nacionalidad) ? $persona->nacionalidad : '' }}">
                             </div>
                         </div>
 
@@ -122,7 +110,7 @@
                                         <span class="input-group-text"><i class="fas fa-phone"></i></span>
                                     </div>
                                     <input class="form-control mask_tlf" type="text" name="telefono_fijo"
-                                           value="{{ $persona->telefono_fijo }}">
+                                           value="{{ isset($persona->telefono_fijo) ? $persona->telefono_fijo : '' }}">
                                 </div>
                             </div>
                             <div class="form-group col-6">
@@ -132,7 +120,7 @@
                                         <span class="input-group-text"><i class="fas fa-phone"></i></span>
                                     </div>
                                     <input class="form-control mask_tlf" type="text" name="celular"
-                                           value="{{ $persona->celular }}">
+                                           value="{{ isset($persona->celular) ? $persona->celular : '' }}">
                                 </div>
                             </div>
                         </div>
@@ -167,6 +155,10 @@
                                         </div>
                                         <select class="form-control" name="ciudad_id" id="ciudad_id">
                                             <option value="" selected>Seleccione una opción</option>
+                                            {{--@if()
+                                            @else
+                                                <option value="{{ $combo->id }}">{{ $combo->estado }}</option>
+                                            @endif--}}
                                         </select>
                                     </div>
                                 </div>
@@ -336,7 +328,6 @@
                     data: {entidad_id: $('#entidad_id').val(), '_token': $('input[name=_token]').val()},
                     success: function (response) {
                         $('#municipio_id').html(response);
-                        $('#cuidad_id').empty();
                         $("#parroquia_id").empty();
                         $('#parroquia_id').append('<option value="" selected>Seleccione una opción</option>');
 
@@ -345,6 +336,23 @@
                         $('#municipio_id').append('<option value="" selected>Buscando...</option>');
                     }
                 });
+            });
+
+            $('#entidad_id').change(function () {
+                $.ajax({
+                    method: "POST",
+                    url: "{{ url('/ciudadAjaxUser') }}",
+                    data: {entidad_id: $('#entidad_id').val(), '_token': $('input[name=_token]').val()},
+                    success: function (response) {
+                        $('#ciudad_id').html(response);
+                        /*$('#municipio_id').empty();
+                        $('#municipio_id').append('<option value="" selected>Seleccione una opción</option>');*/
+                    },
+                    beforeSend: function () {
+                        $('#ciudad_id').append('<option value="" selected>Buscando...</option>');
+                    }
+                });
+
             });
 
             $('#municipio_id').change(function () {
@@ -361,21 +369,6 @@
                     }
                 });
 
-            });
-
-            $('.estado').change(function () {
-                $.ajax({
-                    method: "POST",
-                    url: "{{ url('/ciudadAjaxUser') }}",
-                    data: {entidad_id: $('#entidad_id').val(), '_token': $('input[name=_token]').val()},
-                    success: function (response) {
-                        $('#ciudad_id').html(response);
-
-                    },
-                    beforeSend: function () {
-                        $('#ciudad_id').append('<option value="" selected>Buscando...</option>');
-                    }
-                });
             });
         })
     </script>

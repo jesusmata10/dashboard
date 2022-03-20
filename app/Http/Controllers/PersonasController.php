@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PersonasRequest;
+use App\Http\Requests\StoreFamilia;
 use App\Models\Direccion;
 use App\Models\Entidades;
 use App\Models\Personas;
 use App\Models\Tcalle;
 use App\Models\Tvivienda;
 use App\Models\Tzona;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -29,7 +31,8 @@ class PersonasController extends Controller
 
         $carga_familiar = DB::table('personas')
             ->where('personas_id', '=', $request->id)
-            ->get();
+            ->get()
+        ;
         //dump($persona->all());
         $datatable = Personas::sqlReport($request);
 
@@ -60,14 +63,15 @@ class PersonasController extends Controller
      */
     public function store(PersonasRequest $request)
     {
-        //dd($request);
+        dd($request);
         try {
             $input = $request->all();
-            $input['personas_id'] = 0;
-            $input['parentesco'] = 'Jefe de hogar';
+            $input['fecha'] = Carbon::parse($request['fecha'])->format('Y-m-d');
+            $input['personas_id'] = isset($request->personas_id) ? $request->personas_id : '0';
+            $input['parentesco'] = isset($request->parentesco) ? $request->parentesco : 'Jefe de hogar';
             $input['user_id'] = Auth::id();
             $input['status'] = 1;  //acomodar en la tabla como booleano
-            //dd($input);
+            dd($input);
             $solicitud = Personas::create($input);
 
             $personaDireccionSave = new Direccion();
@@ -93,14 +97,16 @@ class PersonasController extends Controller
 
                     $familiaSave = new Personas();
                     $familiaSave->personas_id = $solicitud->id;
-                    $familiaSave->nombres = $servicios->nombres;
-                    $familiaSave->apellidos = $servicios->apellidos;
+                    $familiaSave->primer_nombre = $servicios->primer_nombre;
+                    $familiaSave->segundo_nombre = $servicios->segundo_nombre;
+                    $familiaSave->primer_apellido = $servicios->primer_apellido;
+                    $familiaSave->segundo_apellido = $servicios->segundo_apellido;
                     $familiaSave->cedula = $servicios->cedula;
-                    $familiaSave->fecha = $servicios->fecha;
+                    $familiaSave->fecha = Carbon::parse($servicios->fecha)->format('Y m d');
                     $familiaSave->correo = $servicios->correo = '' ? '$solicitud->correo' : '0';
                     $familiaSave->rif = $servicios->rif = '' ? 'solicitud->rif' : '0';
-                    $familiaSave->lugarnac = 0;
-                    $familiaSave->nacionalidad = 0;
+                    $familiaSave->lugarnac = $servicios->lugarnac;
+                    $familiaSave->nacionalidad = $servicios->nacionalidad;
                     $familiaSave->telefono_fijo = 0;
                     $familiaSave->celular = $solicitud->celular;
                     $familiaSave->user_id = $solicitud->user_id;
@@ -125,13 +131,13 @@ class PersonasController extends Controller
                 }
             }
 
-            return redirect('/personas')->with('message', __('Registro Sastifatorio'));
+            return redirect('/personas')->with('success', 'Registro Sastifatorio');
         } catch (Exception $e) {
             \Log::error('PersonasController.store', [
                 'message' => $e->getMessage(),
             ]);
 
-            return redirect('/personas')->with('searchError', __('messages.information_not_stored'));
+            return redirect('/personas')->with('error', 'messages.information_not_stored');
         }
     }
 
@@ -146,8 +152,13 @@ class PersonasController extends Controller
     {
         $persona = Personas::consulta(decrypt($id));
         $carga_familiar = Personas::carga_familiar(decrypt($id));
+        $entidad = Entidades::all();
+        $zonas = Tzona::all();
+        $area = Tcalle::all();
+        $hogar = Tvivienda::all();
+        //dd($carga_familiar);
 
-        return view('persona.show', compact('persona', 'carga_familiar'));
+        return view('persona.show', compact('persona', 'carga_familiar', 'entidad', 'zonas', 'area', 'hogar'));
     }
 
     /**
@@ -164,44 +175,38 @@ class PersonasController extends Controller
         $area = Tcalle::all();
         $hogar = Tvivienda::all();
         $persona = Personas::consulta(decrypt($id));
-        //dd($persona);
+
         $cargaFamiliar = Personas::carga_familiar(decrypt($id));
+        //dd($cargaFamiliar);
 
         return view('persona.edit', compact('persona', 'cargaFamiliar', 'entidad', 'zonas', 'area', 'hogar'));
     }
 
+    public function storeFamiliar(StoreFamilia $request)
+    {
+        try {
+            $input = $request->all();
+            $input['fecha'] = Carbon::parse($request['fecha'])->format('Y-m-d');
+            $input['personas_id'] = isset($request->personas_id) ? $request->personas_id : '0';
+            $input['parentesco'] = isset($request->parentesco) ? $request->parentesco : 'Jefe de hogar';
+            $input['user_id'] = Auth::id();
+            $input['status'] = 1;  //acomodar en la tabla como booleano
+            //dd($input);
+            $solicitud = Personas::create($input);
+
+            return redirect('/personas')->with('success', 'Registro Sastifatorio');
+        } catch (Exception $e) {
+            \Log::error('PersonasController.store', [
+                'message' => $e->getMessage(),
+            ]);
+
+            return redirect('/personas')->with('error', 'messages.information_not_stored');
+        }
+    }
+
     /**
      * Update the specified resource in storage.
-     *+"num": 1
-     * +"id": 8
-     * +"nombres": "maria antonia"
-     * +"apellidos": "perez"
-     * +"personas_id": 0
-     * +"cedula": "V-17475727"
-     * +"correo": "rosa@gmail.com"
-     * +"rif": "J-17475727-1"
-     * +"fecha": "1979-06-15"
-     * +"lugarnac": "caracas"
-     * +"nacionalidad": "venezuela"
-     * +"celular": "111111111111"
-     * +"telefono_fijo": "000000000000"
-     * +"estado": "Bolivariano de Miranda"
-     * +"ciudad_id": "292"
-     * +"ciudad": "Santa Teresa"
-     * +"municipio_id": "233"
-     * +"municipio": "Independencia"
-     * +"parroquia_id": "631"
-     * +"parroquia": "Santa Teresa del Tuy"
-     * +"urbanizacion": "mopia"
-     * +"tzona": "1"
-     * +"zona": "sector"
-     * +"nzona": "2"
-     * +"tcalle": "1"
-     * +"calle": "vereda"
-     * +"ncalle": "28B"
-     * +"tvivienda": "1"
-     * +"vivienda": "casa"
-     * +"nvivienda": "23".
+
      *
      * @param int $id
      *
@@ -220,16 +225,16 @@ class PersonasController extends Controller
      */
     public function destroy($id)
     {
-        /*try {
-            $data = Personas::where('id', $id)->delete();
+        //dd(decrypt($id));
+        try {
+            $data = Personas::where('id', decrypt($id))->delete();
 
-            return back()->with('success', __('¡Producto eliminado sastifactoriamente!'));
+            return back()->with('success', '¡Producto eliminado sastifactoriamente!');
 
         } catch (Exception $e) {
 
-            return back()->with('error', __('¡Ha ocurrido un Error'));
-
-        }*/
+            return back()->with('error', '¡Ha ocurrido un Error');
+        }
     }
 
     public function pdf(Request $request)
@@ -240,7 +245,8 @@ class PersonasController extends Controller
         //dd($datatable);
         return PDF::loadView('persona.pdf', compact('lista', 'report'))
             ->setPaper('letter', 'landscape')
-            ->stream('persona.pdf');
+            ->stream('persona.pdf')
+        ;
     }
 
     public function constanciaResidenciaPdf(Request $request)
@@ -249,6 +255,7 @@ class PersonasController extends Controller
         //dd($datatable);
         return PDF::loadView('reportes.residenciapdf', compact('datatable'))
             ->setPaper('letter')
-            ->stream('reportes.residenciapdf');
+            ->stream('reportes.residenciapdf')
+        ;
     }
 }

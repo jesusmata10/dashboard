@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class Personas extends Model
 {
@@ -36,9 +37,13 @@ class Personas extends Model
         'updated_at',
     ];
 
+
+
     protected $with = [
         'carnet', 'direccion',
     ];
+
+
 
     public function carnet(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
@@ -53,7 +58,7 @@ class Personas extends Model
     public static function consulta($id)
     {
         return DB::table('personas as p')
-            ->select(DB::raw('row_number() OVER (ORDER BY p.nombres) as num'), 'p.id', 'p.primer_nombre', 'p.segundo_nombre', 'p.primer_apellido', 'p.segundo_apellido', 'p.personas_id', 'p.cedula', 'p.correo', 'p.rif', 'p.fecha', 'p.lugarnac', 'p.nacionalidad', 'p.celular', 'p.telefono_fijo', 'e.estado', 'd.estado_id', 'd.ciudad_id', 'ciu.ciudad', 'd.municipio_id', 'm.municipio', 'parroquia_id', 'pa.parroquia', 'urbanizacion', 'tzona', 'tz.nombre as zona', 'nzona', 'tcalle', 't.nombre as calle', 'ncalle', 'tvivienda', 'tv.nombre as vivienda', 'nvivienda')
+            ->select(DB::raw('row_number() OVER (ORDER BY p.cedula) as num'), 'p.id', 'p.primer_nombre', 'p.segundo_nombre', 'p.primer_apellido', 'p.segundo_apellido', 'p.personas_id', 'p.cedula', 'p.correo', 'p.rif', 'p.fecha', 'p.lugarnac', 'p.nacionalidad', 'p.celular', 'p.telefono_fijo', 'e.estado', 'd.estado_id', 'd.ciudad_id', 'ciu.ciudad', 'd.municipio_id', 'm.municipio', 'parroquia_id', 'pa.parroquia', 'urbanizacion', 'tzona', 'tz.nombre as zona', 'nzona', 'tcalle', 't.nombre as calle', 'ncalle', 'tvivienda', 'tv.nombre as vivienda', 'nvivienda')
             ->join('direccion as d', 'd.personas_id', 'p.id')
             ->join('entidades as e', 'e.id', 'd.estado_id')
             ->join('ciudades as ciu', 'ciu.id', 'd.ciudad_id')
@@ -69,7 +74,7 @@ class Personas extends Model
     public static function carga_familiar($id)
     {
         return DB::table('personas as p')
-            ->select(DB::raw('row_number() OVER (ORDER BY p.nombres) as num'), 'p.id', 'p.primer_nombre', 'p.segundo_nombre', 'p.primer_apellido', 'p.segundo_apellido', 'p.personas_id', 'p.cedula', 'p.correo', 'p.fecha', 'p.lugarnac', 'p.nacionalidad', 'p.celular', 'p.telefono_fijo', 'p.parentesco')
+            ->select(DB::raw('row_number() OVER (ORDER BY p.cedula) as num'), 'p.id', 'p.primer_nombre', 'p.segundo_nombre', 'p.primer_apellido', 'p.segundo_apellido', 'p.personas_id', 'p.cedula', 'p.correo', 'p.fecha', 'p.lugarnac', 'p.nacionalidad', 'p.celular', 'p.telefono_fijo', 'p.parentesco')
             ->where('p.personas_id', '=', $id)
             ->get();
     }

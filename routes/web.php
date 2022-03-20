@@ -53,6 +53,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('/personas', 'PersonasController');
     Route::get('/personasPdf', 'PersonasController@pdf');
+    Route::post('/personaFamilia', 'PersonasController@storeFamiliar');
 
     // Carnet de  la Patria
 

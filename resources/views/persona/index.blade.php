@@ -4,19 +4,6 @@
 <div class="row">
     <div class="col-12">
 
-        @if (session('success'))
-        <div class="alert alert-success desva">
-            {{ session('success') }}
-        </div>
-        @elseif(session('error'))
-        <div class="alert alert-danger desva">
-            {{ session('error') }}
-        </div>
-        @endif
-
-        {{--<div id="criterioBusqueda" class="alert alert-danger desva" style="display: none" role="alert">
-            Debe seleccionar un criterio de b&uacute;squeda
-        </div>--}}
         <div id="criterioBusqueda" class="alert alert-danger desva" style="display: none" role="alert">
             <button type="button" class="close text-white" data-dismiss="alert" aria-hidden="true">×</button>
             <h5><i class="icon fas fa-ban" style="font-size:15px"></i>¡Error!</h5>
@@ -122,36 +109,34 @@
                     <div class="col-12">
                         <div class="table-responsive">
                             <table id="example2" class="table table-sm table-bordered table-hover">
-                            <thead>
-                                <tr class="text-center">
-                                    <th style="width:50px">N°</th>
-                                    <th>Nombres y Apellido</th>
-                                    <th>Cedula</th>
-                                    <th>Correo</th>
-                                    <th style="width:150px">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($lista as $items)
-                                <tr class="text-center">
-                                    <td>{{ $items->num }}</td>
-                                    <td>{{ $items->nombres . ' ' . $items->apellidos }}</td>
-                                    <td>{{ $items->cedula}}</td>
-                                    <td>{{ $items->correo }}</td>
-                                    <td>
-                                        <div class="text-center ">
-                                            <a href="{{ url('/personas/' . encrypt($items->id) ) }}" title="Ver" type="button" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></a>
-                                            <a href="{{ url('/personas/'.encrypt($items->id).'/edit') }}" title="Editar" type="button" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
-
-                                            <!-- button type="button" class="btn btn-outline-primary">Eliminar</button -->
-
-                                        </div>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                                <thead>
+                                    <tr class="text-center">
+                                        <th style="width:50px">N°</th>
+                                        <th>Nombres y Apellido</th>
+                                        <th>Cedula</th>
+                                        <th>Correo</th>
+                                        <th style="width:150px">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($lista as $items)
+                                    <tr class="text-center">
+                                        <td>{{ $items->num }}</td>
+                                        <td>{{ $items->primer_nombre . ' ' . $items->primer_apellido }}</td>
+                                        <td>{{ $items->cedula}}</td>
+                                        <td>{{ $items->correo }}</td>
+                                        <td>
+                                            <div class="text-center ">
+                                                <a href="{{ url('/personas/' . encrypt($items->id) ) }}" title="Ver" type="button" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></a>
+                                                <a href="{{ url('/personas/'.encrypt($items->id).'/edit') }}" title="Editar" type="button" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
+                                                <!-- button type="button" class="btn btn-outline-primary">Eliminar</button -->
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -295,6 +280,23 @@
 @section('js')
     <script>
 
+        @if(session('success'))
+            toastr.options = {
+            "closeButton": true,
+            "progressBar": true
+        }
+        toastr.success("{{ session('success') }}");
+
+        @endif
+
+            @if(session('error'))
+            toastr.options = {
+            "closeButton": true,
+            "progressBar": true
+        }
+        toastr.error("{{ session('error') }}");
+
+        @endif
         function modal(item) {
             let datatable = {!! $report !!}
             const result = datatable.filter(datatable => datatable.id === item)

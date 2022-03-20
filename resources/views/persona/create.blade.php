@@ -19,7 +19,7 @@
 
                         <div class="row">
                             <div class="form-group col-sm-12 col-md-4">
-                                <label for="cedula">(*) C&eacute;dula:</label>
+                                <label for="cedula">(*) C&eacutedula:</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-address-card"></i></span>
@@ -28,7 +28,7 @@
                                 </div>
                             </div>
                             <div class="form-group col-sm-12 col-md-4">
-                                <label for="correo">(*) Correo Electr&oacute;nico:</label>
+                                <label for="correo">(*) Correo Electr&oacutenico:</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-at"></i></span>
@@ -42,7 +42,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-registered"></i></span>
                                     </div>
-                                    <input class="form-control text-uppercase" type="text" name="rif">
+                                    <input class="form-control text-uppercase" type="text" name="rif" maxlength="12">
                                 </div>
                             </div>
                         </div>
@@ -385,7 +385,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-map-marked-alt"></i></span>
                                     </div>
-                                    <input class="form-control text-uppercase" type="text" name="lugarnacf">
+                                    <input class="form-control text-uppercase" type="text" name="lugarnacf" id="lugarnacf">
                                 </div>
                             </div>
                             <div class="form-group col-md-4">
@@ -394,7 +394,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-map"></i></span>
                                     </div>
-                                    <input class="form-control text-uppercase" type="text" name="nacionalidadf">
+                                    <input class="form-control text-uppercase" type="text" name="nacionalidadf" id="nacionalidadf">
                                 </div>
                             </div>
                         </div>
@@ -422,7 +422,7 @@
                                         <th>Segundo Apellidos</th>
                                         <th>Cedula</th>
                                         <th>Fecha</th>
-                                        <th>Parentezco</th>
+                                        <th>Parentesco</th>
                                         <th>Acción</th>
                                     </tr>
                                     </thead>
@@ -483,6 +483,8 @@
                 let fecha = $('#fechacf').val()
                 let parentesco = $('#parentesco').val()
                 let parentescotxt = $('#parentesco option:selected').text()
+                let lugarnac = $('#lugarnacf').val()
+                let nacionalidad = $('#nacionalidadf').val()
 
                 let data = {
                     id: id,
@@ -493,9 +495,11 @@
                     cedula: cedula,
                     fecha: fecha,
                     parentesco: parentesco,
-                    parentescotxt: parentescotxt
+                    parentescotxt: parentescotxt,
+                    lugarnac: lugarnac,
+                    nacionalidad: nacionalidad
                 }
-
+                console.log(data);
                 let accion = JSON.stringify(data)
                 if (primer_nombre !== '' && primer_apellido !== '' && fecha !== '' && parentesco !== '') {
                     $('#mytable').append(`
@@ -536,6 +540,8 @@
                 $('#cedulacf').val('');
                 $('#fechacf').val('');
                 $('#parentesco').val('');
+                $('#lugarnacf').val('');
+                $('#nacionalidadf').val('');
 
             }
 

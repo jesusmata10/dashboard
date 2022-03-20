@@ -7,7 +7,6 @@
 <table class="table">
     <tbody>
         <tr>
-
             <td class="text-left" style="width: 30%"><img src="{{ public_path('/img/logo.jfif') }}" width="40%" height="10%"alt=""></td>
             <td class="text-center" style="width: 60%; font-size:12pt"><b>{{ env('APP_NAME') }}</b> <br><br></BR><b style="color: #337DFF ;">CONSEJO COMUNAL JESUCRISTO ES MI SALVADOR</b></td>
 
@@ -45,8 +44,8 @@
             <tr class="text-center" style="font-size:10pt">
                 <td> {{$items->num}} </td>
                 <td> {{$items->cedula}} </td>
-                <td> {{$items->nombres}} </td>
-                <td> {{$items->apellidos}} </td>
+                <td> {{$items->primer_nombre}}, {{$items->segundo_nombre}} </td>
+                <td> {{$items->primer_apellido}}, {{$items->segundo_apellido}} </td>
                 <td> {{$items->correo}}</td>
                 <td> {{$items->estado}}, {{$items->urbanizacion}}, {{$items->zona}} {{$items->nzona}}, {{$items->calle}} {{$items->ncalle}}, {{$items->vivienda}} {{$items->nvivienda}} </td>
             </tr>
