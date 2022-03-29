@@ -1,0 +1,27 @@
+/*Body*/
+/*Margin Reset
+body {
+    margin: 0;
+}*/
+
+/*Progress Bar*/
+.progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 10px;
+    background-color: #0c85e8;
+    transition: all linear 0.1s;
+    min-width: 1%;
+}
+
+/*Page Content*/
+.content {
+    width: 100%;
+    height: 100vh;
+    margin-bottom: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
