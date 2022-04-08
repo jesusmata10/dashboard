@@ -2,24 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserCreateRequest;
-use Illuminate\Database\QueryException;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use Spatie\Permission\Models\Role;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Arr;
-use App\Models\User;
+use App\Models\Ciudades;
+use App\Models\Direccion;
 use App\Models\Entidades;
 use App\Models\Municipios;
 use App\Models\Parroquias;
-use App\Models\Ciudades;
-use App\Models\Tzona;
+use App\Models\Personas;
 use App\Models\Tcalle;
 use App\Models\Tvivienda;
+use App\Models\Tzona;
+use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Database\QueryException;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -28,26 +28,26 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $breadcrumb = [
             [
                 'link' => '#',
-                'name' => 'Configuración'
+                'name' => 'Configuración',
             ],
             [
                 'link' => '#',
-                'name' => 'Usuarios'
-            ]
+                'name' => 'Usuarios',
+            ],
         ];
 
         $data = User::consulta();
-        //dd($data);
+        // dd($data);
 
-        //$users = $data->paginate(10);
-        //$report = $data->get(10);
+        // $users = $data->paginate(10);
+        // $report = $data->get(10);
         $rol = User::userRol();
-        //dd($rol);
+        // dd($rol);
 
         return view('usuarios.index', compact('breadcrumb', 'rol', 'data'));
     }
@@ -57,14 +57,15 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         try {
             $entidad = Entidades::all();
-            $zonas = Tzona::consulta();
-            $hogar = Tvivienda::consulta();
-            $area = Tcalle::consulta();
+            $zonas = Tzona::all('id', 'nombre');
+            $hogar = Tvivienda::all();
+            $area = Tcalle::all();
             $roles = Role::select('id', 'name')->orderBy('name')->get();
+            $input = $request->all();
 
             return view('usuarios.create', compact('entidad', 'roles', 'zonas', 'hogar', 'area'));
         } catch (QueryException $e) {
@@ -77,32 +78,54 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserCreateRequest $request)
+    public function store(Request $request)
     {
+
         $input = $request->all();
         $input['user_id'] = Auth::id();
+        $input['personas_id'] = isset($request->personas_id) ? $request->personas_id : 0;
+        $input['fecha'] = Carbon::parse($request['fecha'])->format('Y-m-d');
         $input['remember_token'] = Str::random(10);
         $input['password'] = Hash::make($request->password);
-        dd($input);
+        $input['status'] = 1;
+
         try {
             DB::transaction(function () use ($request, $input) {
                 $user = User::create($input);
 
-                $personas = Personas::create($input);
+                $persona = Personas::create($input);
 
-                $user->syncRoles($request->rol);
+                $personaDireccionSave = new Direccion();
+                $personaDireccionSave->personas_id = $persona->id;
+                $personaDireccionSave->estado_id = $request->estado_id;
+                $personaDireccionSave->ciudad_id = $request->ciudad_id;
+                $personaDireccionSave->municipio_id = $request->municipio_id;
+                $personaDireccionSave->parroquia_id = $request->parroquia_id;
+                $personaDireccionSave->urbanizacion = $request->urbanizacion;
+                $personaDireccionSave->tzona = $request->tzona;
+                $personaDireccionSave->nzona = $request->nzona;
+                $personaDireccionSave->tcalle = $request->tcalle;
+                $personaDireccionSave->ncalle = $request->ncalle;
+                $personaDireccionSave->tvivienda = $request->tvivienda;
+                $personaDireccionSave->nvivienda = $request->nvivienda;
+                $personaDireccionSave->status = 1;
+                $personaDireccionSave->save();
+
+                //$role = Role::findByName($request->rol, 'web');
+                $roles = Role::select('id', 'name')->orderBy('name')->get();
+                $user->assignRole($request->rol);
+                // $user->syncRoles($request->rol);
             });
 
-            return redirect('/usuario')->with('success', 'messages.stored_information');
+            return redirect('/usuario')->with('success', '¡Registro Sastifactorio!');
         } catch (QueryException $e) {
             \Log::error('UserController.store', [
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             ]);
 
-            return redirect('/usuario')->with('error', 'messages.information_not_stored');
+            return redirect('/usuario')->with('error', '¡Ha ocurrido un Problema!');
         }
     }
 
@@ -110,17 +133,18 @@ class UserController extends Controller
      * Display the specified resource.
      *
      * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -128,16 +152,16 @@ class UserController extends Controller
         $breadcrumb = [
             [
                 'link' => '#',
-                'name' => 'Configuración'
+                'name' => 'Configuración',
             ],
             [
                 'link' => '/usuario',
-                'name' => 'Usuarios'
+                'name' => 'Usuarios',
             ],
             [
                 'link' => '/usuario',
-                'name' => 'Editar Usuario'
-            ]
+                'name' => 'Editar Usuario',
+            ],
         ];
 
         $entidad = Entidades::all();
@@ -148,7 +172,7 @@ class UserController extends Controller
             ->join('municipios as m', 'm.id', 'sp.municipio_id')
             ->join('parroquias as p', 'p.id', 'sp.parroquia_id')
             ->where('u.id', decrypt($id))->first();
-        //dd($user);
+
         $rol = $user->roles->implode('name', ',');
 
         $roles = Role::orderBy('name')->pluck('name', 'id');
@@ -161,36 +185,34 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
      * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
     }
 
     public function municipioAjaxUser(Request $request)
     {
-        //dd($request->all());
+        // dd($request->all());
         if ($request->ajax()) {
-
-            //$lista = Municipio::listaMunicipios($request->entidad_id);
+            // $lista = Municipio::listaMunicipios($request->entidad_id);
             $lista = Municipios::where('entidad_id', $request->entidad_id)->get();
-            //dd($lista);
+            // dd($lista);
             echo '<option disabled selected value="">Seleccione una opci&oacute;n</option>';
-            //echo '<option value="TODOS">TODOS LOS MUNICIPIOS</option>';
+            // echo '<option value="TODOS">TODOS LOS MUNICIPIOS</option>';
 
             foreach ($lista as $value) {
                 echo '<option value=' . $value->id . '>' . $value->municipio . '</option>';
@@ -201,11 +223,11 @@ class UserController extends Controller
     public function parroquiaAjaxUser(Request $request)
     {
         if ($request->ajax()) {
-            //$lista = Parroquia::listaParroquias($request->municipio_id);
+            // $lista = Parroquia::listaParroquias($request->municipio_id);
             $lista = Parroquias::where('municipio_id', $request->municipio_id)->get();
 
             echo '<option disabled selected value="">Seleccione una opci&oacute;n</option>';
-            //echo '<option value="TODAS">TODAS LAS PARROQUIAS</option>';
+            // echo '<option value="TODAS">TODAS LAS PARROQUIAS</option>';
 
             foreach ($lista as $value) {
                 echo '<option value=' . $value->id . '>' . $value->parroquia . '</option>';
@@ -216,13 +238,12 @@ class UserController extends Controller
     public function ciudadAjaxUser(Request $request)
     {
         if ($request->ajax()) {
-
-            //$lista = Municipio::listaMunicipios($request->entidad_id);
+            // $lista = Municipio::listaMunicipios($request->entidad_id);
             $lista = Ciudades::where('estado_id', $request->entidad_id)->get();
 
-            //dd($lista);
+            // dd($lista);
             echo '<option disabled selected value="">Seleccione una opci&oacute;n</option>';
-            //echo '<option value="TODOS">TODOS LOS MUNICIPIOS</option>';
+            // echo '<option value="TODOS">TODOS LOS MUNICIPIOS</option>';
 
             foreach ($lista as $value) {
                 echo '<option value=' . $value->id . '>' . $value->ciudad . '</option>';

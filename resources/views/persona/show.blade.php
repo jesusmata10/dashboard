@@ -81,7 +81,7 @@
                             Correo Electrónico:
                         </b>
                         <span>
-                            {{ $persona->correo }}
+                            {{ $persona->email }}
                         </span>
                     </div>
                 </div>
@@ -208,7 +208,9 @@
                                         </td>
                                         <td class="">
                                             <a href="{{ url('/personas/'.encrypt($items->id).'/edit') }}" title="Editar" type="button" class="btn btn-sm btn-sm btn-primary"><i class="fas fa-edit"></i></a>
-                                            <a href="{{ url('/personas/'.encrypt($items->id)) }}" title="Eliminar" type="button" class="btn btn-sm btn-danger"><i class="fas fa-eraser"></i></a>
+                                            <a href="{{ route('personas.destroy',encrypt($items->id)) }}" title="Eliminar" type="button" class="btn btn-sm btn-danger"><i class="fas fa-eraser"></i></a>
+                                            <a href="{{ url('/personas/'.encrypt($items->id)) }}" title="Eliminar" type="button" class="btn btn-sm btn-warning"><i class="fas fa-eraser"></i></a>
+                                            {{--route('route.name', [ 'id'=> $item->id ])--}}
                                         </td>
                                     </tr>
                                 @endforeach

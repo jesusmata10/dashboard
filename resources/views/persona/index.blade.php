@@ -124,7 +124,7 @@
                                         <td>{{ $items->num }}</td>
                                         <td>{{ $items->primer_nombre . ' ' . $items->primer_apellido }}</td>
                                         <td>{{ $items->cedula}}</td>
-                                        <td>{{ $items->correo }}</td>
+                                        <td>{{ $items->email }}</td>
                                         <td>
                                             <div class="text-center ">
                                                 <a href="{{ url('/personas/' . encrypt($items->id) ) }}" title="Ver" type="button" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></a>
@@ -140,7 +140,7 @@
                     </div>
                 </div>
             </div>
-            @if ($lista->total() > 2)
+            @if ($lista->total() > 10)
                 <div class="card-footer">
                     <div class="float-right">
                         {{ $lista->withQueryString()->links() }}

@@ -26,13 +26,13 @@ class PersonasController extends Controller
     public function index(Request $request)
     {
         $persona = Personas::sqlReport($request);
-        $lista = $persona->paginate(2);
-        $report = $persona->get(2);
 
+        $lista = $persona->paginate(10);
+        $report = $persona->get(10);
+        //dd($lista);
         $carga_familiar = DB::table('personas')
             ->where('personas_id', '=', $request->id)
-            ->get()
-        ;
+            ->get();
         //dump($persona->all());
         $datatable = Personas::sqlReport($request);
 
@@ -63,15 +63,15 @@ class PersonasController extends Controller
      */
     public function store(PersonasRequest $request)
     {
-        dd($request);
+        //dd($request);
         try {
             $input = $request->all();
             $input['fecha'] = Carbon::parse($request['fecha'])->format('Y-m-d');
-            $input['personas_id'] = isset($request->personas_id) ? $request->personas_id : '0';
+            $input['personas_id'] = isset($request->personas_id) ? $request->personas_id : 0;
             $input['parentesco'] = isset($request->parentesco) ? $request->parentesco : 'Jefe de hogar';
             $input['user_id'] = Auth::id();
             $input['status'] = 1;  //acomodar en la tabla como booleano
-            dd($input);
+
             $solicitud = Personas::create($input);
 
             $personaDireccionSave = new Direccion();
@@ -206,7 +206,6 @@ class PersonasController extends Controller
 
     /**
      * Update the specified resource in storage.
-
      *
      * @param int $id
      *
@@ -227,7 +226,9 @@ class PersonasController extends Controller
     {
         //dd(decrypt($id));
         try {
-            $data = Personas::where('id', decrypt($id))->delete();
+            //$data = Personas::where('id', decrypt($id))->delete();
+            $data = Personas::findOrFail(decrypt($id));
+            $data->delete();
 
             return back()->with('success', '¡Producto eliminado sastifactoriamente!');
 
@@ -245,8 +246,7 @@ class PersonasController extends Controller
         //dd($datatable);
         return PDF::loadView('persona.pdf', compact('lista', 'report'))
             ->setPaper('letter', 'landscape')
-            ->stream('persona.pdf')
-        ;
+            ->stream('persona.pdf');
     }
 
     public function constanciaResidenciaPdf(Request $request)
@@ -255,7 +255,6 @@ class PersonasController extends Controller
         //dd($datatable);
         return PDF::loadView('reportes.residenciapdf', compact('datatable'))
             ->setPaper('letter')
-            ->stream('reportes.residenciapdf')
-        ;
+            ->stream('reportes.residenciapdf');
     }
 }

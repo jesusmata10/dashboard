@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class RolesController extends Controller
 {
@@ -19,17 +19,17 @@ class RolesController extends Controller
         $breadcrumb = [
             [
                 'link' => '#',
-                'name' => 'Configuración'
+                'name' => 'Configuración',
             ],
             [
                 'link' => '#',
-                'name' => 'Roles'
-            ]
+                'name' => 'Roles',
+            ],
         ];
 
         $roles = Role::select('id', 'name')->orderBy('name')->get();
-        //$datatable = $this->sql($request)->paginate(10);
-        //$report = $this->sql($request)->get();
+        // $datatable = $this->sql($request)->paginate(10);
+        // $report = $this->sql($request)->get();
         return view('roles.index', compact('breadcrumb', 'roles'));
     }
 
@@ -46,68 +46,65 @@ class RolesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        
         $role = new Role();
         $role->name = $request->name;
-        //$role->guard_name = 'web';
+        $role->team_id = 1;
+        $role->guard_name = 'web';
         $role->save();
 
         if ($role->save()) {
             return redirect()->route('roles.index')->with('success', __('¡Rol creado sastifactoriamente!'));
-        } else {
-            return redirect()->route('roles.create')->with('error', __('messages.information_not_stored'));
         }
-        
+
+        return redirect()->route('roles.create')->with('error', __('messages.information_not_stored'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
     }
 
     public function rolesPermission($id)
@@ -115,16 +112,16 @@ class RolesController extends Controller
         $breadcrumb = [
             [
                 'link' => '#',
-                'name' => 'Configuración'
+                'name' => 'Configuración',
             ],
             [
                 'link' => '/roles',
-                'name' => 'Roles'
+                'name' => 'Roles',
             ],
             [
                 'link' => '#',
-                'name' => 'Permiso por Rol'
-            ]
+                'name' => 'Permiso por Rol',
+            ],
         ];
 
         $rol = Role::select('id', 'name')->find($id);
@@ -154,7 +151,7 @@ class RolesController extends Controller
             ModuloHasRoles::where('role_id', $rol->id)->delete();
 
             if (isset($request->modulos)) {
-                for ($i=0; $i <= count($request->modulos) - 1; $i++) {
+                for ($i = 0; $i <= count($request->modulos) - 1; ++$i) {
                     $modulohasroles = new ModuloHasRoles();
                     $modulohasroles->role_id = $rol->id;
                     $modulohasroles->modulo_id = $request->modulos[$i];
