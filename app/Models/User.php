@@ -80,4 +80,44 @@ class User extends Authenticatable
             ->select(DB::raw('row_number() OVER (ORDER BY name) as numero'), 'id', 'name', 'email')
             ->get();
     }
+
+    /*public static function sqlReport($search)
+    {
+        $datatable = DB::table('users as u')
+            ->select(
+                DB::raw('row_number() OVER (ORDER BY u.cedula) as num'),
+
+            )
+            ->join('personas as p', 'p.id', 'u.id')
+            ->join('entidades as e', 'e.id', 'd.estado_id')
+            ->join('ciudades as ciu', 'ciu.id', 'd.ciudad_id')
+            ->join('municipios as m', 'm.id', 'd.municipio_id')
+            ->join('parroquias as pa', 'pa.id', 'd.parroquia_id')
+            ->join('tzonas as tz', 'tz.id', 'd.tzona')
+            ->join('tcalles as t', 't.id', 'd.tcalle')
+            ->join('tviviendas as tv', 'tv.id', 'd.tvivienda')
+            ->where('p.personas_id', '=', 0);
+
+        if ($search->cedula != null) {
+            $datatable->where('p.cedula', $search->cedula);
+        }
+
+        if ($search->primer_nombre != null) {
+            $datatable->where('p.primer_nombre', $search->primer_nombre);
+        }
+
+        if ($search->segundo_nombre != null) {
+            $datatable->where('p.segundo_nombre', $search->segundo_nombre);
+        }
+
+        if ($search->primer_apellido != null) {
+            $datatable->where('p.primer_apellido', $search->primer_apellido);
+        }
+
+        if ($search->segundo_apellido != null) {
+            $datatable->where('p.segundo_apellido', $search->segundo_apellido);
+        }
+
+        return $datatable->orderBy('p.cedula')->distinct();
+    }*/
 }

@@ -46,7 +46,7 @@
                 <td> {{$items->cedula}} </td>
                 <td> {{$items->primer_nombre}}, {{$items->segundo_nombre}} </td>
                 <td> {{$items->primer_apellido}}, {{$items->segundo_apellido}} </td>
-                <td> {{$items->correo}}</td>
+                <td> {{$items->email}}</td>
                 <td> {{$items->estado}}, {{$items->urbanizacion}}, {{$items->zona}} {{$items->nzona}}, {{$items->calle}} {{$items->ncalle}}, {{$items->vivienda}} {{$items->nvivienda}} </td>
             </tr>
         @endforeach

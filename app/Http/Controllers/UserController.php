@@ -42,14 +42,14 @@ class UserController extends Controller
         ];
 
         $data = User::consulta();
-        // dd($data);
+        //dd($data);
 
-        // $users = $data->paginate(10);
-        // $report = $data->get(10);
+        //$users = $data->paginate(10);
+        //$report = $data->get(10);
         $rol = User::userRol();
         // dd($rol);
 
-        return view('usuarios.index', compact('breadcrumb', 'rol', 'data'));
+        return view('usuarios.index', compact('breadcrumb', 'rol', 'data', 'report'));
     }
 
     /**
