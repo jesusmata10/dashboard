@@ -49,7 +49,7 @@ class UserController extends Controller
         $rol = User::userRol();
         // dd($rol);
 
-        return view('usuarios.index', compact('breadcrumb', 'rol', 'data', 'report'));
+        return view('usuarios.index', compact('breadcrumb', 'rol', 'data'));
     }
 
     /**
@@ -149,37 +149,31 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $breadcrumb = [
-            [
-                'link' => '#',
-                'name' => 'Configuración',
-            ],
-            [
-                'link' => '/usuario',
-                'name' => 'Usuarios',
-            ],
-            [
-                'link' => '/usuario',
-                'name' => 'Editar Usuario',
-            ],
-        ];
-
         $entidad = Entidades::all();
+        $parroquia = Parroquias::all();
+        $municipio = Municipios::all();
+        $ciudad = Ciudades::all();
+        $zonas = Tzona::all('id', 'nombre');
+        $hogar = Tvivienda::all();
+        $area = Tcalle::all();
 
-        $user = User::select('u.*', 'u.id as id_user', 'sp.*', 'e.nombre_entidad', 'm.nombre_municipio', 'p.nombre_parroquia')->from('seguridad.users as u')
-            ->join('seguridad.perfiles as sp', 'sp.user_id', 'u.id')
-            ->join('entidades as e', 'e.id', 'sp.entidad_id')
-            ->join('municipios as m', 'm.id', 'sp.municipio_id')
-            ->join('parroquias as p', 'p.id', 'sp.parroquia_id')
+        $user = User::select('u.*', 'u.id as id_user', 'sp.*', 'e.estado', 'm.municipio', 'p.parroquia')->from('users as u')
+            ->join('personas as sp', 'sp.user_id', 'u.id')
+            ->join('direccion as d', 'd.id', 'sp.id')
+            ->join('entidades as e', 'e.id', 'd.estado_id')
+            ->join('municipios as m', 'm.id', 'd.municipio_id')
+            ->join('parroquias as p', 'p.id', 'd.parroquia_id')
             ->where('u.id', decrypt($id))->first();
 
-        $rol = $user->roles->implode('name', ',');
+        //$rol = $user->roles->implode('name', ',');
 
-        $roles = Role::orderBy('name')->pluck('name', 'id');
-
+        //$roles = Role::orderBy('name')->pluck('name', 'id');
+        $roles = Role::select('id', 'name')->orderBy('name')->get();
+        return view('usuarios.edit', compact('roles', 'entidad', 'parroquia', 'municipio', 'ciudad', 'zonas', 'hogar', 'area'));
         // $entidad = Entidad::all(['id', 'entidad'])->sortBy('entidad');
 
-        return view('usuarios.edit', ['breadcrumb' => $breadcrumb, 'user' => $user, 'rol' => $rol, 'roles' => $roles, 'entidad' => $entidad]);
+        //return view('usuarios.edit', ['user' => $user, 'roles' => $roles, 'entidad' => $entidad]);
+
     }
 
     /**
