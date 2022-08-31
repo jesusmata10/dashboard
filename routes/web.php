@@ -28,7 +28,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/parroquiaAjaxUser', 'UserController@parroquiaAjaxUser');
     Route::post('/ciudadAjaxUser', 'UserController@ciudadAjaxUser');
 
-    Route::get('/prueba', 'PruebaController@index');
+    Route::get('/prueba', 'PruebaController@index')->name('prueba');
 
     Route::resource('/upload', 'UploadController');
 
@@ -51,7 +51,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Personas
 
-    Route::resource('/personas', 'PersonasController');
+    Route::resource('/personas', 'PersonasController')->names('personas');
     Route::get('/personasPdf', 'PersonasController@pdf');
     Route::post('/personaFamilia', 'PersonasController@storeFamiliar');
 
