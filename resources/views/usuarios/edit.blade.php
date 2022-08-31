@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-12">
             <form action="{{ url('/usuario') }}" method="POST" role="form" data-toggle="validator" class="form"
-                  id="usuarioForm" name="usuarioForm">
+                  id="editUsuarioForm" name="editUsuarioForm">
                 {{ csrf_field() }}
 
                 <div class="card">
@@ -289,7 +289,6 @@
                     </div>
 
                     <div class="card-body">
-
                         <div class="row">
                             <div class="form-group col-6">
                                 <label for="">Nombre Usuario:</label>
@@ -306,9 +305,7 @@
                                 </select>
                             </div>
                         </div>
-
                         <div class="row">
-
                             <div class="col-6 form-group">
                                 <label for="password">Nueva Contraseña:</label>
                                 <div class="input-group">
@@ -327,7 +324,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="col-6 form-group">
                                 <label for="confirm_password">Confirmar Contraseña:</label>
                                 <div class="input-group">
@@ -346,22 +342,18 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="col-md-12">
                                 <div id="mensajeIogualdadPass" style="color: #dc3545; font-size:13px;"></div>
                                 <div id="result"></div>
                             </div>
                             <br>
-
                         </div>
-
                         <div class="row">
                             <div class="col-12 text-right">
-                                <button type="button" onclick="verificarIgualdad();" class="btn btn-outline-primary"
-                                        id="setPass">Aceptar
+                                <button type="button" onclick="verificarIgualdad()" class="btn btn-sm btn-primary">
+                                    Aceptar
                                 </button>
-                                <a href="{{ url('/usuario') }}" type="button"
-                                   class="btn btn-outline-danger">Cancelar</a>
+                                <a href="{{ url('/usuario') }}" type="button" class="btn btn-sm btn-danger">Cancelar</a>
                             </div>
                         </div>
 
@@ -372,9 +364,76 @@
         </div>
     </div>
 
-
     @section('footer')
         <div></div>
     @endsection
 
 @endsection
+@section('js')
+
+    {{--<script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
+    {!! JsValidator::formRequest('App\Http\Requests\UserCreateRequest', '#editUsuarioForm') !!}--}}
+
+    <script>
+
+        $('.datepicker').datepicker({
+            format: "dd-mm-yyyy",
+            clearBtn: true,
+            language: "es",
+            orientation: "bottom auto",
+            changeYear: false,
+            endDate: new Date()
+        });
+
+        $('#entidad_id').change(function () {
+            $.ajax({
+                method: "POST",
+                url: "{{ url('/municipioAjaxUser') }}",
+                data: {entidad_id: $('#entidad_id').val(), '_token': $('input[name=_token]').val()},
+                success: function (response) {
+                    $('#municipio_id').html(response);
+                    $("#parroquia_id").empty();
+                    $('#parroquia_id').append('<option value="" selected>Seleccione una opción</option>');
+
+                },
+                beforeSend: function () {
+                    $('#municipio_id').append('<option value="" selected>Buscando...</option>');
+                }
+            });
+        });
+
+        $('#entidad_id').change(function () {
+            $.ajax({
+                method: "POST",
+                url: "{{ url('/ciudadAjaxUser') }}",
+                data: {entidad_id: $('#entidad_id').val(), '_token': $('input[name=_token]').val()},
+                success: function (response) {
+                    $('#ciudad_id').html(response);
+                    /*$('#municipio_id').empty();
+                    $('#municipio_id').append('<option value="" selected>Seleccione una opción</option>');*/
+                },
+                beforeSend: function () {
+                    $('#ciudad_id').append('<option value="" selected>Buscando...</option>');
+                }
+            });
+
+        });
+
+        $('#municipio_id').change(function () {
+            $.ajax({
+                method: "POST",
+                url: "{{ url('/parroquiaAjaxUser') }}",
+                data: {municipio_id: $('#municipio_id').val(), '_token': $('input[name=_token]').val()},
+                success: function (response) {
+                    $('#parroquia_id').html(response);
+
+                },
+                beforeSend: function () {
+                    $('#parroquia_id').append('<option value="" selected>Buscando...</option>');
+                }
+            });
+
+        });
+    </script>
+
+@stop
