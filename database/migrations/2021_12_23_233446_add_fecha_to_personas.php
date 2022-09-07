@@ -15,8 +15,9 @@ class AddFechaToPersonas extends Migration
     {
         Schema::table('personas', function (Blueprint $table) {
             $table->date('fecha')->after('cedula');
-            $table->string('lugarnac',50)->nullable()->after('rif');
+            $table->string('lugarnac', 50)->nullable()->after('rif');
             $table->string('nacionalidad', 50)->nullable()->after('lugarnac');
+            $table->string('sexo', 10)->nullable()->after('nacionalidad');
         });
     }
 

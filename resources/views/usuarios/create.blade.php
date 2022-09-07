@@ -3,7 +3,8 @@
 
     <div class="row">
         <div class="col-12">
-            <form action="{{ url('/usuario') }}" method="POST" role="form" data-toggle="validator" class="form" id="usuarioForm" name="usuarioForm">
+            <form action="{{ url('/usuario') }}" method="POST" role="form" data-toggle="validator" class="form"
+                id="usuarioForm" name="usuarioForm">
                 {{ csrf_field() }}
 
                 <div class="card">
@@ -50,7 +51,7 @@
                                         <span class="input-group-text"><i class="fas fa-signature"></i></span>
                                     </div>
                                     <input id="primer_nombre" class="form-control text-uppercase" type="text"
-                                           name="primer_nombre">
+                                        name="primer_nombre">
                                 </div>
                             </div>
                             <div class="form-group col-md-3">
@@ -60,7 +61,7 @@
                                         <span class="input-group-text"><i class="fas fa-signature"></i></span>
                                     </div>
                                     <input id="segundo_nombre" class="form-control text-uppercase" type="text"
-                                           name="segundo_nombre">
+                                        name="segundo_nombre">
                                 </div>
                             </div>
                             <div class="form-group col-md-3">
@@ -70,7 +71,7 @@
                                         <span class="input-group-text"><i class="fas fa-signature"></i></span>
                                     </div>
                                     <input id="primer_apellido" class="form-control text-uppercase" type="text"
-                                           name="primer_apellido">
+                                        name="primer_apellido">
                                 </div>
                             </div>
                             <div class="form-group col-md-3">
@@ -80,25 +81,25 @@
                                         <span class="input-group-text"><i class="fas fa-signature"></i></span>
                                     </div>
                                     <input id="segundo_apellido" class="form-control text-uppercase" type="text"
-                                           name="segundo_apellido">
+                                        name="segundo_apellido">
                                 </div>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-3">
                                 <label for="fecha">(*) Fecha:</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="far fa-calendar-alt"></i>
-                                </span>
+                                        <span class="input-group-text">
+                                            <i class="far fa-calendar-alt"></i>
+                                        </span>
                                     </div>
                                     <input type="text" class="form-control float-right datepicker" name="fecha"
-                                           autocomplete="off" readonly>
+                                        autocomplete="off" readonly>
                                 </div>
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-3">
                                 <label for="lugarnac">(*) Lugar de Nacimiento:</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -107,13 +108,26 @@
                                     <input class="form-control text-uppercase" type="text" name="lugarnac">
                                 </div>
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-3">
                                 <label for="nacionalidad">(*) Nacionalidad:</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-map"></i></span>
                                     </div>
                                     <input class="form-control text-uppercase" type="text" name="nacionalidad">
+                                </div>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="sexo">(*) Sexo:</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-user-friends"></i></span>
+                                    </div>
+                                    <select class="form-control" name="sexo" id="sexo">
+                                        <option value="" selected>Seleccione una opci&oacute;n</option>
+                                        <option value="M">Mujer</option>
+                                        <option value="H">Hombre</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -169,7 +183,7 @@
                                         </div>
                                         <select class="form-control estado" name="estado_id" id="entidad_id">
                                             <option value="" selected>Seleccione una opción</option>
-                                            @foreach($entidad as $combo)
+                                            @foreach ($entidad as $combo)
                                                 <option value="{{ $combo->id }}">{{ $combo->estado }}</option>
                                             @endforeach
                                         </select>
@@ -238,7 +252,7 @@
                                         </div>
                                         <select class="form-control" name="tzona" id="tzona">
                                             <option value="" selected>Seleccione una opción</option>
-                                            @foreach($zonas as $combo)
+                                            @foreach ($zonas as $combo)
                                                 <option value="{{ $combo->id }}">{{ $combo->nombre }}</option>
                                             @endforeach
                                         </select>
@@ -262,7 +276,7 @@
                                         </div>
                                         <select class="form-control" name="tcalle" id="tcalle">
                                             <option value="" selected>Seleccione una opción</option>
-                                            @foreach($area as $combo)
+                                            @foreach ($area as $combo)
                                                 <option value="{{ $combo->id }}">{{ $combo->nombre }}</option>
                                             @endforeach
                                         </select>
@@ -284,7 +298,7 @@
                                         </div>
                                         <select class="form-control" name="tvivienda" id="tvivienda">
                                             <option value="" selected>Seleccione una opción</option>
-                                            @foreach($hogar as $combo)
+                                            @foreach ($hogar as $combo)
                                                 <option value="{{ $combo->id }}">{{ $combo->nombre }}</option>
                                             @endforeach
                                         </select>
@@ -324,9 +338,8 @@
                                     </div>
                                     <select class="form-control" name="rol">
                                         <option value="">Seleccione una opci&oacute;n</option>
-                                        @foreach($roles as $items)
-                                            <option
-                                                value="{{ $items->id }}">{{ $items->name }}</option>
+                                        @foreach ($roles as $items)
+                                            <option value="{{ $items->id }}">{{ $items->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -341,14 +354,14 @@
                                         <span class="input-group-text"> <i class="fa fa-key"></i> </span>
                                     </div>
                                     <input type="password" class="form-control" id="password" name="password"
-                                           onkeyup="validaClave()" title="Máximo 15 dígitos."/>
+                                        onkeyup="validaClave()" title="Máximo 15 dígitos." />
                                     <div class="input-group-append">
-                                <span class="input-group-text">
-                                  <i class="fa fa-exclamation-circle" style="color:red;" data-placement="right"
-                                     data-toggle="popover" title="Nueva contraseña"
-                                     data-content="Ingrese una combinación de al menos seis (6) y hasta quince (15 ) dígitos que incluya números, letras mayúsculas y minúsculas  y/ o caracteres especiales.">
-                                  </i>
-                                </span>
+                                        <span class="input-group-text">
+                                            <i class="fa fa-exclamation-circle" style="color:red;" data-placement="right"
+                                                data-toggle="popover" title="Nueva contraseña"
+                                                data-content="Ingrese una combinación de al menos seis (6) y hasta quince (15 ) dígitos que incluya números, letras mayúsculas y minúsculas  y/ o caracteres especiales.">
+                                            </i>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -359,14 +372,14 @@
                                         <span class="input-group-text"> <i class="fa fa-key"></i> </span>
                                     </div>
                                     <input type="password" class="form-control" id="password_confirmation"
-                                           name="password_confirmation"/>
+                                        name="password_confirmation" />
                                     <div class="input-group-append">
-                                <span class="input-group-text">
-                                  <i class="fa fa-exclamation-circle" style="color:red;" data-placement="right"
-                                     data-toggle="popover" title="Confirmar contraseña"
-                                     data-content="Confirme su nueva contraseña.">
-                                  </i>
-                                </span>
+                                        <span class="input-group-text">
+                                            <i class="fa fa-exclamation-circle" style="color:red;" data-placement="right"
+                                                data-toggle="popover" title="Confirmar contraseña"
+                                                data-content="Confirme su nueva contraseña.">
+                                            </i>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -382,7 +395,8 @@
                             <div class="col-12 text-right">
                                 <button type="submit" class="btn btn-sm btn-primary" id="setPass">Aceptar
                                 </button>
-                                <a href="{{ url('/usuario') }}" type="button" class="btn btn-sm btn-danger">Cancelar</a>
+                                <a href="{{ url('/usuario') }}" type="button"
+                                    class="btn btn-sm btn-danger">Cancelar</a>
                             </div>
                         </div>
 
@@ -399,11 +413,10 @@
 @stop
 @section('js')
 
-    {{--<script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
-    {!! JsValidator::formRequest('App\Http\Requests\UserCreateRequest', '#usuarioForm') !!}--}}
+    {{-- <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
+    {!! JsValidator::formRequest('App\Http\Requests\UserCreateRequest', '#usuarioForm') !!} --}}
 
     <script>
-
         $('.datepicker').datepicker({
             format: "dd-mm-yyyy",
             clearBtn: true,
@@ -413,50 +426,60 @@
             endDate: new Date()
         });
 
-        $('#entidad_id').change(function () {
+        $('#entidad_id').change(function() {
             $.ajax({
                 method: "POST",
                 url: "{{ url('/municipioAjaxUser') }}",
-                data: {entidad_id: $('#entidad_id').val(), '_token': $('input[name=_token]').val()},
-                success: function (response) {
+                data: {
+                    entidad_id: $('#entidad_id').val(),
+                    '_token': $('input[name=_token]').val()
+                },
+                success: function(response) {
                     $('#municipio_id').html(response);
                     $("#parroquia_id").empty();
-                    $('#parroquia_id').append('<option value="" selected>Seleccione una opción</option>');
+                    $('#parroquia_id').append(
+                        '<option value="" selected>Seleccione una opción</option>');
 
                 },
-                beforeSend: function () {
+                beforeSend: function() {
                     $('#municipio_id').append('<option value="" selected>Buscando...</option>');
                 }
             });
         });
 
-        $('#entidad_id').change(function () {
+        $('#entidad_id').change(function() {
             $.ajax({
                 method: "POST",
                 url: "{{ url('/ciudadAjaxUser') }}",
-                data: {entidad_id: $('#entidad_id').val(), '_token': $('input[name=_token]').val()},
-                success: function (response) {
+                data: {
+                    entidad_id: $('#entidad_id').val(),
+                    '_token': $('input[name=_token]').val()
+                },
+                success: function(response) {
                     $('#ciudad_id').html(response);
                     /*$('#municipio_id').empty();
                     $('#municipio_id').append('<option value="" selected>Seleccione una opción</option>');*/
                 },
-                beforeSend: function () {
+                beforeSend: function() {
                     $('#ciudad_id').append('<option value="" selected>Buscando...</option>');
                 }
             });
 
         });
 
-        $('#municipio_id').change(function () {
+        $('#municipio_id').change(function() {
             $.ajax({
                 method: "POST",
                 url: "{{ url('/parroquiaAjaxUser') }}",
-                data: {municipio_id: $('#municipio_id').val(), '_token': $('input[name=_token]').val()},
-                success: function (response) {
+                data: {
+                    municipio_id: $('#municipio_id').val(),
+                    '_token': $('input[name=_token]').val()
+                },
+                success: function(response) {
                     $('#parroquia_id').html(response);
 
                 },
-                beforeSend: function () {
+                beforeSend: function() {
                     $('#parroquia_id').append('<option value="" selected>Buscando...</option>');
                 }
             });

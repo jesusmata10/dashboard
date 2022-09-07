@@ -23,7 +23,7 @@ class CreatePersonasTable extends Migration
             $table->string('cedula', 10)->unique();
             $table->string('telefono_fijo', 15)->nullable();
             $table->string('celular', 15);
-            $table->string('correo', 255)->unique();
+            $table->string('email', 255)->unique();
             $table->string('rif', 14)->nullable();
             $table->boolean('status')->default(true);
             $table->unsignedBigInteger('user_id')->nullable();
@@ -31,7 +31,7 @@ class CreatePersonasTable extends Migration
             $table->string('parentesco')->nullable();
             $table->string('vocero_id', 255)->nullable();
             $table->timestamps();
-            $table->foreign('personas_id')->references('id')->on('personas');
+            //$table->foreign('personas_id')->references('id')->on('personas');
             $table->foreign('user_create_id')->references('id')->on('users');
             $table->foreign('user_id')->references('id')->on('users');
         });

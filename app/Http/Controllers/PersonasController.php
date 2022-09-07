@@ -23,6 +23,15 @@ class PersonasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('can:personas.index')->only('index');
+        $this->middleware('can:personas.create')->only('create', 'store');
+        $this->middleware('can:personas.show')->only('show');
+        $this->middleware('can:personas.edit')->only('edit', 'update');
+        $this->middleware('can:personas.destroy')->only('destroy');
+    }
+
     public function index(Request $request)
     {
         $persona = Personas::sqlReport($request);
@@ -69,7 +78,7 @@ class PersonasController extends Controller
             $input['fecha'] = Carbon::parse($request['fecha'])->format('Y-m-d');
             $input['personas_id'] = isset($request->personas_id) ? $request->personas_id : 0;
             $input['parentesco'] = isset($request->parentesco) ? $request->parentesco : 'Jefe de hogar';
-            $input['user_id'] = Auth::id();
+            $input['user_create_id'] = Auth::id();
             $input['status'] = 1;  //acomodar en la tabla como booleano
 
             $solicitud = Personas::create($input);
@@ -231,7 +240,6 @@ class PersonasController extends Controller
             $data->delete();
 
             return back()->with('success', '¡Producto eliminado sastifactoriamente!');
-
         } catch (Exception $e) {
 
             return back()->with('error', '¡Ha ocurrido un Error');

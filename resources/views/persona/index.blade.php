@@ -96,7 +96,9 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <a href="{{ url('personas/create') }}" type="button" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Nuevo</a>
+                        @can('personas.create')
+                            <a href="{{ route('personas.create') }}" type="button" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Nuevo</a>
+                        @endcan
 
                             <button type="button" onClick="reports('pdf')" class="btn btn-sm btn-primary "><i class="fa fa-file-pdf"></i> Pdf</button>
                             {{--@can('reporte')

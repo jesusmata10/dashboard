@@ -82,9 +82,9 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-
+        //dd($request);
         $input = $request->all();
-        $input['user_id'] = Auth::id();
+        $input['user_create_id'] = Auth::id();
         $input['personas_id'] = isset($request->personas_id) ? $request->personas_id : 0;
         $input['fecha'] = Carbon::parse($request['fecha'])->format('Y-m-d');
         $input['remember_token'] = Str::random(10);
@@ -94,7 +94,9 @@ class UserController extends Controller
         try {
             DB::transaction(function () use ($request, $input) {
                 $user = User::create($input);
+                $user->assignRole($request->rol);
 
+                $input['user_id'] = $user->id;
                 $persona = Personas::create($input);
 
                 $personaDireccionSave = new Direccion();
@@ -112,11 +114,6 @@ class UserController extends Controller
                 $personaDireccionSave->nvivienda = $request->nvivienda;
                 $personaDireccionSave->status = 1;
                 $personaDireccionSave->save();
-
-                //$role = Role::findByName($request->rol, 'web');
-                $roles = Role::select('id', 'name')->orderBy('name')->get();
-                $user->assignRole($request->rol);
-                // $user->syncRoles($request->rol);
             });
 
             return redirect('/usuario')->with('success', '¡Registro Sastifactorio!');
