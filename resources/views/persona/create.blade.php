@@ -33,7 +33,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-at"></i></span>
                                     </div>
-                                    <input class="form-control text-lowercase" type="text" name="correo">
+                                    <input class="form-control text-lowercase" type="email" name="email">
                                 </div>
                             </div>
                             <div class="form-group col-sm-12 col-md-4">

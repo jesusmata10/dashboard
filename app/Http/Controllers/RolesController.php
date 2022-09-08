@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use App\Http\Requests\Roles\RolesStoreRequest;
 
 class RolesController extends Controller
 {
@@ -62,6 +63,41 @@ class RolesController extends Controller
 
         return redirect()->route('roles.create')->with('error', __('messages.information_not_stored'));
     }
+
+    /*public function storeRolModulo(Request $request)
+    {
+        try {
+            $rol = Role::select('id')->where('name', $request->rol)->first();
+
+            ModuloHasRoles::where('role_id', $rol->id)->delete();
+
+            if (isset($request->modulos)) {
+                for ($i=0; $i <= count($request->modulos) - 1; $i++) {
+                    $modulohasroles = new ModuloHasRoles();
+                    $modulohasroles->role_id = $rol->id;
+                    $modulohasroles->modulo_id = $request->modulos[$i];
+                    $modulohasroles->save();
+                }
+            }
+
+            return redirect('/roles')->with('success', __('messages.stored_information'));
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect('/roles')->with('error', __('messages.information_not_stored'));
+        }
+
+    }
+    public function storeRolPermiso(Request $request)
+    {
+        try {
+            $rol = Role::where('name', $request->rol)->first();
+            $rol->syncPermissions($request->permiso);
+
+            return redirect('/roles')->with('success', __('messages.stored_information'));
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect('/roles')->with('error', __('messages.information_not_stored'));
+        }
+    }*/
+
 
     /**
      * Display the specified resource.

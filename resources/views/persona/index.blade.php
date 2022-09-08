@@ -121,6 +121,11 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                @if(count($lista)<=0)
+                                    <tr class="text-center">
+                                        <td colspan="5">No hay resultado que mostrar</td>
+                                    </tr>
+                                @else
                                     @foreach($lista as $items)
                                     <tr class="text-center">
                                         <td>{{ $items->num }}</td>
@@ -129,13 +134,21 @@
                                         <td>{{ $items->email }}</td>
                                         <td>
                                             <div class="text-center ">
-                                                <a href="{{ url('/personas/' . encrypt($items->id) ) }}" title="Ver" type="button" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></a>
+
+                                                @can('personas.show')
+                                                    <a href="{{ route('personas.show', encrypt($items->id)) }}" title="Ver" type="button" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></a>
+                                                @endcan
+                                                @can('personas.edit')
+                                                    <a href="{{ route('personas.edit', encrypt($items->id)) }}" title="Ver" type="button" class="btn btn-sm btn-danger"><i class="fas fa-eye"></i></a>
+                                                @endcan
                                                 <a href="{{ url('/personas/'.encrypt($items->id).'/edit') }}" title="Editar" type="button" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
                                                 <!-- button type="button" class="btn btn-outline-primary">Eliminar</button -->
                                             </div>
                                         </td>
                                     </tr>
                                     @endforeach
+                                @endif
+                                    
                                 </tbody>
                             </table>
                         </div>

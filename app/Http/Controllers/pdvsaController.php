@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\Pbombonas;
 class pdvsaController extends Controller
 {
     /**
@@ -13,7 +13,9 @@ class pdvsaController extends Controller
      */
     public function index()
     {
-        return view('pdvsa.index');
+        $bombonas = Pbombonas::consulta('id', 'nombre', 'numero');
+        
+        return view('pdvsa.index', compact('bombonas'));
     }
 
     /**

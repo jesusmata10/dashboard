@@ -29,7 +29,7 @@ class Carnet extends Model
     public static function consulta($search)
     {
         $data = DB ::table('carnet as c')
-            -> select(DB ::raw('row_number() OVER (ORDER BY p.cedula) as num'), 'p.id', 'p.primer_nombre', 'p.segundo_nombre', 'p.primer_apellido', 'p.segundo_apellido', 'p.cedula', 'c.serial', 'p.celular', 'c.codigo', 'c.personas_id')
+            -> select(DB ::raw('row_number() OVER (ORDER BY p.cedula) as num'), 'c.id', 'p.primer_nombre', 'p.segundo_nombre', 'p.primer_apellido', 'p.segundo_apellido', 'p.cedula', 'c.serial', 'p.celular', 'c.codigo', 'c.personas_id')
             -> join('personas as p', 'p.id', 'c.personas_id');
 
         if ($search -> cedula != null) {

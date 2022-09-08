@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,13 +18,18 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+/*Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+
     return view('dashboard');
-})->name('dashboard');
+
+})->name('dashboard');*/
 
 Route::middleware(['auth'])->group(function () {
+
+    Route::get('/dashboard', 'HomeController@index')->name('dashboard');
+    
     // Usuario
-    Route::resource('/usuario', 'UserController');
+    Route::resource('/usuario', 'UserController')->names('usuario');
     Route::post('/municipioAjaxUser', 'UserController@municipioAjaxUser');
     Route::post('/parroquiaAjaxUser', 'UserController@parroquiaAjaxUser');
     Route::post('/ciudadAjaxUser', 'UserController@ciudadAjaxUser');
@@ -57,6 +63,6 @@ Route::middleware(['auth'])->group(function () {
 
     // Carnet de  la Patria
 
-    Route::resource('/carnetPatria', 'CarnetController');
+    Route::resource('/carnetPatria', 'CarnetController')->names('carnet');
 
 });

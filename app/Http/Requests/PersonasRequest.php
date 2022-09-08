@@ -30,7 +30,7 @@ class PersonasRequest extends FormRequest
                 'required',
                 Rule::unique('personas')->ignore($this->id),
             ],
-            'correo' => ['required', 'email', Rule::unique('personas')->ignore($this->id)],
+            'email' => ['required', 'email', Rule::unique('personas')->ignore($this->id)],
             'primer_nombre' => 'required|regex:/^[A-Za-záéíóúñÁÉÍÓÚÑ\s]+$/|between:2,50',
             'segundo_nombre' => 'regex:/^[A-Za-záéíóúñÁÉÍÓÚÑ\s]+$/|between:2,50',
             'primer_apellido' => 'required|regex:/^[A-Za-záéíóúñÁÉÍÓÚÑ\s]+$/|between:2,50',
@@ -59,7 +59,7 @@ class PersonasRequest extends FormRequest
     {
         $this->merge([
             'id' => (isset($this->id)) ? decrypt($this->id) : '',
-            'correo' => Str::lower($this->correo),
+            'email' => Str::lower($this->email),
             'primer_nombre' => Str::upper($this->primer_nombre),
             'segundo_nombre' => Str::upper($this->segundo_nombre),
             'primer_apellido' => Str::upper($this->primer_apellido),

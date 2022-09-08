@@ -81,8 +81,12 @@
                                 </tr>
                             </thead>
                             <tbody>
-
-                                {{--@foreach($persona as $items)
+                            @if (count($bombonas)<=0)
+                                <tr class="text-center">
+                                    <td colspan="5">No hay resultado que mostrar</td>
+                                </tr>
+                            @else
+                                {{--@foreach($bombonas as $items)
                                     <tr class="text-center">
                                         <td>{{ $items->id }}</td>
                                         <td>{{ $items->nombres . ' ' . $items->apellidos }}</td>
@@ -97,6 +101,8 @@
                                         </td>
                                     </tr>
                                 @endforeach--}}
+                            @endif
+                                
                             </tbody>
                         </table>
                     </div>

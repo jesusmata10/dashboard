@@ -27,8 +27,8 @@ class PersonasController extends Controller
     {
         $this->middleware('can:personas.index')->only('index');
         $this->middleware('can:personas.create')->only('create', 'store');
-        $this->middleware('can:personas.show')->only('show');
         $this->middleware('can:personas.edit')->only('edit', 'update');
+        $this->middleware('can:personas.show')->only('show');
         $this->middleware('can:personas.destroy')->only('destroy');
     }
 
@@ -80,6 +80,7 @@ class PersonasController extends Controller
             $input['parentesco'] = isset($request->parentesco) ? $request->parentesco : 'Jefe de hogar';
             $input['user_create_id'] = Auth::id();
             $input['status'] = 1;  //acomodar en la tabla como booleano
+            //dd($input);
 
             $solicitud = Personas::create($input);
 
@@ -112,7 +113,7 @@ class PersonasController extends Controller
                     $familiaSave->segundo_apellido = $servicios->segundo_apellido;
                     $familiaSave->cedula = $servicios->cedula;
                     $familiaSave->fecha = Carbon::parse($servicios->fecha)->format('Y m d');
-                    $familiaSave->correo = $servicios->correo = '' ? '$solicitud->correo' : '0';
+                    $familiaSave->email = $servicios->email = '' ? '$solicitud->correo' : '0';
                     $familiaSave->rif = $servicios->rif = '' ? 'solicitud->rif' : '0';
                     $familiaSave->lugarnac = $servicios->lugarnac;
                     $familiaSave->nacionalidad = $servicios->nacionalidad;

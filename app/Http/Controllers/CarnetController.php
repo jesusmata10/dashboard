@@ -23,7 +23,7 @@ class CarnetController extends Controller
         //dump($carnet);
         $lista = $carnet->paginate(2);
         $report = $carnet->get(2);
-        //dd($report);
+        //dd($lista);
 
         return view('carnet.index', compact('carnet', 'report', 'lista'));
     }
@@ -46,7 +46,7 @@ class CarnetController extends Controller
     public function store(CarnetCreateRequest $request)
     {
         $persona = DB::table('personas')
-            ->select('id', 'cedula', 'nombres', 'apellidos')
+            ->select('id', 'cedula', 'primer_nombre', 'primer_apellido')
             ->where('cedula', $request['cedula'])
             ->first();
         //dd($persona);
@@ -97,6 +97,7 @@ class CarnetController extends Controller
      */
     public function edit($id)
     {
+        return view('carnet.edit');
     }
 
     /**
@@ -119,6 +120,18 @@ class CarnetController extends Controller
      */
     public function destroy($id)
     {
+        
+        //dd($id);
+        try {
+            /*$data = Carnet::where('id', decrypt($id))->delete();*/
+            $data = Carnet::findOrFail($id);
+            //dd($data);
+            $data->delete();
 
+            return back()->with('success', '¡Carnet eliminado sastifactoriamente!');
+        } catch (Exception $e) {
+
+            return back()->with('error', '¡Ha ocurrido un Error');
+        }
     }
 }

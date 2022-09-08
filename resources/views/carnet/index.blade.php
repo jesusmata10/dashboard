@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-12">
 
-            <form action="{{ route('carnetPatria.index') }}" method="GET" role="form" id="form">
+            <form action="{{ route('carnet.index') }}" method="GET" role="form" id="form">
 
                 <div class="card collapsed-card">
                     <div class="card-header">
@@ -84,39 +84,60 @@
                             <div class="table-responsive">
                                 <table id="example2" class="table table-sm table-bordered table-hover">
                                     <thead>
-                                    <tr class="text-center">
-                                        <th style="width:50px">N°</th>
-                                        <th>CEDULA</th>
-                                        <th>NOMBRES Y APELLIDOS</th>
-                                        <th>SERIAL</th>
-                                        <th>CODIGO</th>
-                                        <th style="width:150px">ACCIONES</th>
-                                    </tr>
+                                        <tr class="text-center">
+                                            <th style="width:50px">N°</th>
+                                            <th>CEDULA</th>
+                                            <th>NOMBRES Y APELLIDOS</th>
+                                            <th>SERIAL</th>
+                                            <th>CODIGO</th>
+                                            <th style="width:150px">ACCIONES</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($lista as $items)
-                                        <tr class="text-center">
-                                            <td>{{ $items->num }}</td>
-                                            <td>{{ $items->cedula }}</td>
-                                            <td>{{ $items->nombres }} {{ $items->apellidos }}</td>
-                                            <td>{{ $items->serial }}</td>
-                                            <td>{{ $items->codigo }}</td>
-                                            <td>
-                                                <div class="text-center">
-                                                    <button type="button" onClick="modal({{ $items->id }})" title="Ver"
-                                                            data-toggle="modal" data-target="#modal-xl"
-                                                            class="btn btn-sm btn-success"><i class="fas fa-eye"></i>
-                                                    </button>
-                                                    <a href="{{ url('/carnetPatria/'.encrypt($items->id).'/edit') }}"
-                                                       title="Editar" type="button" class="btn btn-sm btn-primary"><i
-                                                            class="fas fa-edit"></i></a>
-                                                    <a href="{{ url('/carnetPatria/'.encrypt($items->id).'/destroy') }}"
-                                                       title="Editar" type="button" class="btn btn-sm btn-danger"><i
-                                                            class="fas fa-eraser" title="Eliminar"></i></a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                        @if (count($lista) <= 0)
+                                            <tr>
+                                                <td colspan="6">
+                                                    Sin datos para mostrar
+                                                </td>
+                                            </tr>
+                                        @else
+                                            @foreach ($lista as $items)
+                                                <tr class="text-center">
+                                                    <td>{{ $items->num }}</td>
+                                                    <td>{{ $items->cedula }}</td>
+                                                    <td>{{ $items->primer_nombre }} {{ $items->primer_apellido }}</td>
+                                                    <td>{{ $items->serial }}</td>
+                                                    <td>{{ $items->codigo }}</td>
+                                                    <td>
+                                                        <div class="text-center">
+                                                            <button type="button" onClick="modal({{ $items->id }})"
+                                                                title="Ver" data-toggle="modal" data-target="#modal-xl"
+                                                                class="btn btn-sm btn-success"><i class="fas fa-eye"></i>
+                                                            </button>
+                                                            <a href="{{ route('carnet.edit', encrypt($items->id)) }}"
+                                                                title="Editar" type="button"
+                                                                class="btn btn-sm btn-primary"><i
+                                                                    class="fas fa-edit"></i></a>
+                                                            <div>
+                                                                <form action="{{ route('carnet.destroy', $items->id) }}" method="POST" >
+                                                                    @csrf
+                                                                    @method('DELETE')
+
+                                                                    <button type="submit" class="btn btn-sm btn-danger"><i
+                                                                    class="fas fa-eraser" title="Eliminar"></i></button>
+
+                                                                    {{--<a href="{{ route('carnet.destroy', encrypt($items)) }}"
+                                                                title="Eliminar"
+                                                                type="button"class="btn btn-sm btn-danger"><i
+                                                                    class="fas fa-eraser" title="Eliminar"></i></a>--}}
+                                                                </form>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>
@@ -192,25 +213,23 @@
 @endsection
 
 @section('js')
-
     <script type="text/javascript">
-
-        @if(session('success'))
+        @if (session('success'))
             toastr.options = {
-            "closeButton": true,
-            "progressBar": true
-        }
-        toastr.success("{{ session('success') }}");
-
+                "closeButton": true,
+                "progressBar": true
+            }
+            toastr.success("{{ session('success') }}");
         @endif
 
         function modal(item) {
             let datatable = {!! $report !!}
             const result = datatable.filter(datatable => datatable.id === item)
+            console.log(result);
 
             $('input[name=mo_cedula]').val(result[0].cedula)
-            $('input[name=mo_nombres]').val(result[0].nombres)
-            $('input[name=mo_apellidos]').val(result[0].apellidos)
+            $('input[name=mo_nombres]').val(result[0].primer_nombre)
+            $('input[name=mo_apellidos]').val(result[0].primer_apellido)
             $('input[name=mo_celular]').val(result[0].celular)
             $('input[name=mo_serial]').val(result[0].serial)
             $('input[name=mo_codigo]').val(result[0].codigo)
@@ -218,7 +237,7 @@
             $('#modal-xl').modal('show');
         }
 
-        setTimeout(function () {
+        setTimeout(function() {
             $(".desva").fadeOut(6000)
         }, 12000)
 
@@ -230,7 +249,7 @@
             var flag = false
 
             if (select > 0) {
-                $.each($('#form select'), function () {
+                $.each($('#form select'), function() {
                     if ($(this).val() == '') {
                         if (i == select) {
                             flag = false
@@ -245,7 +264,7 @@
             }
 
             if (text > 0 && !flag) {
-                $.each($('#form input[type=text]'), function () {
+                $.each($('#form input[type=text]'), function() {
                     if ($(this).val() == '') {
                         if (i == text) {
                             flag = false
@@ -287,10 +306,8 @@
             }
         }
     </script>
-
 @endsection
 
 @section('footer')
     <div></div>
 @endsection
-

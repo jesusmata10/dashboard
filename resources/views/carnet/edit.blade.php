@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-sm-12 col-md-12">
 
-            <form action="{{ route('carnetPatria.store') }}" method="POST" role="form" data-toggle="validator"
+            <form action="{{ route('carnet.store') }}" method="POST" role="form" data-toggle="validator"
                   class="form" id="carnetForm" name="carnetForm">
                 {{ csrf_field() }}
 
