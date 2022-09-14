@@ -20,7 +20,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-address-card"></i></span>
                                     </div>
-                                    <input type="text" class="form-control" maxlength="12" name="cedula">
+                                    <input type="text" class="form-control" maxlength="12" name="cedula" value="{{old('cedula')}}">
                                 </div>
                             </div>
                             <div class="form-group col-sm-12 col-md-4">
@@ -29,7 +29,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-address-card"></i></span>
                                     </div>
-                                    <input class="form-control text-uppercase" type="text" name="serial">
+                                    <input class="form-control text-uppercase" type="text" maxlength="10" name="serial" value="{{ old('serial')}}">
 
                                 </div>
                             </div>
@@ -39,7 +39,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-address-card"></i></span>
                                     </div>
-                                    <input class="form-control text-uppercase" type="text" name="codigo">
+                                    <input class="form-control text-uppercase" type="text" maxlength="10"name="codigo" value="{{ old('codigo')}}">
 
                                 </div>
                             </div>

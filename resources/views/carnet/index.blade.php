@@ -77,6 +77,7 @@
                                 <i class="fa fa-file-excel"></i> Excel
                             </button>
                         </div>
+
                     </div>
                     <br>
                     <div class="row">
@@ -109,30 +110,33 @@
                                                     <td>{{ $items->serial }}</td>
                                                     <td>{{ $items->codigo }}</td>
                                                     <td>
-                                                        <div class="text-center">
-                                                            <button type="button" onClick="modal({{ $items->id }})"
-                                                                title="Ver" data-toggle="modal" data-target="#modal-xl"
-                                                                class="btn btn-sm btn-success"><i class="fas fa-eye"></i>
-                                                            </button>
-                                                            <a href="{{ route('carnet.edit', encrypt($items->id)) }}"
-                                                                title="Editar" type="button"
-                                                                class="btn btn-sm btn-primary"><i
-                                                                    class="fas fa-edit"></i></a>
-                                                            <div>
-                                                                <form action="{{ route('carnet.destroy', $items->id) }}" method="POST" >
+                                                        <div class="row justify-content-center">
+                                                            <div class="d-flex">
+                                                                <button type="button" onClick="modal({{ $items->id }})"
+                                                                    title="Ver" data-toggle="modal"
+                                                                    data-target="#modal-xl"
+                                                                    class="btn btn-sm btn-success"><i
+                                                                        class="fas fa-eye"></i>
+                                                                </button>
+                                                            </div>
+                                                                <div class="d-flex">
+                                                                <a href="{{ route('carnet.edit', encrypt($items->id)) }}"
+                                                                    title="Editar" type="button"
+                                                                    class="btn btn-sm btn-primary"><i
+                                                                        class="fas fa-edit"></i></a>
+
+                                                            </div>
+                                                            <div class="d-flex">
+                                                                <form action="{{ route('carnet.destroy', $items->id) }}"
+                                                                    method="POST">
                                                                     @csrf
                                                                     @method('DELETE')
 
                                                                     <button type="submit" class="btn btn-sm btn-danger"><i
-                                                                    class="fas fa-eraser" title="Eliminar"></i></button>
-
-                                                                    {{--<a href="{{ route('carnet.destroy', encrypt($items)) }}"
-                                                                title="Eliminar"
-                                                                type="button"class="btn btn-sm btn-danger"><i
-                                                                    class="fas fa-eraser" title="Eliminar"></i></a>--}}
+                                                                            class="fas fa-eraser"
+                                                                            title="Eliminar"></i></button>
                                                                 </form>
                                                             </div>
-                                                            
                                                         </div>
                                                     </td>
                                                 </tr>

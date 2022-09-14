@@ -4,13 +4,14 @@
     <div class="row">
         <div class="col-sm-12 col-md-12">
 
-            <form action="{{ route('carnet.store') }}" method="POST" role="form" data-toggle="validator"
+            <form action="{{ route('carnet.update', encrypt($carnet->id) ) }}" method="POST" role="form" data-toggle="validator"
                   class="form" id="carnetForm" name="carnetForm">
                 {{ csrf_field() }}
+                @method('PUT')
 
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Carnet Patria</h3>
+                        <h3 class="card-title">Editar Carnet Patria</h3>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -20,7 +21,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-address-card"></i></span>
                                     </div>
-                                    <input type="text" class="form-control" maxlength="12" name="cedula">
+                                    <input type="text" class="form-control" maxlength="12" name="cedula" value="{{$carnet->cedula}}" readonly>
                                 </div>
                             </div>
                             <div class="form-group col-sm-12 col-md-4">
@@ -29,7 +30,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-address-card"></i></span>
                                     </div>
-                                    <input class="form-control text-uppercase" type="text" name="serial">
+                                    <input class="form-control text-uppercase" type="text" maxlength="10" name="serial" value="{{$carnet->serial}}">
 
                                 </div>
                             </div>
@@ -39,7 +40,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-address-card"></i></span>
                                     </div>
-                                    <input class="form-control text-uppercase" type="text" name="codigo">
+                                    <input class="form-control text-uppercase" type="text" maxlength="10" name="codigo" value="{{$carnet->codigo}}">
 
                                 </div>
                             </div>
@@ -64,8 +65,8 @@
 @stop
 @section('js')
 
-    <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
-    {!! JsValidator::formRequest('App\Http\Requests\CarnetCreateRequest', '#carnetForm') !!}
+    {{--<script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
+    {!! JsValidator::formRequest('App\Http\Requests\CarnetCreateRequest', '#carnetForm') !!}--}}
 
 
     <script>

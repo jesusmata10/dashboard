@@ -51,7 +51,7 @@ class CarnetController extends Controller
             ->first();
         //dd($persona);
         if ($persona == '') {
-            return redirect('/carnetPatria/create')->with('error', 'Cedula no registrada en el sistemas');
+            return redirect()->route('carnet.create')->with('error', 'Cedula no registrada en el sistemas');
         }
 
         try {
@@ -72,7 +72,7 @@ class CarnetController extends Controller
             \Log::error('CarnetController.store', [
                 'message' => $e->getMessage(),
             ]);
-            return redirect('/carnetPatria/create')->with('error', '!Ha ocurrido un error¡');
+            return back()->with('error', '!Ha ocurrido un error¡');
         }
     }
 
@@ -97,7 +97,10 @@ class CarnetController extends Controller
      */
     public function edit($id)
     {
-        return view('carnet.edit');
+
+        $carnet = Carnet::edit(decrypt($id));
+
+        return view('carnet.edit', compact('carnet'));
     }
 
     /**
@@ -109,6 +112,19 @@ class CarnetController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        try {
+
+            $carnet = Carnet::find(decrypt($id));
+
+            $carnet->serial = $request->serial;
+            $carnet->codigo = $request->codigo;
+            $carnet->save();
+
+            return redirect()->route('carnet.index')->with('success', '¡El carnet ha sido actualizado sastifactoriamente!');
+        } catch (Exception $e) {
+            return back()->with('error', '¡Ha ocurrido un Error');
+        }
     }
 
     /**
@@ -120,7 +136,7 @@ class CarnetController extends Controller
      */
     public function destroy($id)
     {
-        
+
         //dd($id);
         try {
             /*$data = Carnet::where('id', decrypt($id))->delete();*/
