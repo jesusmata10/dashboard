@@ -121,7 +121,7 @@ class Personas extends Model
             ->join('tzonas as tz', 'tz.id', 'd.tzona')
             ->join('tcalles as t', 't.id', 'd.tcalle')
             ->join('tviviendas as tv', 'tv.id', 'd.tvivienda')
-            ->where('p.personas_id', '=', 0);
+            ->where('p.personas_id', '=', $search);
 
         if ($search->cedula != null) {
             $datatable->where('p.cedula', $search->cedula);
@@ -144,5 +144,10 @@ class Personas extends Model
         }
 
         return $datatable->orderBy('p.cedula')->distinct();
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

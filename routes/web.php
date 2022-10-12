@@ -64,5 +64,6 @@ Route::middleware(['auth'])->group(function () {
     // Carnet de  la Patria
 
     Route::resource('/carnetPatria', 'CarnetController')->names('carnet');
+    Route::get('/carnetPdf', 'CarnetController@pdf')->name('carnetPdf');
 
 });

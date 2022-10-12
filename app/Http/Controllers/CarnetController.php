@@ -7,6 +7,7 @@ use App\Models\Carnet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use PDF;
 
 
 class CarnetController extends Controller
@@ -149,5 +150,16 @@ class CarnetController extends Controller
 
             return back()->with('error', '¡Ha ocurrido un Error');
         }
+    }
+
+    public function pdf(Request $request)
+    {
+        $carnet = Carnet::consulta($request);
+        $lista = $carnet->paginate(2);
+        $report = $carnet->get(2);
+        //dd($datatable);
+        return PDF::loadView('carnet.pdf', compact('lista', 'report'))
+            ->setPaper('letter', 'landscape')
+            ->stream('persona.pdf');
     }
 }

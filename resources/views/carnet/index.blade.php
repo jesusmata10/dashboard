@@ -161,7 +161,7 @@
     </div>
     <!--modal-->
     <div class="modal fade" id="modal-xl">
-        <div class="modal-dialog modal-xl">
+        <div class="modal-dialog modal-md">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Información del Usuario</h4>
@@ -304,7 +304,7 @@
             }
 
             if (type == 'pdf') {
-                window.open('{{-- url("/usuarioPdf") --}}' + '?' + cadena, '_blank')
+                window.open('{{ url("/carnetPdf") }}' + '?' + cadena, '_blank')
             } else {
                 window.open('{{-- url("/usuarioExcel") --}}' + '?' + cadena, '_blank')
             }

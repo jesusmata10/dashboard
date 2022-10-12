@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
 
+
 class UserController extends Controller
 {
     /**
@@ -30,26 +31,24 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $breadcrumb = [
-            [
-                'link' => '#',
-                'name' => 'Configuración',
-            ],
-            [
-                'link' => '#',
-                'name' => 'Usuarios',
-            ],
-        ];
-
-        $data = User::consulta();
-        //dd($data);
-
-        //$users = $data->paginate(10);
-        //$report = $data->get(10);
+        //dd($request);
+        //$email = $request->get('email');
+        //$role = $request->get('rol')
+        //dd($email);
+        $data = User::consulta($request);
+        $lista = $data->paginate(2);
+        $dato = $data->get();
+        
+        //$persona = $data->query();
+        //$data = json_encode($data);
+        //$data = json_Decode($data);
+        //dd($dato);
+        
+        //$report = $data->items();
         $rol = User::userRol();
-        // dd($rol);
+        //dd($persona);
 
-        return view('usuarios.index', compact('breadcrumb', 'rol', 'data'));
+        return view('usuarios.index', compact('rol', 'data', 'lista', 'dato'));
     }
 
     /**

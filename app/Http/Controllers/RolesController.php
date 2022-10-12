@@ -17,21 +17,9 @@ class RolesController extends Controller
      */
     public function index()
     {
-        $breadcrumb = [
-            [
-                'link' => '#',
-                'name' => 'Configuración',
-            ],
-            [
-                'link' => '#',
-                'name' => 'Roles',
-            ],
-        ];
 
         $roles = Role::select('id', 'name')->orderBy('name')->get();
-        // $datatable = $this->sql($request)->paginate(10);
-        // $report = $this->sql($request)->get();
-        return view('roles.index', compact('breadcrumb', 'roles'));
+        return view('roles.index', compact('roles'));
     }
 
     /**
@@ -169,6 +157,8 @@ class RolesController extends Controller
 
     public function storeRolPermiso(Request $request)
     {
+    dd($request);
+        
         try {
             $rol = Role::where('name', $request->rol)->first();
             $rol->syncPermissions($request->permiso);
