@@ -3,8 +3,8 @@
 
     <div class="row">
         <div class="col-12">
-            <form action="{{ url('/usuario') }}" method="POST" role="form" data-toggle="validator" class="form"
-                  id="editUsuarioForm" name="editUsuarioForm">
+            <form action="{{-- route('usuario.update', encrypt($user->id)) --}}" method="POST" role="form" data-toggle="validator" class="form"
+                id="editUsuarioForm" name="editUsuarioForm">
                 {{ csrf_field() }}
 
                 <div class="card">
@@ -21,7 +21,8 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-address-card"></i></span>
                                     </div>
-                                    <input type="text" class="form-control" maxlength="10" name="cedula">
+                                    <input type="text" class="form-control" maxlength="10" name="cedula"
+                                        value="{{ isset($user->cedula) ? $user->cedula : '' }}" readonly>
                                 </div>
                             </div>
                             <div class="form-group col-sm-12 col-md-4">
@@ -30,7 +31,8 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-at"></i></span>
                                     </div>
-                                    <input class="form-control text-lowercase" type="text" name="correo">
+                                    <input class="form-control text-lowercase" type="text" name="correo"
+                                        value="{{ isset($user->email) ? $user->email : 'no' }}">
                                 </div>
                             </div>
                             <div class="form-group col-sm-12 col-md-4">
@@ -39,7 +41,8 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-registered"></i></span>
                                     </div>
-                                    <input class="form-control text-uppercase" type="text" name="rif" maxlength="12">
+                                    <input class="form-control text-uppercase" type="text" name="rif" maxlength="12"
+                                        value="{{ isset($user->rif) ? $user->rif : '' }}">
                                 </div>
                             </div>
                         </div>
@@ -52,7 +55,8 @@
                                         <span class="input-group-text"><i class="fas fa-signature"></i></span>
                                     </div>
                                     <input id="primer_nombre" class="form-control text-uppercase" type="text"
-                                           name="primer_nombre">
+                                        name="primer_nombre"
+                                        value="{{ isset($user->primer_nombre) ? $user->primer_nombre : '' }}">
                                 </div>
                             </div>
                             <div class="form-group col-md-3">
@@ -62,7 +66,8 @@
                                         <span class="input-group-text"><i class="fas fa-signature"></i></span>
                                     </div>
                                     <input id="segundo_nombre" class="form-control text-uppercase" type="text"
-                                           name="segundo_nombre">
+                                        name="segundo_nombre"
+                                        value="{{ isset($user->segundo_nombre) ? $user->segundo_nombre : '' }}">
                                 </div>
                             </div>
                             <div class="form-group col-md-3">
@@ -72,7 +77,8 @@
                                         <span class="input-group-text"><i class="fas fa-signature"></i></span>
                                     </div>
                                     <input id="primer_apellido" class="form-control text-uppercase" type="text"
-                                           name="primer_apellido">
+                                        name="primer_apellido"
+                                        value="{{ isset($user->primer_apellido) ? $user->primer_apellido : '' }}">
                                 </div>
                             </div>
                             <div class="form-group col-md-3">
@@ -82,7 +88,8 @@
                                         <span class="input-group-text"><i class="fas fa-signature"></i></span>
                                     </div>
                                     <input id="segundo_apellido" class="form-control text-uppercase" type="text"
-                                           name="segundo_apellido">
+                                        name="segundo_apellido"
+                                        value="{{ isset($user->segundo_apellido) ? $user->segundo_apellido : '' }}">
                                 </div>
                             </div>
                         </div>
@@ -92,12 +99,12 @@
                                 <label for="fecha">(*) Fecha:</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="far fa-calendar-alt"></i>
-                                </span>
+                                        <span class="input-group-text">
+                                            <i class="far fa-calendar-alt"></i>
+                                        </span>
                                     </div>
                                     <input type="text" class="form-control float-right datepicker" name="fecha"
-                                           autocomplete="off" readonly>
+                                        autocomplete="off" readonly value="{{ isset($user->fecha) ? $user->fecha : '' }}">
                                 </div>
                             </div>
                             <div class="form-group col-md-4">
@@ -106,7 +113,8 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-map-marked-alt"></i></span>
                                     </div>
-                                    <input class="form-control text-uppercase" type="text" name="lugarnac">
+                                    <input class="form-control text-uppercase" type="text" name="lugarnac"
+                                        value="{{ isset($user->lugarnac) ? $user->lugarnac : '' }}">
                                 </div>
                             </div>
                             <div class="form-group col-md-4">
@@ -115,7 +123,8 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-map"></i></span>
                                     </div>
-                                    <input class="form-control text-uppercase" type="text" name="nacionalidad">
+                                    <input class="form-control text-uppercase" type="text" name="nacionalidad"
+                                        value="{{ isset($user->nacionalidad) ? $user->nacionalidad : '' }}">
                                 </div>
                             </div>
                         </div>
@@ -127,7 +136,8 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-phone"></i></span>
                                     </div>
-                                    <input class="form-control mask_tlf" type="text" name="telefono_fijo">
+                                    <input class="form-control mask_tlf" type="text" name="telefono_fijo"
+                                        value="{{ isset($user->telefono_fijo) ? $user->telefono_fijo : '' }}">
                                 </div>
                             </div>
                             <div class="form-group col-6">
@@ -136,7 +146,8 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-mobile-alt"></i></span>
                                     </div>
-                                    <input class="form-control mask_tlf" type="text" name="celular">
+                                    <input class="form-control mask_tlf" type="text" name="celular"
+                                        value="{{ isset($user->celular) ? $user->celular : '' }}">
                                 </div>
                             </div>
                         </div>
@@ -151,8 +162,13 @@
                                         </div>
                                         <select class="form-control estado" name="estado_id" id="entidad_id">
                                             <option value="" selected>Seleccione una opción</option>
-                                            @foreach($entidad as $combo)
-                                                <option value="{{ $combo->id }}">{{ $combo->estado }}</option>
+                                            @foreach ($entidad as $combo)
+                                                @if ($combo->id == $user->estado_id)
+                                                    <option selected="selected" value="{{ $combo->id }}">
+                                                        {{ $combo->estado }}</option>
+                                                @else
+                                                    <option value="{{ $combo->id }}">{{ $combo->estado }}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                     </div>
@@ -166,7 +182,8 @@
                                             <span class="input-group-text"><i class="fas fa-city"></i></span>
                                         </div>
                                         <select class="form-control" name="ciudad_id" id="ciudad_id">
-                                            <option value="" selected>Seleccione una opción</option>
+                                            <option selected="selected" value="{{ $user->ciudad_id }}">
+                                                {{ $user->ciudad }}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -179,7 +196,8 @@
                                             <span class="input-group-text"><i class="fas fa-city"></i></span>
                                         </div>
                                         <select class="form-control" name="municipio_id" id="municipio_id">
-                                            <option value="" selected>Seleccione una opción</option>
+                                            <option value="{{ $user->municipio_id }}" selected>{{ $user->municipio }}
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
@@ -192,7 +210,8 @@
                                             <span class="input-group-text"><i class="fas fa-map-pin"></i></span>
                                         </div>
                                         <select class="form-control" name="parroquia_id" id="parroquia_id">
-                                            <option value="" selected>Seleccione una opción</option>
+                                            <option value="{{ $user->parroquia_id }}" selected>{{ $user->parroquia }}
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
@@ -207,7 +226,8 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-city"></i></span>
                                         </div>
-                                        <input class="form-control text-uppercase" type="text" name="urbanizacion">
+                                        <input class="form-control text-uppercase" type="text" name="urbanizacion"
+                                            value="{{ isset($user->urbanizacion) ? $user->urbanizacion : '' }}">
                                     </div>
                                 </div>
                             </div>
@@ -220,8 +240,13 @@
                                         </div>
                                         <select class="form-control" name="tzona" id="tzona">
                                             <option value="" selected>Seleccione una opción</option>
-                                            @foreach($zonas as $combo)
-                                                <option value="{{ $combo->id }}">{{ $combo->nombre }}</option>
+                                            @foreach ($zonas as $combo)
+                                                @if ($combo->id == $user->tzona)
+                                                    <option selected="selected" value="{{ $combo->id }}">
+                                                        {{ $combo->nombre }}</option>
+                                                @else
+                                                    <option value="{{ $combo->id }}">{{ $combo->nombre }}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                     </div>
@@ -230,7 +255,8 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="nzona">(*) Nombre de zona</label>
-                                    <input class="form-control text-uppercase" type="text" name="nzona">
+                                    <input class="form-control text-uppercase" type="text" name="nzona"
+                                        value="{{ isset($user->nzona) ? $user->nzona : '' }}">
                                 </div>
                             </div>
                         </div>
@@ -244,8 +270,13 @@
                                         </div>
                                         <select class="form-control" name="tcalle" id="tcalle">
                                             <option value="" selected>Seleccione una opción</option>
-                                            @foreach($area as $combo)
-                                                <option value="{{ $combo->id }}">{{ $combo->nombre }}</option>
+                                            @foreach ($area as $combo)
+                                                @if ($combo->id == $user->tcalle)
+                                                    <option selected="selected" value="{{ $combo->id }}">
+                                                        {{ $combo->nombre }}</option>
+                                                @else
+                                                    <option value="{{ $combo->id }}">{{ $combo->nombre }}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                     </div>
@@ -254,7 +285,8 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="ncalle">(*) Nombre de Area</label>
-                                    <input class="form-control text-uppercase" type="text" name="ncalle">
+                                    <input class="form-control text-uppercase" type="text" name="ncalle"
+                                        value="{{ isset($user->ncalle) ? $user->ncalle : '' }}">
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -266,8 +298,13 @@
                                         </div>
                                         <select class="form-control" name="tvivienda" id="tvivienda">
                                             <option value="" selected>Seleccione una opción</option>
-                                            @foreach($hogar as $combo)
-                                                <option value="{{ $combo->id }}">{{ $combo->nombre }}</option>
+                                            @foreach ($hogar as $combo)
+                                                @if ($combo->id == $user->tvivienda)
+                                                    <option selected="selected" value="{{ $combo->id }}">
+                                                        {{ $combo->nombre }}</option>
+                                                @else
+                                                    <option value="{{ $combo->id }}">{{ $combo->nombre }}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                     </div>
@@ -276,7 +313,8 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="nvivienda">(*) Nombre Hogar:</label>
-                                    <input class="form-control text-uppercase" type="text" name="nvivienda">
+                                    <input class="form-control text-uppercase" type="text" name="nvivienda"
+                                        value="{{ isset($user->nvivienda) ? $user->nvivienda : '' }}">
                                 </div>
                             </div>
                         </div>
@@ -292,15 +330,20 @@
                         <div class="row">
                             <div class="form-group col-6">
                                 <label for="">Nombre Usuario:</label>
-                                <input type="text" class="form-control text-lowercase" name="name">
+                                <input type="text" class="form-control text-lowercase" name="name"
+                                    value="{{ isset($user->name) ? $user->name : '' }}">
                             </div>
                             <div class="form-group col-6">
                                 <label for="">Rol:</label>
                                 <select class="form-control" name="rol">
                                     <option value="">Seleccione una opci&oacute;n</option>
-                                    @foreach($roles as $items)
-                                        <option
-                                            value="{{ $items->name }}">{{ (($items->name == 'super-admin') ? 'ADMINISTRADOR DEL SISTEMA' : $items->name ) }}</option>
+                                    @foreach ($roles as $items)
+                                        @if ($items->id == $rol->id)
+                                            <option selected="selected" value="{{ $items->id }}">{{ $items->name }}
+                                            </option>
+                                        @else
+                                            <option value="{{ $items->id }}">{{ $items->name }}</option>
+                                        @endif
                                     @endforeach
                                 </select>
                             </div>
@@ -313,14 +356,14 @@
                                         <span class="input-group-text"> <i class="fa fa-key"></i> </span>
                                     </div>
                                     <input type="password" class="form-control" id="password" name="password"
-                                           onkeyup="validaClave()" title="Máximo 15 dígitos."/>
+                                        onkeyup="validaClave()" title="Máximo 15 dígitos." />
                                     <div class="input-group-append">
-                                <span class="input-group-text">
-                                  <i class="fa fa-exclamation-circle" style="color:red;" data-placement="right"
-                                     data-toggle="popover" title="Nueva contraseña"
-                                     data-content="Ingrese una combinación de al menos seis (6) y hasta quince (15 ) dígitos que incluya números, letras mayúsculas y minúsculas  y/ o caracteres especiales.">
-                                  </i>
-                                </span>
+                                        <span class="input-group-text">
+                                            <i class="fa fa-exclamation-circle" style="color:red;" data-placement="right"
+                                                data-toggle="popover" title="Nueva contraseña"
+                                                data-content="Ingrese una combinación de al menos seis (6) y hasta quince (15 ) dígitos que incluya números, letras mayúsculas y minúsculas  y/ o caracteres especiales.">
+                                            </i>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -331,14 +374,14 @@
                                         <span class="input-group-text"> <i class="fa fa-key"></i> </span>
                                     </div>
                                     <input type="password" class="form-control" id="confirm_password"
-                                           name="confirm_password"/>
+                                        name="confirm_password" />
                                     <div class="input-group-append">
-                                <span class="input-group-text">
-                                  <i class="fa fa-exclamation-circle" style="color:red;" data-placement="right"
-                                     data-toggle="popover" title="Confirmar contraseña"
-                                     data-content="Confirme su nueva contraseña.">
-                                  </i>
-                                </span>
+                                        <span class="input-group-text">
+                                            <i class="fa fa-exclamation-circle" style="color:red;" data-placement="right"
+                                                data-toggle="popover" title="Confirmar contraseña"
+                                                data-content="Confirme su nueva contraseña.">
+                                            </i>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -353,7 +396,8 @@
                                 <button type="button" onclick="verificarIgualdad()" class="btn btn-sm btn-primary">
                                     Aceptar
                                 </button>
-                                <a href="{{ url('/usuario') }}" type="button" class="btn btn-sm btn-danger">Cancelar</a>
+                                <a href="{{ url('/usuario') }}" type="button"
+                                    class="btn btn-sm btn-danger">Cancelar</a>
                             </div>
                         </div>
 
@@ -364,76 +408,85 @@
         </div>
     </div>
 
-    @section('footer')
-        <div></div>
-    @endsection
+@section('footer')
+    <div></div>
+@endsection
 
 @endsection
 @section('js')
 
-    {{--<script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
-    {!! JsValidator::formRequest('App\Http\Requests\UserCreateRequest', '#editUsuarioForm') !!}--}}
+{{-- <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
+    {!! JsValidator::formRequest('App\Http\Requests\UserCreateRequest', '#editUsuarioForm') !!} --}}
 
-    <script>
+<script>
+    $('.datepicker').datepicker({
+        format: "dd-mm-yyyy",
+        clearBtn: true,
+        language: "es",
+        orientation: "bottom auto",
+        changeYear: false,
+        endDate: new Date()
+    });
 
-        $('.datepicker').datepicker({
-            format: "dd-mm-yyyy",
-            clearBtn: true,
-            language: "es",
-            orientation: "bottom auto",
-            changeYear: false,
-            endDate: new Date()
+    $('#entidad_id').change(function() {
+        $.ajax({
+            method: "POST",
+            url: "{{ url('/municipioAjaxUser') }}",
+            data: {
+                entidad_id: $('#entidad_id').val(),
+                '_token': $('input[name=_token]').val()
+            },
+            success: function(response) {
+                $('#municipio_id').html(response);
+                $("#parroquia_id").empty();
+                $('#parroquia_id').append(
+                    '<option value="" selected>Seleccione una opción</option>');
+
+            },
+            beforeSend: function() {
+                $('#municipio_id').append('<option value="" selected>Buscando...</option>');
+            }
+        });
+    });
+
+    $('#entidad_id').change(function() {
+        $.ajax({
+            method: "POST",
+            url: "{{ url('/ciudadAjaxUser') }}",
+            data: {
+                entidad_id: $('#entidad_id').val(),
+                '_token': $('input[name=_token]').val()
+            },
+            success: function(response) {
+                $('#ciudad_id').html(response);
+                /*$('#municipio_id').empty();
+                $('#municipio_id').append('<option value="" selected>Seleccione una opción</option>');*/
+            },
+            beforeSend: function() {
+                $('#ciudad_id').append('<option value="" selected>Buscando...</option>');
+            }
         });
 
-        $('#entidad_id').change(function () {
-            $.ajax({
-                method: "POST",
-                url: "{{ url('/municipioAjaxUser') }}",
-                data: {entidad_id: $('#entidad_id').val(), '_token': $('input[name=_token]').val()},
-                success: function (response) {
-                    $('#municipio_id').html(response);
-                    $("#parroquia_id").empty();
-                    $('#parroquia_id').append('<option value="" selected>Seleccione una opción</option>');
+    });
 
-                },
-                beforeSend: function () {
-                    $('#municipio_id').append('<option value="" selected>Buscando...</option>');
-                }
-            });
+    $('#municipio_id').change(function() {
+        $.ajax({
+            method: "POST",
+            url: "{{ url('/parroquiaAjaxUser') }}",
+            data: {
+                municipio_id: $('#municipio_id').val(),
+                '_token': $('input[name=_token]').val()
+            },
+            success: function(response) {
+                $('#parroquia_id').html(response);
+
+            },
+            beforeSend: function() {
+                $('#parroquia_id').append('<option value="" selected>Buscando...</option>');
+            }
         });
 
-        $('#entidad_id').change(function () {
-            $.ajax({
-                method: "POST",
-                url: "{{ url('/ciudadAjaxUser') }}",
-                data: {entidad_id: $('#entidad_id').val(), '_token': $('input[name=_token]').val()},
-                success: function (response) {
-                    $('#ciudad_id').html(response);
-                    /*$('#municipio_id').empty();
-                    $('#municipio_id').append('<option value="" selected>Seleccione una opción</option>');*/
-                },
-                beforeSend: function () {
-                    $('#ciudad_id').append('<option value="" selected>Buscando...</option>');
-                }
-            });
-
-        });
-
-        $('#municipio_id').change(function () {
-            $.ajax({
-                method: "POST",
-                url: "{{ url('/parroquiaAjaxUser') }}",
-                data: {municipio_id: $('#municipio_id').val(), '_token': $('input[name=_token]').val()},
-                success: function (response) {
-                    $('#parroquia_id').html(response);
-
-                },
-                beforeSend: function () {
-                    $('#parroquia_id').append('<option value="" selected>Buscando...</option>');
-                }
-            });
-
-        });
-    </script>
+    });
+</script>
 
 @stop

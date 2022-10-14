@@ -38,12 +38,12 @@ class UserController extends Controller
         $data = User::consulta($request);
         $lista = $data->paginate(2);
         $dato = $data->get();
-        
+
         //$persona = $data->query();
         //$data = json_encode($data);
         //$data = json_Decode($data);
         //dd($dato);
-        
+
         //$report = $data->items();
         $rol = User::userRol();
         //dd($persona);
@@ -145,6 +145,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        
         $entidad = Entidades::all();
         $parroquia = Parroquias::all();
         $municipio = Municipios::all();
@@ -153,19 +154,22 @@ class UserController extends Controller
         $hogar = Tvivienda::all();
         $area = Tcalle::all();
 
-        $user = User::select('u.*', 'u.id as id_user', 'sp.*', 'e.estado', 'm.municipio', 'p.parroquia')->from('users as u')
+
+        $user = User::select('u.*', 'sp.*', 'd.*', 'e.estado', 'c.ciudad', 'm.municipio', 'p.parroquia')->from('users as u')
             ->join('personas as sp', 'sp.user_id', 'u.id')
             ->join('direccion as d', 'd.id', 'sp.id')
             ->join('entidades as e', 'e.id', 'd.estado_id')
+            ->join('ciudades as c', 'c.id', 'd.ciudad_id')
             ->join('municipios as m', 'm.id', 'd.municipio_id')
             ->join('parroquias as p', 'p.id', 'd.parroquia_id')
             ->where('u.id', decrypt($id))->first();
 
-        //$rol = $user->roles->implode('name', ',');
+        $rol = $user->roles[0];
 
         //$roles = Role::orderBy('name')->pluck('name', 'id');
-        $roles = Role::select('id', 'name')->orderBy('name')->get();
-        return view('usuarios.edit', compact('roles', 'entidad', 'parroquia', 'municipio', 'ciudad', 'zonas', 'hogar', 'area'));
+        $roles = Role::select('id', 'name')->orderBy('id')->get();
+        @dump($user);
+        return view('usuarios.edit', compact('roles', 'rol', 'user', 'entidad', 'parroquia', 'municipio', 'ciudad', 'zonas', 'hogar', 'area'));
         // $entidad = Entidad::all(['id', 'entidad'])->sortBy('entidad');
 
         //return view('usuarios.edit', ['user' => $user, 'roles' => $roles, 'entidad' => $entidad]);

@@ -42,12 +42,12 @@ class Personas extends Model
         'carnet', 'direccion',
     ];
 
-    public function carnet(): \Illuminate\Database\Eloquent\Relations\HasOne
+    public function carnet()
     {
         return $this->hasOne(Carnet::class);
     }
 
-    public function direccion(): \Illuminate\Database\Eloquent\Relations\HasOne
+    public function direccion()
     {
         return $this->hasOne(Direccion::class);
     }
