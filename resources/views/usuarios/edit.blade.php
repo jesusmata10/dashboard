@@ -16,13 +16,14 @@
 
                         <div class="row">
                             <div class="form-group col-sm-12 col-md-4">
-                                <label for="cedula">(*) C&eacutedula:</label>
+                                <label for="cedula">(*) C&eacutedula:</label>1
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-address-card"></i></span>
                                     </div>
                                     <input type="text" class="form-control" maxlength="10" name="cedula"
-                                        value="{{ isset($user->cedula) ? $user->cedula : '' }}" readonly>
+                                        value="{{ isset($user->personas->cedula) ? $user->personas->cedula : '' }}"
+                                        readonly>
                                 </div>
                             </div>
                             <div class="form-group col-sm-12 col-md-4">
@@ -42,7 +43,7 @@
                                         <span class="input-group-text"><i class="fas fa-registered"></i></span>
                                     </div>
                                     <input class="form-control text-uppercase" type="text" name="rif" maxlength="12"
-                                        value="{{ isset($user->rif) ? $user->rif : '' }}">
+                                        value="{{ isset($user->personas->rif) ? $user->personas->rif : '' }}">
                                 </div>
                             </div>
                         </div>
@@ -56,7 +57,7 @@
                                     </div>
                                     <input id="primer_nombre" class="form-control text-uppercase" type="text"
                                         name="primer_nombre"
-                                        value="{{ isset($user->primer_nombre) ? $user->primer_nombre : '' }}">
+                                        value="{{ isset($user->personas->primer_nombre) ? $user->personas->primer_nombre : '' }}">
                                 </div>
                             </div>
                             <div class="form-group col-md-3">
@@ -67,7 +68,7 @@
                                     </div>
                                     <input id="segundo_nombre" class="form-control text-uppercase" type="text"
                                         name="segundo_nombre"
-                                        value="{{ isset($user->segundo_nombre) ? $user->segundo_nombre : '' }}">
+                                        value="{{ isset($user->personas->segundo_nombre) ? $user->personas->segundo_nombre : '' }}">
                                 </div>
                             </div>
                             <div class="form-group col-md-3">
@@ -78,7 +79,7 @@
                                     </div>
                                     <input id="primer_apellido" class="form-control text-uppercase" type="text"
                                         name="primer_apellido"
-                                        value="{{ isset($user->primer_apellido) ? $user->primer_apellido : '' }}">
+                                        value="{{ isset($user->personas->primer_apellido) ? $user->personas->primer_apellido : '' }}">
                                 </div>
                             </div>
                             <div class="form-group col-md-3">
@@ -89,7 +90,7 @@
                                     </div>
                                     <input id="segundo_apellido" class="form-control text-uppercase" type="text"
                                         name="segundo_apellido"
-                                        value="{{ isset($user->segundo_apellido) ? $user->segundo_apellido : '' }}">
+                                        value="{{ isset($user->personas->segundo_apellido) ? $user->personas->segundo_apellido : '' }}">
                                 </div>
                             </div>
                         </div>
@@ -104,7 +105,8 @@
                                         </span>
                                     </div>
                                     <input type="text" class="form-control float-right datepicker" name="fecha"
-                                        autocomplete="off" readonly value="{{ isset($user->fecha) ? $user->fecha : '' }}">
+                                        autocomplete="off" readonly
+                                        value="{{ isset($user->personas->fecha) ? $user->personas->fecha : '' }}">
                                 </div>
                             </div>
                             <div class="form-group col-md-4">
@@ -114,7 +116,7 @@
                                         <span class="input-group-text"><i class="fas fa-map-marked-alt"></i></span>
                                     </div>
                                     <input class="form-control text-uppercase" type="text" name="lugarnac"
-                                        value="{{ isset($user->lugarnac) ? $user->lugarnac : '' }}">
+                                        value="{{ isset($user->personas->lugarnac) ? $user->personas->lugarnac : '' }}">
                                 </div>
                             </div>
                             <div class="form-group col-md-4">
@@ -124,7 +126,7 @@
                                         <span class="input-group-text"><i class="fas fa-map"></i></span>
                                     </div>
                                     <input class="form-control text-uppercase" type="text" name="nacionalidad"
-                                        value="{{ isset($user->nacionalidad) ? $user->nacionalidad : '' }}">
+                                        value="{{ isset($user->personas->nacionalidad) ? $user->personas->nacionalidad : '' }}">
                                 </div>
                             </div>
                         </div>
@@ -137,7 +139,7 @@
                                         <span class="input-group-text"><i class="fas fa-phone"></i></span>
                                     </div>
                                     <input class="form-control mask_tlf" type="text" name="telefono_fijo"
-                                        value="{{ isset($user->telefono_fijo) ? $user->telefono_fijo : '' }}">
+                                        value="{{ isset($user->personas->telefono_fijo) ? $user->personas->telefono_fijo : '' }}">
                                 </div>
                             </div>
                             <div class="form-group col-6">
@@ -147,7 +149,7 @@
                                         <span class="input-group-text"><i class="fas fa-mobile-alt"></i></span>
                                     </div>
                                     <input class="form-control mask_tlf" type="text" name="celular"
-                                        value="{{ isset($user->celular) ? $user->celular : '' }}">
+                                        value="{{ isset($user->personas->celular) ? $user->personas->celular : '' }}">
                                 </div>
                             </div>
                         </div>
@@ -163,9 +165,10 @@
                                         <select class="form-control estado" name="estado_id" id="entidad_id">
                                             <option value="" selected>Seleccione una opción</option>
                                             @foreach ($entidad as $combo)
-                                                @if ($combo->id == $user->estado_id)
+                                                @if ($combo->id == $user->personas->direccion->estado_id)
                                                     <option selected="selected" value="{{ $combo->id }}">
-                                                        {{ $combo->estado }}</option>
+                                                        {{ $combo->estado }}
+                                                    </option>
                                                 @else
                                                     <option value="{{ $combo->id }}">{{ $combo->estado }}</option>
                                                 @endif
@@ -182,8 +185,13 @@
                                             <span class="input-group-text"><i class="fas fa-city"></i></span>
                                         </div>
                                         <select class="form-control" name="ciudad_id" id="ciudad_id">
-                                            <option selected="selected" value="{{ $user->ciudad_id }}">
-                                                {{ $user->ciudad }}</option>
+                                            @foreach ($ciudad as $items)
+                                                @if ($items->id == $user->personas->direccion->ciudad_id)
+                                                    <option selected="selected" value="{{ $items->id }}">
+                                                        {{ $items->ciudad }}
+                                                    </option>
+                                                @endif
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -196,8 +204,13 @@
                                             <span class="input-group-text"><i class="fas fa-city"></i></span>
                                         </div>
                                         <select class="form-control" name="municipio_id" id="municipio_id">
-                                            <option value="{{ $user->municipio_id }}" selected>{{ $user->municipio }}
-                                            </option>
+                                            @foreach ($municipio as $items)
+                                                @if ($items->id == $user->personas->direccion->municipio_id)
+                                                    <option selected="selected" value="{{ $items->id }}">
+                                                        {{ $items->municipio }}</option>
+                                                @endif
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -210,8 +223,12 @@
                                             <span class="input-group-text"><i class="fas fa-map-pin"></i></span>
                                         </div>
                                         <select class="form-control" name="parroquia_id" id="parroquia_id">
-                                            <option value="{{ $user->parroquia_id }}" selected>{{ $user->parroquia }}
-                                            </option>
+                                            @foreach ($parroquia as $items)
+                                                @if ($items->id == $user->personas->direccion->parroquia_id)
+                                                    <option selected="selected" value="{{ $items->id }}">
+                                                        {{ $items->parroquia }}</option>
+                                                @endif
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -227,7 +244,7 @@
                                             <span class="input-group-text"><i class="fas fa-city"></i></span>
                                         </div>
                                         <input class="form-control text-uppercase" type="text" name="urbanizacion"
-                                            value="{{ isset($user->urbanizacion) ? $user->urbanizacion : '' }}">
+                                            value="{{ isset($user->personas->direccion->urbanizacion) ? $user->personas->direccion->urbanizacion : '' }}">
                                     </div>
                                 </div>
                             </div>
@@ -241,9 +258,10 @@
                                         <select class="form-control" name="tzona" id="tzona">
                                             <option value="" selected>Seleccione una opción</option>
                                             @foreach ($zonas as $combo)
-                                                @if ($combo->id == $user->tzona)
+                                                @if ($combo->id == $user->personas->direccion->tzona)
                                                     <option selected="selected" value="{{ $combo->id }}">
-                                                        {{ $combo->nombre }}</option>
+                                                        {{ $combo->nombre }}
+                                                    </option>
                                                 @else
                                                     <option value="{{ $combo->id }}">{{ $combo->nombre }}</option>
                                                 @endif
@@ -256,7 +274,7 @@
                                 <div class="form-group">
                                     <label for="nzona">(*) Nombre de zona</label>
                                     <input class="form-control text-uppercase" type="text" name="nzona"
-                                        value="{{ isset($user->nzona) ? $user->nzona : '' }}">
+                                        value="{{ isset($user->personas->direccion->nzona) ? $user->personas->direccion->nzona : '' }}">
                                 </div>
                             </div>
                         </div>
@@ -271,9 +289,10 @@
                                         <select class="form-control" name="tcalle" id="tcalle">
                                             <option value="" selected>Seleccione una opción</option>
                                             @foreach ($area as $combo)
-                                                @if ($combo->id == $user->tcalle)
+                                                @if ($combo->id == $user->personas->direccion->tcalle)
                                                     <option selected="selected" value="{{ $combo->id }}">
-                                                        {{ $combo->nombre }}</option>
+                                                        {{ $combo->nombre }}
+                                                    </option>
                                                 @else
                                                     <option value="{{ $combo->id }}">{{ $combo->nombre }}</option>
                                                 @endif
@@ -286,7 +305,7 @@
                                 <div class="form-group">
                                     <label for="ncalle">(*) Nombre de Area</label>
                                     <input class="form-control text-uppercase" type="text" name="ncalle"
-                                        value="{{ isset($user->ncalle) ? $user->ncalle : '' }}">
+                                        value="{{ isset($user->personas->direccion->ncalle) ? $user->personas->direccion->ncalle : '' }}">
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -299,9 +318,10 @@
                                         <select class="form-control" name="tvivienda" id="tvivienda">
                                             <option value="" selected>Seleccione una opción</option>
                                             @foreach ($hogar as $combo)
-                                                @if ($combo->id == $user->tvivienda)
+                                                @if ($combo->id == $user->personas->direccion->tvivienda)
                                                     <option selected="selected" value="{{ $combo->id }}">
-                                                        {{ $combo->nombre }}</option>
+                                                        {{ $combo->nombre }}
+                                                    </option>
                                                 @else
                                                     <option value="{{ $combo->id }}">{{ $combo->nombre }}</option>
                                                 @endif
@@ -314,7 +334,7 @@
                                 <div class="form-group">
                                     <label for="nvivienda">(*) Nombre Hogar:</label>
                                     <input class="form-control text-uppercase" type="text" name="nvivienda"
-                                        value="{{ isset($user->nvivienda) ? $user->nvivienda : '' }}">
+                                        value="{{ isset($user->personas->direccion->nvivienda) ? $user->personas->direccion->nvivienda : '' }}">
                                 </div>
                             </div>
                         </div>
@@ -415,8 +435,9 @@
 @endsection
 @section('js')
 
-{{-- <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
-    {!! JsValidator::formRequest('App\Http\Requests\UserCreateRequest', '#editUsuarioForm') !!} --}}
+{{--
+<script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
+{!! JsValidator::formRequest('App\Http\Requests\UserCreateRequest', '#editUsuarioForm') !!} --}}
 
 <script>
     $('.datepicker').datepicker({
