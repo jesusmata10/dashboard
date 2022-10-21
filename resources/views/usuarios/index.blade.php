@@ -149,7 +149,7 @@
                                                 <td>{{ $items->personas->primer_nombre ?? 'Sin Datos' }}</td>
                                                 <td>{{ $items->personas->primer_apellido ?? 'Sin Datos' }}</td>
                                                 <td>{{ $items->email }}</td>
-                                                <td>{{ $items->roles[0]->name }} <span class="float-right badge badge-success">Activo</span></td>
+                                                <td>{{ isset($items->roles[0]->name) ? $items->roles[0]->name : '' }} <span class="float-right badge badge-success">Activo</span></td>
                                                 <td>
                                                     <div class="text-center">
                                                         <button type="button" onClick="modal({{ $items->id }})"

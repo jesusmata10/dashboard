@@ -173,6 +173,32 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        dd($request);
+        /*
+        $input = $request->all();
+        $input['user_id'] = Auth::id();
+        $input['estatus'] = (bool)$input['estatus'];
+        $input['password'] = Hash::make($request->password);
+
+        try {
+            // update user
+            $data = Arr::only($input, ['name', 'email', 'password']);
+            $user = User::where('id', decrypt($id))->update($data);
+
+            // update perfiles
+            $data = Arr::only($input, ['cedula', 'telefono_movil', 'telefono_local', 'direccion_habitacion', 'direccion_trabajo', 'nombres', 'apellidos', 'estatus']);
+            $perfiles = Perfile::where('user_id', decrypt($id))->update($data);
+
+            // se sincronizan los permisos con el usuario
+            $user = User::where('id', decrypt($id))->first();
+            $user->syncRoles($request->rol);
+
+            return redirect('/usuario')->with('success', __('messages.information_successfully_updated'));
+        } catch (\Illuminate\Database\QueryException $e) {
+            dd($e);
+            return redirect('/usuario')->with('error', __('messages.information_not_stored'));
+        }
+        */
     }
 
     /**

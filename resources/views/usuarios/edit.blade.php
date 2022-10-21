@@ -3,9 +3,10 @@
 
     <div class="row">
         <div class="col-12">
-            <form action="{{-- route('usuario.update', encrypt($user->id)) --}}" method="POST" role="form" data-toggle="validator" class="form"
+            <form action="{{ route('usuario.update', encrypt($user->id)) }}" method="POST" role="form" data-toggle="validator" class="form"
                 id="editUsuarioForm" name="editUsuarioForm">
                 {{ csrf_field() }}
+                 @method('PUT')
 
                 <div class="card">
                     <div class="card-header">
@@ -13,7 +14,7 @@
                     </div>
 
                     <div class="card-body">
-
+                        <input type="hidden" name="id" value="{{ $user->personas->id }}">
                         <div class="row">
                             <div class="form-group col-sm-12 col-md-4">
                                 <label for="cedula">(*) C&eacutedula:</label>1
@@ -413,7 +414,7 @@
                         </div>
                         <div class="row">
                             <div class="col-12 text-right">
-                                <button type="button" onclick="verificarIgualdad()" class="btn btn-sm btn-primary">
+                                <button type="submit" onclick="verificarIgualdad()" class="btn btn-sm btn-primary">
                                     Aceptar
                                 </button>
                                 <a href="{{ url('/usuario') }}" type="button"
