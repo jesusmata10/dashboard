@@ -526,6 +526,16 @@ return [
                 ],
             ],
         ],
+        'inputmask' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/inputmask/jquery.inputmask.js',
+                ],
+            ],
+        ],
         'datepicker' => [
             'active' => true,
             'files' => [

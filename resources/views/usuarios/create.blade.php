@@ -38,7 +38,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-registered"></i></span>
                                     </div>
-                                    <input class="form-control text-uppercase" type="text" name="rif" maxlength="12">
+                                    <input class="form-control text-uppercase mask_rif" type="text" name="rif" maxlength="12">
                                 </div>
                             </div>
                         </div>
@@ -417,6 +417,11 @@
     {!! JsValidator::formRequest('App\Http\Requests\UserCreateRequest', '#usuarioForm') !!} --}}
 
     <script>
+        $(document).ready(function() {
+            $('.mask_tlf').inputmask("(9999) 999-99-99")
+            $('.mask_rif').inputmask("99999999-9")
+        });
+
         $('.datepicker').datepicker({
             format: "dd-mm-yyyy",
             clearBtn: true,

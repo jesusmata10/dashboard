@@ -7,7 +7,7 @@
         <div class="col-12">
 
             <form action="{{ route('personas.store') }}" method="POST" role="form" data-toggle="validator" class="form"
-                  id="personaForm" name="personaForm">
+                id="personaForm" name="personaForm">
                 {{ csrf_field() }}
 
                 <div class="card">
@@ -42,7 +42,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-registered"></i></span>
                                     </div>
-                                    <input class="form-control text-uppercase" type="text" name="rif" maxlength="12">
+                                    <input class="form-control text-uppercase mask_rif" type="text" name="rif" maxlength="12">
                                 </div>
                             </div>
                         </div>
@@ -55,7 +55,7 @@
                                         <span class="input-group-text"><i class="fas fa-signature"></i></span>
                                     </div>
                                     <input id="primer_nombre" class="form-control text-uppercase" type="text"
-                                           name="primer_nombre">
+                                        name="primer_nombre">
                                 </div>
                             </div>
                             <div class="form-group col-md-3">
@@ -65,7 +65,7 @@
                                         <span class="input-group-text"><i class="fas fa-signature"></i></span>
                                     </div>
                                     <input id="segundo_nombre" class="form-control text-uppercase" type="text"
-                                           name="segundo_nombre">
+                                        name="segundo_nombre">
                                 </div>
                             </div>
                             <div class="form-group col-md-3">
@@ -75,7 +75,7 @@
                                         <span class="input-group-text"><i class="fas fa-signature"></i></span>
                                     </div>
                                     <input id="primer_apellido" class="form-control text-uppercase" type="text"
-                                           name="primer_apellido">
+                                        name="primer_apellido">
                                 </div>
                             </div>
                             <div class="form-group col-md-3">
@@ -85,7 +85,7 @@
                                         <span class="input-group-text"><i class="fas fa-signature"></i></span>
                                     </div>
                                     <input id="segundo_apellido" class="form-control text-uppercase" type="text"
-                                           name="segundo_apellido">
+                                        name="segundo_apellido">
                                 </div>
                             </div>
                         </div>
@@ -95,12 +95,12 @@
                                 <label for="fecha">(*) Fecha:</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="far fa-calendar-alt"></i>
-                                </span>
+                                        <span class="input-group-text">
+                                            <i class="far fa-calendar-alt"></i>
+                                        </span>
                                     </div>
                                     <input type="text" class="form-control float-right datepicker" name="fecha"
-                                           autocomplete="off" readonly>
+                                        autocomplete="off" readonly>
                                 </div>
                             </div>
                             <div class="form-group col-md-4">
@@ -154,7 +154,7 @@
                                         </div>
                                         <select class="form-control estado" name="estado_id" id="entidad_id">
                                             <option value="" selected>Seleccione una opción</option>
-                                            @foreach($entidad as $combo)
+                                            @foreach ($entidad as $combo)
                                                 <option value="{{ $combo->id }}">{{ $combo->estado }}</option>
                                             @endforeach
                                         </select>
@@ -223,7 +223,7 @@
                                         </div>
                                         <select class="form-control" name="tzona" id="tzona">
                                             <option value="" selected>Seleccione una opción</option>
-                                            @foreach($zonas as $combo)
+                                            @foreach ($zonas as $combo)
                                                 <option value="{{ $combo->id }}">{{ $combo->nombre }}</option>
                                             @endforeach
                                         </select>
@@ -247,7 +247,7 @@
                                         </div>
                                         <select class="form-control" name="tcalle" id="tcalle">
                                             <option value="" selected>Seleccione una opción</option>
-                                            @foreach($area as $combo)
+                                            @foreach ($area as $combo)
                                                 <option value="{{ $combo->id }}">{{ $combo->nombre }}</option>
                                             @endforeach
                                         </select>
@@ -269,7 +269,7 @@
                                         </div>
                                         <select class="form-control" name="tvivienda" id="tvivienda">
                                             <option value="" selected>Seleccione una opción</option>
-                                            @foreach($hogar as $combo)
+                                            @foreach ($hogar as $combo)
                                                 <option value="{{ $combo->id }}">{{ $combo->nombre }}</option>
                                             @endforeach
                                         </select>
@@ -301,7 +301,7 @@
                                         <span class="input-group-text"><i class="fas fa-signature"></i></span>
                                     </div>
                                     <input id="primer_nombref" class="form-control text-uppercase" type="text"
-                                           name="primer_nombref">
+                                        name="primer_nombref">
                                 </div>
                             </div>
                             <div class="form-group col-md-3">
@@ -311,7 +311,7 @@
                                         <span class="input-group-text"><i class="fas fa-signature"></i></span>
                                     </div>
                                     <input id="segundo_nombref" class="form-control text-uppercase" type="text"
-                                           name="segundo_nombref">
+                                        name="segundo_nombref">
                                 </div>
                             </div>
                             <div class="form-group col-md-3">
@@ -321,7 +321,7 @@
                                         <span class="input-group-text"><i class="fas fa-signature"></i></span>
                                     </div>
                                     <input id="primer_apellidof" class="form-control text-uppercase" type="text"
-                                           name="primer_apellidof">
+                                        name="primer_apellidof">
                                 </div>
                             </div>
                             <div class="form-group col-md-3">
@@ -331,7 +331,7 @@
                                         <span class="input-group-text"><i class="fas fa-signature"></i></span>
                                     </div>
                                     <input id="segundo_apellidof" class="form-control text-uppercase" type="text"
-                                           name="segundo_apellidof">
+                                        name="segundo_apellidof">
                                 </div>
                             </div>
                         </div>
@@ -343,19 +343,19 @@
                                         <span class="input-group-text"><i class="fas fa-address-card"></i></span>
                                     </div>
                                     <input id="cedulacf" class="form-control text-uppercase" type="text"
-                                           name="cedulacf">
+                                        name="cedulacf">
                                 </div>
                             </div>
                             <div class="form-group col-sm-12 col-md-4">
                                 <label for="fecha">Fecha:</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="far fa-calendar-alt"></i>
-                                </span>
+                                        <span class="input-group-text">
+                                            <i class="far fa-calendar-alt"></i>
+                                        </span>
                                     </div>
                                     <input type="text" class="form-control float-right datepicker" name="fechacf"
-                                           id="fechacf" autocomplete="off" readonly>
+                                        id="fechacf" autocomplete="off" readonly>
                                 </div>
                             </div>
                             <div class="form-group col-md-4">
@@ -385,7 +385,8 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-map-marked-alt"></i></span>
                                     </div>
-                                    <input class="form-control text-uppercase" type="text" name="lugarnacf" id="lugarnacf">
+                                    <input class="form-control text-uppercase" type="text" name="lugarnacf"
+                                        id="lugarnacf">
                                 </div>
                             </div>
                             <div class="form-group col-md-4">
@@ -394,7 +395,8 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-map"></i></span>
                                     </div>
-                                    <input class="form-control text-uppercase" type="text" name="nacionalidadf" id="nacionalidadf">
+                                    <input class="form-control text-uppercase" type="text" name="nacionalidadf"
+                                        id="nacionalidadf">
                                 </div>
                             </div>
                         </div>
@@ -415,16 +417,16 @@
                             <div class="table-responsive">
                                 <table class="table table-sm table-bordered table-hover ">
                                     <thead class="bg-info">
-                                    <tr>
-                                        <th>Primer Nombre</th>
-                                        <th>Segundo Nombre</th>
-                                        <th>Primer Apellidos</th>
-                                        <th>Segundo Apellidos</th>
-                                        <th>Cedula</th>
-                                        <th>Fecha</th>
-                                        <th>Parentesco</th>
-                                        <th>Acción</th>
-                                    </tr>
+                                        <tr>
+                                            <th>Primer Nombre</th>
+                                            <th>Segundo Nombre</th>
+                                            <th>Primer Apellidos</th>
+                                            <th>Segundo Apellidos</th>
+                                            <th>Cedula</th>
+                                            <th>Fecha</th>
+                                            <th>Parentesco</th>
+                                            <th>Acción</th>
+                                        </tr>
                                     </thead>
                                     <tbody id="mytable">
                                     </tbody>
@@ -454,10 +456,14 @@
 @stop
 @section('js')
 
-    <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js') }}"></script>
     {!! JsValidator::formRequest('App\Http\Requests\PersonasRequest', '#personaForm') !!}
 
     <script>
+        $(document).ready(function() {
+            $('.mask_tlf').inputmask("(9999) 999-99-99")
+            $('.mask_rif').inputmask("99999999-9")
+        });
 
         $('.datepicker').datepicker({
             format: "dd-mm-yyyy",
@@ -468,12 +474,12 @@
             endDate: new Date()
         });
 
-        $(document).ready(function () {
+        $(document).ready(function() {
 
-            $('#btnAgregarFamiliar').on('click', function () {
+            $('#btnAgregarFamiliar').on('click', function() {
                 accionAgregarFamiliar();
             })
-            accionAgregarFamiliar = function () {
+            accionAgregarFamiliar = function() {
                 var id = ++$("input[name='personaTemp[]']").length
                 let primer_nombre = $('#primer_nombref').val()
                 let segundo_nombre = $('#segundo_nombref').val()
@@ -546,62 +552,70 @@
             }
 
             //elimina el registro selecionado
-            eliminarFamiliar = function (id) {
+            eliminarFamiliar = function(id) {
                 $('#row' + id).remove();
             }
 
         });
 
-        $('#entidad_id').change(function () {
+        $('#entidad_id').change(function() {
             $.ajax({
                 method: "POST",
                 url: "{{ url('/municipioAjaxUser') }}",
-                data: {entidad_id: $('#entidad_id').val(), '_token': $('input[name=_token]').val()},
-                success: function (response) {
+                data: {
+                    entidad_id: $('#entidad_id').val(),
+                    '_token': $('input[name=_token]').val()
+                },
+                success: function(response) {
                     $('#municipio_id').html(response);
                     $("#parroquia_id").empty();
-                    $('#parroquia_id').append('<option value="" selected>Seleccione una opción</option>');
+                    $('#parroquia_id').append(
+                        '<option value="" selected>Seleccione una opción</option>');
 
                 },
-                beforeSend: function () {
+                beforeSend: function() {
                     $('#municipio_id').append('<option value="" selected>Buscando...</option>');
                 }
             });
         });
 
-        $('#entidad_id').change(function () {
+        $('#entidad_id').change(function() {
             $.ajax({
                 method: "POST",
                 url: "{{ url('/ciudadAjaxUser') }}",
-                data: {entidad_id: $('#entidad_id').val(), '_token': $('input[name=_token]').val()},
-                success: function (response) {
+                data: {
+                    entidad_id: $('#entidad_id').val(),
+                    '_token': $('input[name=_token]').val()
+                },
+                success: function(response) {
                     $('#ciudad_id').html(response);
                     /*$('#municipio_id').empty();
                     $('#municipio_id').append('<option value="" selected>Seleccione una opción</option>');*/
                 },
-                beforeSend: function () {
+                beforeSend: function() {
                     $('#ciudad_id').append('<option value="" selected>Buscando...</option>');
                 }
             });
 
         });
 
-        $('#municipio_id').change(function () {
+        $('#municipio_id').change(function() {
             $.ajax({
                 method: "POST",
                 url: "{{ url('/parroquiaAjaxUser') }}",
-                data: {municipio_id: $('#municipio_id').val(), '_token': $('input[name=_token]').val()},
-                success: function (response) {
+                data: {
+                    municipio_id: $('#municipio_id').val(),
+                    '_token': $('input[name=_token]').val()
+                },
+                success: function(response) {
                     $('#parroquia_id').html(response);
 
                 },
-                beforeSend: function () {
+                beforeSend: function() {
                     $('#parroquia_id').append('<option value="" selected>Buscando...</option>');
                 }
             });
 
         });
-
     </script>
 @stop
-

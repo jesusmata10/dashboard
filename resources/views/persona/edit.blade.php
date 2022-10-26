@@ -26,12 +26,12 @@
                                 </div>
                             </div>
                             <div class="form-group col-md-4">
-                                <label for="correo">Correo Electr&oacute;nico:</label>
+                                <label for="email">Correo Electr&oacute;nico:</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-at"></i></span>
                                     </div>
-                                    <input class="form-control text-lowercase" type="text" name="correo" value="{{ isset($persona->correo) ? $persona->correo : '' }}">
+                                    <input class="form-control text-lowercase" type="text" name="email" value="{{ isset($persona->email) ? $persona->email : '' }}">
                                 </div>
                             </div>
                             <div class="form-group col-md-4">

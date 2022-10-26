@@ -3,10 +3,10 @@
 
     <div class="row">
         <div class="col-12">
-            <form action="{{ route('usuario.update', encrypt($user->id)) }}" method="POST" role="form" data-toggle="validator" class="form"
-                id="editUsuarioForm" name="editUsuarioForm">
+            <form action="{{ route('usuario.update', encrypt($user->id)) }}" method="POST" role="form"
+                data-toggle="validator" class="form" id="editUsuarioForm" name="editUsuarioForm">
                 {{ csrf_field() }}
-                 @method('PUT')
+                @method('PUT')
 
                 <div class="card">
                     <div class="card-header">
@@ -14,7 +14,8 @@
                     </div>
 
                     <div class="card-body">
-                        <input type="hidden" name="id" value="{{ $user->personas->id }}">
+                        <input type="hidden" name="id"
+                            value="{{ isset($user->personas->id) ? $user->personas->id : '' }}">
                         <div class="row">
                             <div class="form-group col-sm-12 col-md-4">
                                 <label for="cedula">(*) C&eacutedula:</label>1
@@ -43,7 +44,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-registered"></i></span>
                                     </div>
-                                    <input class="form-control text-uppercase" type="text" name="rif" maxlength="12"
+                                    <input class="form-control mask_rif text-uppercase" type="text" name="rif" maxlength="12"
                                         value="{{ isset($user->personas->rif) ? $user->personas->rif : '' }}">
                                 </div>
                             </div>
@@ -97,7 +98,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-3">
                                 <label for="fecha">(*) Fecha:</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -106,11 +107,11 @@
                                         </span>
                                     </div>
                                     <input type="text" class="form-control float-right datepicker" name="fecha"
-                                        autocomplete="off" readonly
-                                        value="{{ isset($user->personas->fecha) ? $user->personas->fecha : '' }}">
+                                        autocomplete="off"
+                                        value="{{ isset($user->personas->fecha) ? \Illuminate\Support\Carbon::parse($user->personas->fecha)->format('d-m-Y') : '' }}">
                                 </div>
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-3">
                                 <label for="lugarnac">(*) Lugar de Nacimiento:</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -120,7 +121,7 @@
                                         value="{{ isset($user->personas->lugarnac) ? $user->personas->lugarnac : '' }}">
                                 </div>
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-3">
                                 <label for="nacionalidad">(*) Nacionalidad:</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -128,6 +129,25 @@
                                     </div>
                                     <input class="form-control text-uppercase" type="text" name="nacionalidad"
                                         value="{{ isset($user->personas->nacionalidad) ? $user->personas->nacionalidad : '' }}">
+                                </div>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="sexo">(*) Sexo:</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-user-friends"></i></span>
+                                    </div>
+                                    <select class="form-control text-uppercase" name="sexo" id="sexo">
+                                        <option value="" selected>Seleccione una opci&oacute;n</option>
+                                        @if (isset($user->personas->sexo))
+                                            <option selected="selected" value="{{ $user->personas->sexo }}">
+                                                {{ $user->personas->sexo == 'H' ? 'Hombre' : 'Mujer' }}</option>
+                                        @endif
+
+                                        <option value="M">Mujer</option>
+                                        <option value="H">Hombre</option>
+
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -139,7 +159,8 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-phone"></i></span>
                                     </div>
-                                    <input class="form-control mask_tlf" type="text" name="telefono_fijo"
+                                    <input id="mask_tlf" class="form-control mask_tlf" type="tel"
+                                        name="telefono_fijo"
                                         value="{{ isset($user->personas->telefono_fijo) ? $user->personas->telefono_fijo : '' }}">
                                 </div>
                             </div>
@@ -163,10 +184,11 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-globe-americas"></i></span>
                                         </div>
-                                        <select class="form-control estado" name="estado_id" id="entidad_id">
+                                        <select class="form-control estado text-uppercase" name="estado_id"
+                                            id="entidad_id">
                                             <option value="" selected>Seleccione una opción</option>
                                             @foreach ($entidad as $combo)
-                                                @if ($combo->id == $user->personas->direccion->estado_id)
+                                                @if ($combo->id == isset($user->personas->direccion->estado_id) ? $user->personas->direccion->estado_id : '')
                                                     <option selected="selected" value="{{ $combo->id }}">
                                                         {{ $combo->estado }}
                                                     </option>
@@ -185,7 +207,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-city"></i></span>
                                         </div>
-                                        <select class="form-control" name="ciudad_id" id="ciudad_id">
+                                        <select class="form-control text-uppercase" name="ciudad_id" id="ciudad_id">
                                             @foreach ($ciudad as $items)
                                                 @if ($items->id == $user->personas->direccion->ciudad_id)
                                                     <option selected="selected" value="{{ $items->id }}">
@@ -204,7 +226,8 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-city"></i></span>
                                         </div>
-                                        <select class="form-control" name="municipio_id" id="municipio_id">
+                                        <select class="form-control text-uppercase" name="municipio_id"
+                                            id="municipio_id">
                                             @foreach ($municipio as $items)
                                                 @if ($items->id == $user->personas->direccion->municipio_id)
                                                     <option selected="selected" value="{{ $items->id }}">
@@ -223,7 +246,8 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-map-pin"></i></span>
                                         </div>
-                                        <select class="form-control" name="parroquia_id" id="parroquia_id">
+                                        <select class="form-control text-uppercase" name="parroquia_id"
+                                            id="parroquia_id">
                                             @foreach ($parroquia as $items)
                                                 @if ($items->id == $user->personas->direccion->parroquia_id)
                                                     <option selected="selected" value="{{ $items->id }}">
@@ -254,9 +278,10 @@
                                     <label for="tzona">(*) Zona</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fas fa-map-marked-alt"></i></span>
+                                            <span class="input-group-text text-uppercase"><i
+                                                    class="fas fa-map-marked-alt"></i></span>
                                         </div>
-                                        <select class="form-control" name="tzona" id="tzona">
+                                        <select class="form-control text-uppercase" name="tzona" id="tzona">
                                             <option value="" selected>Seleccione una opción</option>
                                             @foreach ($zonas as $combo)
                                                 @if ($combo->id == $user->personas->direccion->tzona)
@@ -287,7 +312,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-map-marked"></i></span>
                                         </div>
-                                        <select class="form-control" name="tcalle" id="tcalle">
+                                        <select class="form-control text-uppercase" name="tcalle" id="tcalle">
                                             <option value="" selected>Seleccione una opción</option>
                                             @foreach ($area as $combo)
                                                 @if ($combo->id == $user->personas->direccion->tcalle)
@@ -316,7 +341,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-home"></i></span>
                                         </div>
-                                        <select class="form-control" name="tvivienda" id="tvivienda">
+                                        <select class="form-control text-uppercase" name="tvivienda" id="tvivienda">
                                             <option value="" selected>Seleccione una opción</option>
                                             @foreach ($hogar as $combo)
                                                 @if ($combo->id == $user->personas->direccion->tvivienda)
@@ -356,7 +381,7 @@
                             </div>
                             <div class="form-group col-6">
                                 <label for="">Rol:</label>
-                                <select class="form-control" name="rol">
+                                <select class="form-control text-uppercase" name="rol">
                                     <option value="">Seleccione una opci&oacute;n</option>
                                     @foreach ($roles as $items)
                                         @if ($items->id == $rol->id)
@@ -441,6 +466,11 @@
 {!! JsValidator::formRequest('App\Http\Requests\UserCreateRequest', '#editUsuarioForm') !!} --}}
 
 <script>
+    $(document).ready(function() {
+        $('.mask_tlf').inputmask("(9999) 999-99-99")
+        $('.mask_rif').inputmask(" 99999999-9") 
+    });
+
     $('.datepicker').datepicker({
         format: "dd-mm-yyyy",
         clearBtn: true,
